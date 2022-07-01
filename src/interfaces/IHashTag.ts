@@ -1,13 +1,6 @@
 export interface IHashTag {
   id: string;
-  color:
-    | 'default'
-    | 'primary'
-    | 'secondary'
-    | 'error'
-    | 'info'
-    | 'success'
-    | 'warning';
+  color?: string;
   text: string;
   created: string;
 }

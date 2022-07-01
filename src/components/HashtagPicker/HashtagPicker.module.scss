@@ -1,0 +1,15 @@
+.container {
+    // border: 1px solid rgba(0,0,0,0.1);
+}
+
+.settingsButton {
+    display: flex !important;
+    justify-content: space-between !important;;
+}
+
+.chosenItem {
+    margin-top: 3px;
+    padding: 0.5rem 0.25rem;
+    font-weight: 600;
+    border-radius: 2px,
+}

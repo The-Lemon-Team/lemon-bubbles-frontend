@@ -12,10 +12,15 @@ export const useModalManager = () => {
     () => setIsEditMode(!isEditMode),
     [isEditMode, setIsEditMode],
   );
+  const closeCreatingMode = useCallback(
+    () => setIsCreatingMode(false),
+    [setIsCreatingMode],
+  );
 
   return {
     isCreatingMode,
     isEditMode,
+    closeCreatingMode,
     toggleCreatingMode,
     togleEditMode,
   };

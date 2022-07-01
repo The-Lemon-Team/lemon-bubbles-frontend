@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type { FC } from 'react';
 import { Rnd } from 'react-rnd';
-import { Paper, Box, Tab, Tabs, IconButton } from '@mui/material';
+import {
+  Paper,
+  Box,
+  Tab,
+  Tabs,
+  IconButton,
+  Tooltip,
+  Popper,
+} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
+import classNames from 'classnames';
 
 import { useModalManager } from './useModalManager';
 import { NoteList } from '../NoteList';
+import { AddNote } from '../AddNote';
 
 import styles from './FloatingList.module.scss';
 
@@ -27,7 +37,7 @@ const notesExample: INote[] = [
         id: 'h-1',
         created: new Date().toString(),
         text: 'Юнг',
-        color: 'warning',
+        color: '#1976d2',
       },
     ],
   },
@@ -38,10 +48,10 @@ const notesExample: INote[] = [
     created: new Date().toString(),
     hashTags: [
       {
-        id: 'h-1',
+        id: 'h-2',
         created: new Date().toString(),
         text: 'Юнг',
-        color: 'success',
+        // color: '#42a5f5',
       },
     ],
   },
@@ -64,8 +74,15 @@ const TabPanel = (props: TabPanelProps) => {
 };
 
 export const FloatingList: FC<FloatingListProps> = () => {
-  const { isCreatingMode, isEditMode, toggleCreatingMode, togleEditMode } =
-    useModalManager();
+  const boxRef = useRef(null);
+  const poperRef = useRef(null);
+  const {
+    isCreatingMode,
+    isEditMode,
+    closeCreatingMode,
+    toggleCreatingMode,
+    togleEditMode,
+  } = useModalManager();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -76,58 +93,99 @@ export const FloatingList: FC<FloatingListProps> = () => {
     width: '450',
   });
 
-  return (
-    <Rnd
-      resizible
-      minHeight={300}
-      className={styles.resizbleContainer}
-      minWidth={480}
-      onResizeStop={(e, direction, ref, delta, position) => {
-        setSizes({
-          width: ref.style.width,
-          height: ref.style.height,
-        });
-      }}
-      size={sizes}
-    >
-      <Paper elevation={6} className={styles.wrapper}>
-        <Box sx={{ width: '100%', background: '#fff' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs
-              value={value}
-              classes={{
-                flexContainer: styles.tabs,
-              }}
-              onChange={handleChange}
-              aria-label="basic tabs example"
-            >
-              <Tab label="By notes" />
-              <Tab label="By hashtag" />
+  const handleCreatingMode = () => {
+    toggleCreatingMode();
+    console.log(poperRef);
+  };
+  const handleCloseCreateMode = (...rest: any[]) => {
+    console.log(rest);
+  };
 
-              <div className={styles.actions}>
-                <IconButton
-                  color={isEditMode ? 'primary' : 'default'}
-                  onClick={togleEditMode}
-                >
-                  <EditIcon />
-                </IconButton>
-                <IconButton
-                  color={isCreatingMode ? 'primary' : 'default'}
-                  onClick={toggleCreatingMode}
-                >
-                  <AddIcon />
-                </IconButton>
-              </div>
-            </Tabs>
-            <TabPanel value={value} index={0}>
-              <NoteList notes={notesExample} />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-              By hashtag list
-            </TabPanel>
+  console.log(isCreatingMode);
+
+  return (
+    <div className={styles.container}>
+      <Rnd
+        resizible="true"
+        minHeight={300}
+        className={styles.resizbleContainer}
+        dragHandleClassName="rnd-drag"
+        minWidth={480}
+        onDragStart={() => {
+          closeCreatingMode();
+        }}
+        onResizeStop={(e, direction, ref, delta, position) => {
+          setSizes({
+            width: ref.style.width,
+            height: ref.style.height,
+          });
+        }}
+        size={sizes}
+      >
+        <Paper
+          elevation={6}
+          className={classNames(styles.wrapper, 'rnd-drag')}
+          ref={boxRef}
+        >
+          <Box sx={{ width: '100%', background: '#fff' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs
+                value={value}
+                classes={{
+                  flexContainer: styles.tabs,
+                }}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+              >
+                <Tab label="By notes" />
+                <Tab label="By hashtag" />
+
+                <div className={styles.actions}>
+                  <IconButton
+                    color={isEditMode ? 'primary' : 'default'}
+                    onClick={togleEditMode}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    color={isCreatingMode ? 'primary' : 'default'}
+                    onClick={handleCreatingMode}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </div>
+              </Tabs>
+              <TabPanel value={value} index={0}>
+                <NoteList notes={notesExample} />
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+                By hashtag list
+              </TabPanel>
+            </Box>
           </Box>
-        </Box>
-      </Paper>
-    </Rnd>
+        </Paper>
+        {boxRef.current && (
+          <Popper
+            ref={poperRef}
+            open={isCreatingMode}
+            className={styles.creatingCloud}
+            disablePortal={false}
+            anchorEl={boxRef.current}
+            placement="right-start"
+          >
+            <Paper
+              className={styles.creatingWrapper}
+              elevation={6}
+              sx={{
+                width: 350,
+                height: 450,
+              }}
+            >
+              <AddNote />
+            </Paper>
+          </Popper>
+        )}
+      </Rnd>
+    </div>
   );
 };

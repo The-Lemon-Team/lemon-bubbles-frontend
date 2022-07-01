@@ -1,0 +1,38 @@
+.refreshButtonRoot {
+    padding: 8px;
+    min-width: 0;
+}
+
+.resetEndIcon {
+    margin: 0 !important;
+}
+
+.formWrapper {
+    padding: 18px 10px;
+    display: flex;
+    align-items: center;
+}
+
+.refresherWrapper {
+    margin-right: 0.5rem;
+}
+
+.colorInput {
+    max-width: 180px;
+}
+
+.popoverTest {
+    background-color: transparent !important;
+}
+
+.popoverContent {
+    margin-top: 1rem;
+}
+
+.colorLabel {
+    margin-bottom: 0.25rem;
+}
+
+.colorText {
+    font-size: 0.875rem;
+}
