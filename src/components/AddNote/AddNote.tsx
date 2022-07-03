@@ -1,20 +1,12 @@
 import React from 'react';
-import {
-  Autocomplete,
-  Paper,
-  TextField,
-  Typography,
-  Divider,
-  Select,
-  MenuItem,
-} from '@mui/material';
-import { Formik, Field, FieldArray } from 'formik';
+import { TextField, Typography, Divider } from '@mui/material';
+import { Formik, Field } from 'formik';
 import type { FieldProps } from 'formik';
 
-import { HashtagPickerContainer } from '../HashtagPicker/HashtagPickerContainer';
+import { HashtagPickerContainer } from '../../modules/hashtags';
 import styles from './AddNote.module.scss';
 
-import { INote } from '../../interfaces';
+import { IHashTag, INote } from '../../interfaces';
 
 export const AddNote = () => {
   return (
@@ -71,7 +63,7 @@ export const AddNote = () => {
                     return (
                       <HashtagPickerContainer
                         selected={field.value}
-                        onChange={(hashTags) => {
+                        onChange={(hashTags: IHashTag[]) => {
                           form.setFieldValue('hashTags', hashTags);
                         }}
                       />

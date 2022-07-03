@@ -4,13 +4,12 @@ import { styled } from '@mui/material/styles';
 import { Box, Popper, ButtonBase, Typography } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-import { useCreatingMode } from './CreatingMode';
 import { HashtagAutoComplete } from './HashtagAutoComplete';
 
-import { useHashTagColors } from '../Hashtag';
+import { useHashTagColors } from '../../../../components/Hashtag';
 import styles from './HashtagPicker.module.scss';
 
-import { IHashTag } from '../../interfaces';
+import { IHashTag } from '../../../../interfaces';
 
 const StyledPopper = styled(Popper)(({ theme }) => ({
   border: `1px solid ${theme.palette.mode === 'light' ? '#e1e4e8' : '#30363d'}`,

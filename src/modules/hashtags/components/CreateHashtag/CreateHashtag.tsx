@@ -1,32 +1,22 @@
 import React, { useMemo, useCallback, useState, useRef } from 'react';
 import { Formik, Field, FieldProps, FormikProps } from 'formik';
 import { useTheme } from '@mui/material/styles';
-import { grey } from '@mui/material/colors';
-import {
-  InputAdornment,
-  TextField,
-  IconButton,
-  Button,
-  Popover,
-  FormControlLabel,
-  Typography,
-  ClickAwayListener,
-} from '@mui/material';
-import { GithubPicker, ColorResult } from 'react-color';
+import { InputAdornment, TextField, IconButton, Button } from '@mui/material';
+import { ColorResult } from 'react-color';
 import CachedIcon from '@mui/icons-material/Cached';
-import { darken, lighten } from '@mui/material/styles';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import { lighten } from '@mui/material/styles';
 import TagIcon from '@mui/icons-material/Tag';
 import CheckIcon from '@mui/icons-material/Check';
 
+import { colorGenerator } from '../../utils/colorGenerator';
+
 import styles from './CreateHashtag.module.scss';
 
-import { IHashTag } from '../../interfaces';
+import { IHashTag } from '../../../../interfaces';
 
-interface FormikValues extends Pick<IHashTag, 'color' | 'text'> {}
-
-const colorGenerator = () =>
-  '#' + Math.floor(Math.random() * 16777215).toString(16);
+interface FormikValues extends Pick<IHashTag, 'color' | 'text'> {
+  created: IHashTag[];
+}
 
 export const CreateHashtag = () => {
   const theme = useTheme();
@@ -34,6 +24,7 @@ export const CreateHashtag = () => {
   const [isPickerOpened, setIsPickerOpened] = useState(false);
   const initialValues = useMemo(() => {
     return {
+      created: [],
       color: colorGenerator(),
       text: '',
     };
@@ -55,14 +46,12 @@ export const CreateHashtag = () => {
   const handleSubmit = useCallback((values: FormikValues) => {}, []);
   const openDefautPicker = useCallback(
     (event: React.FocusEvent<HTMLInputElement>) => {
-      console.log('andhere');
       setAnchorEl(event.currentTarget);
       setIsPickerOpened(true);
     },
     [setAnchorEl, setIsPickerOpened],
   );
   const closeDefaultPicker = useCallback(() => {
-    console.log('imahere');
     anchorEl?.blur();
     setAnchorEl(null);
     setIsPickerOpened(false);
@@ -131,38 +120,6 @@ export const CreateHashtag = () => {
             <CheckIcon />
           </IconButton>
         </div>
-        {/* <div className={styles.colorInput}>
-          <Field name="color">
-            {({ field }: FieldProps) => {
-              return (
-                <TextField
-                  onFocus={openDefautPicker}
-                  name={field.name}
-                  value={field.value}
-                  size="small"
-                  variant="outlined"
-                />
-              );
-            }}
-          </Field>
-          {isPickerOpened && (
-            <Popover
-              disableRestoreFocus
-              open={isPickerOpened}
-              elevation={0}
-              anchorEl={anchorEl}
-              onClose={closeDefaultPicker}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-            >
-              <div className={styles.popoverContent}>
-                <GithubPicker onChange={handleHashtagPickerChange} />;
-              </div>
-            </Popover>
-          )}
-        </div> */}
       </div>
     </Formik>
   );

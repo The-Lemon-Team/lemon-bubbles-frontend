@@ -51,7 +51,7 @@ const notesExample: INote[] = [
         id: 'h-2',
         created: new Date().toString(),
         text: 'Юнг',
-        // color: '#42a5f5',
+        color: '#42a5f5',
       },
     ],
   },
@@ -95,11 +95,8 @@ export const FloatingList: FC<FloatingListProps> = () => {
 
   const handleCreatingMode = () => {
     toggleCreatingMode();
-    console.log(poperRef);
   };
-  const handleCloseCreateMode = (...rest: any[]) => {
-    console.log(rest);
-  };
+  const handleCloseCreateMode = (...rest: any[]) => {};
 
   console.log(isCreatingMode);
 
