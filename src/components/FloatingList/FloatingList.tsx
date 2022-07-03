@@ -1,15 +1,7 @@
 import React, { useRef, useState } from 'react';
 import type { FC } from 'react';
 import { Rnd } from 'react-rnd';
-import {
-  Paper,
-  Box,
-  Tab,
-  Tabs,
-  IconButton,
-  Tooltip,
-  Popper,
-} from '@mui/material';
+import { Paper, Box, Tab, Tabs, IconButton, Popper } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import classNames from 'classnames';
@@ -96,9 +88,6 @@ export const FloatingList: FC<FloatingListProps> = () => {
   const handleCreatingMode = () => {
     toggleCreatingMode();
   };
-  const handleCloseCreateMode = (...rest: any[]) => {};
-
-  console.log(isCreatingMode);
 
   return (
     <div className={styles.container}>

@@ -1,7 +1,7 @@
 import { types, flow } from 'mobx-state-tree';
 
 import { HashtagStore } from './HashtagStore';
-import { hashTagsService } from '../services/hashtagsService';
+import { hashTagsService } from '../services';
 
 export const HashtagsStore = types
   .model('HashtagsStore', {
@@ -28,7 +28,6 @@ export const HashtagsStore = types
         self.hashTags = yield hashTagsService.loadHashTags();
         self.status = 'success';
       } catch (error) {
-        console.error('Failed to fetch projects', error);
         self.status = 'error';
       }
     });

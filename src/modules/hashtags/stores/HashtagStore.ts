@@ -2,11 +2,6 @@ import { types } from 'mobx-state-tree';
 import { formatISO } from 'date-fns';
 
 import { IHashTag } from '../../../interfaces';
-import { colorGenerator } from '../utils/colorGenerator';
-
-interface HashtagStoreActions {
-  changeColor: (color: string) => void;
-}
 
 export const HashtagStore = types
   .model({

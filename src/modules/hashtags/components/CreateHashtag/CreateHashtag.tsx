@@ -1,8 +1,7 @@
-import React, { useMemo, useCallback, useState, useRef } from 'react';
+import React, { useMemo, useCallback, useRef } from 'react';
 import { Formik, Field, FieldProps, FormikProps } from 'formik';
 import { useTheme } from '@mui/material/styles';
 import { InputAdornment, TextField, IconButton, Button } from '@mui/material';
-import { ColorResult } from 'react-color';
 import CachedIcon from '@mui/icons-material/Cached';
 import { lighten } from '@mui/material/styles';
 import TagIcon from '@mui/icons-material/Tag';
@@ -20,8 +19,6 @@ interface FormikValues extends Pick<IHashTag, 'color' | 'text'> {
 
 export const CreateHashtag = () => {
   const theme = useTheme();
-  const [anchorEl, setAnchorEl] = React.useState<HTMLInputElement | null>(null);
-  const [isPickerOpened, setIsPickerOpened] = useState(false);
   const initialValues = useMemo(() => {
     return {
       created: [],
@@ -34,28 +31,10 @@ export const CreateHashtag = () => {
     (color: string) => formikRef.current?.setFieldValue('color', color),
     [formikRef],
   );
-  const handleHashtagPickerChange = useCallback(
-    ({ hex }: ColorResult) => {
-      setColor(hex);
-    },
-    [setColor],
-  );
   const handleGenerateColor = useCallback(() => {
     setColor(colorGenerator());
   }, [setColor]);
   const handleSubmit = useCallback((values: FormikValues) => {}, []);
-  const openDefautPicker = useCallback(
-    (event: React.FocusEvent<HTMLInputElement>) => {
-      setAnchorEl(event.currentTarget);
-      setIsPickerOpened(true);
-    },
-    [setAnchorEl, setIsPickerOpened],
-  );
-  const closeDefaultPicker = useCallback(() => {
-    anchorEl?.blur();
-    setAnchorEl(null);
-    setIsPickerOpened(false);
-  }, [setAnchorEl, setIsPickerOpened]);
 
   return (
     <Formik<FormikValues>

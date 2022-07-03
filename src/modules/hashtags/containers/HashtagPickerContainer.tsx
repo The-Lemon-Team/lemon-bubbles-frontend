@@ -20,6 +20,7 @@ export const HashtagPickerContainer: React.FC<HashtagPickerContainerProps> =
       if (!hashtagsStore.isSucceed && !hashtagsStore.isLoading) {
         hashtagsStore.loadHashTags();
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return <HashtagPicker hashTags={hashtagsStore.hashTags} {...props} />;

@@ -18,8 +18,9 @@ import { useTheme, styled } from '@mui/material/styles';
 
 import { AutocompletePaper } from './AutocompletePaper';
 
-import { IHashTag } from '../../../../interfaces/IHashTag';
 import { useRootStore } from '../../../common/stores/RootStore';
+
+import { IHashTag } from '../../../../interfaces/IHashTag';
 
 interface HashtagAutoCompleteProps {
   isOpen?: boolean;
@@ -106,7 +107,7 @@ export const HashtagAutoComplete: React.FC<HashtagAutoCompleteProps> = observer(
     const handleClose = useCallback(() => {
       onClose(pendingValue);
       createHashtagStore.switchOffCreatingMode();
-    }, [pendingValue, onClose, createHashtagStore.switchOffCreatingMode]);
+    }, [pendingValue, onClose, createHashtagStore]);
 
     return (
       <ClickAwayListener onClickAway={handleClose}>

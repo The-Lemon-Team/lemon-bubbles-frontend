@@ -1,5 +1,5 @@
 import { types, Instance } from 'mobx-state-tree';
-import React, { createContext, useContext } from 'react';
+import { createContext, useContext } from 'react';
 
 import { CreateHashtagStore } from '../../hashtags/stores/CreateHashtagStore';
 import { HashtagsStore } from '../../hashtags/stores/HashtagsStore';

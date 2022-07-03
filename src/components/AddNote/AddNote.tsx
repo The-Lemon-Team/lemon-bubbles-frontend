@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { TextField, Typography, Divider } from '@mui/material';
 import { Formik, Field } from 'formik';
 import type { FieldProps } from 'formik';
@@ -9,6 +9,8 @@ import styles from './AddNote.module.scss';
 import { IHashTag, INote } from '../../interfaces';
 
 export const AddNote = () => {
+  const handleSubmit = useCallback(() => {}, []);
+
   return (
     <div>
       <div className={styles.titleWrapper}>
@@ -16,7 +18,7 @@ export const AddNote = () => {
       </div>
       <Divider />
       <Formik<Partial<INote>>
-        onSubmit={console.log}
+        onSubmit={handleSubmit}
         initialValues={{
           title: '',
           description: '',

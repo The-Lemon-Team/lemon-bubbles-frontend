@@ -3,9 +3,9 @@ import { observer } from 'mobx-react-lite';
 import { Box, Paper, PaperProps } from '@mui/material';
 
 import { CreateHashtag } from '../CreateHashtag';
-import { AutocompleteActions } from '../../containers/AutocompleteActions';
+import { AutocompleteActions } from '../../containers';
 
-import { useRootStore } from '../../../common/stores/RootStore';
+import { useRootStore } from '../../../common/stores';
 import styles from './AutocompletePaper.module.scss';
 
 interface AutocompletePaperProps extends PaperProps {}

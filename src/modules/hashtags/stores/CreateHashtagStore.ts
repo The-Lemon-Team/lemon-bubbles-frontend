@@ -1,5 +1,4 @@
 import { types } from 'mobx-state-tree';
-import { formatISO } from 'date-fns';
 
 import { HashtagStore } from './HashtagStore';
 

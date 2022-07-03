@@ -1,1 +1,1 @@
-export { HashtagPickerContainer } from './containers/HashtagPickerContainer';
+export * from './containers';

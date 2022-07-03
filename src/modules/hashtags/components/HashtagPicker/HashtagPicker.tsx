@@ -72,9 +72,9 @@ export const HashtagPicker: FC<HashtagPickerProps> = ({
         anchorEl.focus();
       }
       setAnchorEl(null);
-      onChange(value);
+      onChange(chosenTags);
     },
-    [setValue, setAnchorEl, onChange],
+    [setValue, setAnchorEl, onChange, anchorEl],
   );
 
   const open = Boolean(anchorEl);
