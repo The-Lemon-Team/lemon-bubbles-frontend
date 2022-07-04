@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import type { FC } from 'react';
 import { Rnd } from 'react-rnd';
 import { Paper, Box, Tab, Tabs, IconButton, Popper } from '@mui/material';
@@ -6,6 +6,7 @@ import { subDays } from 'date-fns';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import classNames from 'classnames';
+import { DateRangePicker } from 'rsuite';
 
 import { useModalManager } from './useModalManager';
 import { NoteList } from '../NoteList';
@@ -14,7 +15,6 @@ import { AddNote } from '../AddNote';
 import styles from './FloatingList.module.scss';
 
 import { INote } from '../../interfaces';
-import { useCallback } from 'react';
 
 interface FloatingListProps {
   notes?: INote[];
@@ -47,7 +47,6 @@ export const FloatingList: FC<FloatingListProps> = () => {
     togleEditMode,
   } = useModalManager();
   const [tabIndex, setTabIndex] = React.useState(0);
-  console.log(subDays(new Date(), 2).toString());
   const [notes, setNotes] = React.useState([
     {
       id: '1',
@@ -150,6 +149,9 @@ export const FloatingList: FC<FloatingListProps> = () => {
                   </IconButton>
                 </div>
               </Tabs>
+              <div>
+                <DateRangePicker className={styles.datePicker} />
+              </div>
               <TabPanel value={tabIndex} index={0}>
                 <NoteList notes={notes} />
               </TabPanel>
