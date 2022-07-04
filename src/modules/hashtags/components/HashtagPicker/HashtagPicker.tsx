@@ -1,7 +1,13 @@
 import React, { useCallback } from 'react';
 import type { FC } from 'react';
 import { styled } from '@mui/material/styles';
-import { Box, Popper, ButtonBase, Typography } from '@mui/material';
+import {
+  Box,
+  Popper,
+  ButtonBase,
+  Typography,
+  ClickAwayListener,
+} from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 import { HashtagAutoComplete } from './HashtagAutoComplete';

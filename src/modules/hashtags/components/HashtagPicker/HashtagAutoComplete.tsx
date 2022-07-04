@@ -102,7 +102,7 @@ function PopperComponent(props: PopperComponentProps) {
 export const HashtagAutoComplete: React.FC<HashtagAutoCompleteProps> = observer(
   ({ isOpen = false, selected = [], hashTags = [], onClose = () => {} }) => {
     const theme = useTheme();
-    const { createHashtagStore } = useRootStore();
+    const { createHashtagStore, hashtagsStore } = useRootStore();
     const [pendingValue, setPendingValue] = useState<IHashTag[]>(selected);
     const handleClose = useCallback(() => {
       onClose(pendingValue);
@@ -111,7 +111,7 @@ export const HashtagAutoComplete: React.FC<HashtagAutoCompleteProps> = observer(
 
     return (
       <ClickAwayListener onClickAway={handleClose}>
-        <>
+        <div>
           <Box
             sx={{
               borderBottom: `1px solid ${
@@ -140,6 +140,8 @@ export const HashtagAutoComplete: React.FC<HashtagAutoCompleteProps> = observer(
           <Autocomplete
             open={isOpen}
             multiple
+            loading={hashtagsStore.isLoading}
+            loadingText="Loading hashtags..."
             onClose={(
               event: React.ChangeEvent<{}>,
               reason: AutocompleteCloseReason,
@@ -226,7 +228,7 @@ export const HashtagAutoComplete: React.FC<HashtagAutoCompleteProps> = observer(
               )
             }
           />
-        </>
+        </div>
       </ClickAwayListener>
     );
   },
