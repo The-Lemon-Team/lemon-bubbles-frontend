@@ -1,10 +1,12 @@
 .titleWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 1rem 0;
 }
 
 .formWrapper {
     margin-top: 2rem;
-    padding-right: 2rem;
 }
 
 .formField {
@@ -14,4 +16,8 @@
 
 .hashtagField {
     margin: 2rem 0;
+}
+
+.endIcon {
+    margin: 0 !important;
 }

@@ -3,6 +3,7 @@ import { Chip } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 interface IHashtagProps {
+  className?: string;
   color?: string;
   text?: string;
 }
@@ -25,8 +26,14 @@ export const useHashTagColors = () => {
 
 export const getColors = (color?: string) => {};
 
-export const Hashtag: React.FC<IHashtagProps> = ({ text = '', color }) => {
+export const Hashtag: React.FC<IHashtagProps> = ({
+  className,
+  text = '',
+  color,
+}) => {
   const { getColors } = useHashTagColors();
 
-  return <Chip label={`# ${text}`} sx={getColors(color)} />;
+  return (
+    <Chip label={`# ${text}`} className={className} sx={getColors(color)} />
+  );
 };

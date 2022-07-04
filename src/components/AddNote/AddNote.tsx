@@ -1,7 +1,8 @@
 import React, { useCallback, useRef } from 'react';
-import { TextField, Typography, Divider } from '@mui/material';
+import { Button, TextField, Typography, Divider } from '@mui/material';
 import { Formik, FormikProps, Field } from 'formik';
 import type { FieldProps } from 'formik';
+import DoneIcon from '@mui/icons-material/Done';
 
 import { MdEditor } from '../../modules/common/components';
 import { HashtagPickerContainer } from '../../modules/hashtags';
@@ -12,8 +13,17 @@ import { IHashTag, INote } from '../../interfaces';
 
 interface FormikValues extends Partial<INote> {}
 
-export const AddNote = () => {
-  const handleSubmit = useCallback(() => {}, []);
+interface AddNoteProps {
+  onAdd: (payload: INote) => void;
+}
+
+export const AddNote = ({ onAdd }: AddNoteProps) => {
+  const handleSubmit = useCallback(
+    (values: FormikValues) => {
+      onAdd(values as INote);
+    },
+    [onAdd],
+  );
   const formikRef = useRef<FormikProps<FormikValues>>(null);
   const handleTextChange = useCallback(
     (text?: string) => {
@@ -23,23 +33,38 @@ export const AddNote = () => {
   );
 
   return (
-    <div>
-      <div className={styles.titleWrapper}>
-        <Typography variant="body1">Добавить новую запись</Typography>
-      </div>
-      <Divider />
-      <Formik<FormikValues>
-        onSubmit={handleSubmit}
-        innerRef={formikRef}
-        initialValues={{
-          title: '',
-          description: '',
-          created: new Date().toString(),
-          hashTags: [],
-        }}
-      >
-        {({ values }) => {
-          return (
+    <Formik<FormikValues>
+      onSubmit={handleSubmit}
+      innerRef={formikRef}
+      initialValues={{
+        title: '',
+        description: '',
+        created: new Date().toString(),
+        hashTags: [],
+      }}
+    >
+      {({ handleSubmit }) => {
+        return (
+          <div>
+            <div className={styles.titleWrapper}>
+              <Typography variant="body1">Добавить новую запись</Typography>
+              <div>
+                <Button
+                  color="success"
+                  endIcon={<DoneIcon />}
+                  onClick={() => handleSubmit()}
+                  variant="contained"
+                  sx={{
+                    minWidth: 'auto',
+                    padding: '10px',
+                  }}
+                  classes={{
+                    endIcon: styles.endIcon,
+                  }}
+                />
+              </div>
+            </div>
+            <Divider />
             <div className={styles.formWrapper}>
               <div className={styles.formField}>
                 <Field name="title">
@@ -65,15 +90,6 @@ export const AddNote = () => {
                         onChange={handleTextChange}
                       />
                     );
-                    // return (
-                    //   <TextField
-                    //     id="outlined-basic"
-                    //     label="Текст"
-                    //     variant="standard"
-                    //     fullWidth
-                    //     {...field}
-                    //   />
-                    // );
                   }}
                 </Field>
               </div>
@@ -92,9 +108,9 @@ export const AddNote = () => {
                 </Field>
               </div>
             </div>
-          );
-        }}
-      </Formik>
-    </div>
+          </div>
+        );
+      }}
+    </Formik>
   );
 };

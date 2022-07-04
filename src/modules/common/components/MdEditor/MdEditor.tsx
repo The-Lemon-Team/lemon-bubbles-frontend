@@ -1,9 +1,6 @@
 import React from 'react';
 import { TextareaAutosize } from '@mui/material';
-import MDEditor, { MarkdownUtil } from '@uiw/react-md-editor';
-import { useCallback } from 'react';
-
-import styles from './MdEditor.module.scss';
+import MDEditor from '@uiw/react-md-editor';
 
 interface MdEditorProps {
   value: string;
@@ -11,14 +8,6 @@ interface MdEditorProps {
 }
 
 export const MdEditor: React.FC<MdEditorProps> = ({ value, onChange }) => {
-  const handlechange = useCallback(
-    (e: React.SyntheticEvent, ...rest: any) => {
-      console.log(rest);
-      // onChange(value);
-    },
-    [onChange],
-  );
-
   return (
     <MDEditor
       height={200}

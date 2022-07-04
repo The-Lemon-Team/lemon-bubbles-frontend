@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import type { FC } from 'react';
 import { Rnd } from 'react-rnd';
 import { Paper, Box, Tab, Tabs, IconButton, Popper } from '@mui/material';
+import { subDays } from 'date-fns';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import classNames from 'classnames';
@@ -13,41 +14,11 @@ import { AddNote } from '../AddNote';
 import styles from './FloatingList.module.scss';
 
 import { INote } from '../../interfaces';
+import { useCallback } from 'react';
 
 interface FloatingListProps {
   notes?: INote[];
 }
-
-const notesExample: INote[] = [
-  {
-    id: '1',
-    title: 'Title #1',
-    description: 'Description #1',
-    created: new Date().toString(),
-    hashTags: [
-      {
-        id: 'h-1',
-        created: new Date().toString(),
-        text: 'Юнг',
-        color: '#1976d2',
-      },
-    ],
-  },
-  {
-    id: '2',
-    title: 'Title Title Title Title #2',
-    description: 'Description #2',
-    created: new Date().toString(),
-    hashTags: [
-      {
-        id: 'h-2',
-        created: new Date().toString(),
-        text: 'Юнг',
-        color: '#42a5f5',
-      },
-    ],
-  },
-];
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -75,10 +46,41 @@ export const FloatingList: FC<FloatingListProps> = () => {
     toggleCreatingMode,
     togleEditMode,
   } = useModalManager();
-  const [value, setValue] = React.useState(0);
+  const [tabIndex, setTabIndex] = React.useState(0);
+  console.log(subDays(new Date(), 2).toString());
+  const [notes, setNotes] = React.useState([
+    {
+      id: '1',
+      title: 'Title #1',
+      description: 'Description #1',
+      created: subDays(new Date(), 2).toString(),
+      hashTags: [
+        {
+          id: 'h-1',
+          created: new Date().toString(),
+          text: 'Юнг',
+          color: '#1976d2',
+        },
+      ],
+    },
+    {
+      id: '2',
+      title: 'Title Title Title Title #2',
+      description: 'Description #2',
+      created: new Date().toString(),
+      hashTags: [
+        {
+          id: 'h-2',
+          created: new Date().toString(),
+          text: 'Юнг',
+          color: '#42a5f5',
+        },
+      ],
+    },
+  ]);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabIndex(newValue);
   };
   const [sizes, setSizes] = useState({
     height: '300',
@@ -88,6 +90,13 @@ export const FloatingList: FC<FloatingListProps> = () => {
   const handleCreatingMode = () => {
     toggleCreatingMode();
   };
+
+  const addNote = useCallback(
+    (newNote: INote) => {
+      setNotes([...notes, newNote]);
+    },
+    [notes, setNotes],
+  );
 
   return (
     <div className={styles.container}>
@@ -116,11 +125,11 @@ export const FloatingList: FC<FloatingListProps> = () => {
           <Box sx={{ width: '100%', background: '#fff' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
-                value={value}
+                value={tabIndex}
                 classes={{
                   flexContainer: styles.tabs,
                 }}
-                onChange={handleChange}
+                onChange={handleTabChange}
                 aria-label="basic tabs example"
               >
                 <Tab label="By notes" />
@@ -141,10 +150,10 @@ export const FloatingList: FC<FloatingListProps> = () => {
                   </IconButton>
                 </div>
               </Tabs>
-              <TabPanel value={value} index={0}>
-                <NoteList notes={notesExample} />
+              <TabPanel value={tabIndex} index={0}>
+                <NoteList notes={notes} />
               </TabPanel>
-              <TabPanel value={value} index={1}>
+              <TabPanel value={tabIndex} index={1}>
                 By hashtag list
               </TabPanel>
             </Box>
@@ -164,10 +173,10 @@ export const FloatingList: FC<FloatingListProps> = () => {
               elevation={6}
               sx={{
                 width: 350,
-                height: 450,
+                minHeight: 400,
               }}
             >
-              <AddNote />
+              <AddNote onAdd={addNote} />
             </Paper>
           </Popper>
         )}
