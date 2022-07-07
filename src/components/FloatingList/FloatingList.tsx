@@ -1,11 +1,16 @@
 import React, { useRef, useState, useCallback } from 'react';
 import { Rnd } from 'react-rnd';
-import { Tab, Tabs } from '@mui/material';
 import { subDays } from 'date-fns';
 import EditIcon from '@rsuite/icons/Edit';
 import classNames from 'classnames';
-import { DateRangePicker, Popover, Panel, Whisper } from 'rsuite';
-import { IconButton } from 'rsuite';
+import {
+  DateRangePicker,
+  Popover,
+  Panel,
+  Whisper,
+  Nav,
+  IconButton,
+} from 'rsuite';
 import PlusIcon from '@rsuite/icons/Plus';
 
 import { useModalManager } from './useModalManager';
@@ -22,16 +27,16 @@ interface FloatingListProps {
 
 interface TabPanelProps {
   children?: React.ReactNode;
-  index: number;
-  value: number;
+  eventKey: string;
+  active: boolean;
 }
 
 const TabPanel = (props: TabPanelProps) => {
-  const { children, value, index, ...other } = props;
+  const { children, eventKey, active, ...other } = props;
 
   return (
-    <div role="tabpanel" hidden={value !== index} {...other}>
-      {value === index && <div>{children}</div>}
+    <div role="tabpanel" hidden={!active} {...other}>
+      {active && <div>{children}</div>}
     </div>
   );
 };
@@ -46,7 +51,7 @@ export const FloatingList: React.FC<FloatingListProps> = () => {
     toggleCreatingMode,
     togleEditMode,
   } = useModalManager();
-  const [tabIndex, setTabIndex] = React.useState(0);
+  const [activeTab, setActiveTab] = React.useState('notes');
   const [notes, setNotes] = React.useState([
     {
       id: '1',
@@ -78,8 +83,8 @@ export const FloatingList: React.FC<FloatingListProps> = () => {
     },
   ]);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabIndex(newValue);
+  const handleTabChange = (newValue: string) => {
+    setActiveTab(newValue);
   };
   const [sizes, setSizes] = useState({
     height: '300',
@@ -121,16 +126,15 @@ export const FloatingList: React.FC<FloatingListProps> = () => {
           className={classNames(styles.wrapper, 'rnd-drag')}
           ref={boxRef}
         >
-          <Tabs
-            value={tabIndex}
-            classes={{
-              flexContainer: styles.tabs,
-            }}
-            onChange={handleTabChange}
+          <Nav
+            activeKey={activeTab}
+            appearance="subtle"
+            className={styles.tabs}
+            onSelect={handleTabChange}
             aria-label="basic tabs example"
           >
-            <Tab label="By notes" />
-            <Tab label="By hashtag" />
+            <Nav.Item eventKey="notes">By notes</Nav.Item>
+            <Nav.Item eventKey="hashtags">By hashtag</Nav.Item>
 
             <div className={styles.actions}>
               <div className={styles.actionWrapper}>
@@ -166,14 +170,14 @@ export const FloatingList: React.FC<FloatingListProps> = () => {
                 </Whisper>
               </div>
             </div>
-          </Tabs>
+          </Nav>
           <div>
             <DateRangePicker className={styles.datePicker} />
           </div>
-          <TabPanel value={tabIndex} index={0}>
+          <TabPanel active={activeTab === 'notes'} eventKey="notes">
             <NoteList notes={notes} />
           </TabPanel>
-          <TabPanel value={tabIndex} index={1}>
+          <TabPanel active={activeTab === 'hashtags'} eventKey="hashtags">
             By hashtag list
           </TabPanel>
         </Panel>
