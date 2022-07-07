@@ -1,15 +1,15 @@
 import React, { useCallback, useRef } from 'react';
-import { Button, TextField, Typography, Divider } from '@mui/material';
+
+import { Divider, IconButton, Input } from 'rsuite';
 import { Formik, FormikProps, Field } from 'formik';
 import type { FieldProps } from 'formik';
-import DoneIcon from '@mui/icons-material/Done';
+import CheckIcon from '@rsuite/icons/Check';
 
 import { MdEditor } from '../../modules/common/components';
-import { HashtagPickerContainer } from '../../modules/hashtags';
 
 import styles from './AddNote.module.scss';
 
-import { IHashTag, INote } from '../../interfaces';
+import { INote } from '../../interfaces';
 
 interface FormikValues extends Partial<INote> {}
 
@@ -47,20 +47,15 @@ export const AddNote = ({ onAdd }: AddNoteProps) => {
         return (
           <div>
             <div className={styles.titleWrapper}>
-              <Typography variant="body1">Добавить новую запись</Typography>
+              <p className={styles.title}>Добавить новую запись</p>
               <div>
-                <Button
-                  color="success"
-                  endIcon={<DoneIcon />}
+                <IconButton
+                  size="sm"
+                  appearance="primary"
+                  icon={<CheckIcon />}
                   onClick={() => handleSubmit()}
                   variant="contained"
-                  sx={{
-                    minWidth: 'auto',
-                    padding: '10px',
-                  }}
-                  classes={{
-                    endIcon: styles.endIcon,
-                  }}
+                  color="green"
                 />
               </div>
             </div>
@@ -70,11 +65,10 @@ export const AddNote = ({ onAdd }: AddNoteProps) => {
                 <Field name="title">
                   {({ field }: FieldProps) => {
                     return (
-                      <TextField
+                      <Input
+                        size="sm"
                         id="outlined-basic"
-                        label="Заголовок"
-                        variant="standard"
-                        fullWidth
+                        placeholder="Заголовок"
                         {...field}
                       />
                     );
@@ -96,14 +90,7 @@ export const AddNote = ({ onAdd }: AddNoteProps) => {
               <div className={styles.hashtagField}>
                 <Field name="hashTags">
                   {({ field, form }: FieldProps) => {
-                    return (
-                      <HashtagPickerContainer
-                        selected={field.value}
-                        onChange={(hashTags: IHashTag[]) => {
-                          form.setFieldValue('hashTags', hashTags);
-                        }}
-                      />
-                    );
+                    return <div>hashtags</div>;
                   }}
                 </Field>
               </div>

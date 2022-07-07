@@ -1,12 +1,12 @@
 import React, { useRef, useState, useCallback } from 'react';
-import type { FC } from 'react';
 import { Rnd } from 'react-rnd';
-import { Paper, Box, Tab, Tabs, IconButton, Popper } from '@mui/material';
+import { Tab, Tabs } from '@mui/material';
 import { subDays } from 'date-fns';
-import EditIcon from '@mui/icons-material/Edit';
-import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@rsuite/icons/Edit';
 import classNames from 'classnames';
-import { DateRangePicker } from 'rsuite';
+import { DateRangePicker, Popover, Panel, Whisper } from 'rsuite';
+import { IconButton } from 'rsuite';
+import PlusIcon from '@rsuite/icons/Plus';
 
 import { useModalManager } from './useModalManager';
 import { NoteList } from '../NoteList';
@@ -31,12 +31,12 @@ const TabPanel = (props: TabPanelProps) => {
 
   return (
     <div role="tabpanel" hidden={value !== index} {...other}>
-      {value === index && <Box>{children}</Box>}
+      {value === index && <div>{children}</div>}
     </div>
   );
 };
 
-export const FloatingList: FC<FloatingListProps> = () => {
+export const FloatingList: React.FC<FloatingListProps> = () => {
   const boxRef = useRef(null);
   const poperRef = useRef(null);
   const {
@@ -116,72 +116,67 @@ export const FloatingList: FC<FloatingListProps> = () => {
         }}
         size={sizes}
       >
-        <Paper
-          elevation={6}
+        <Panel
+          shaded
           className={classNames(styles.wrapper, 'rnd-drag')}
           ref={boxRef}
         >
-          <Box sx={{ width: '100%', background: '#fff' }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs
-                value={tabIndex}
-                classes={{
-                  flexContainer: styles.tabs,
-                }}
-                onChange={handleTabChange}
-                aria-label="basic tabs example"
-              >
-                <Tab label="By notes" />
-                <Tab label="By hashtag" />
-
-                <div className={styles.actions}>
-                  <IconButton
-                    color={isEditMode ? 'primary' : 'default'}
-                    onClick={togleEditMode}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    color={isCreatingMode ? 'primary' : 'default'}
-                    onClick={handleCreatingMode}
-                  >
-                    <AddIcon />
-                  </IconButton>
-                </div>
-              </Tabs>
-              <div>
-                <DateRangePicker className={styles.datePicker} />
-              </div>
-              <TabPanel value={tabIndex} index={0}>
-                <NoteList notes={notes} />
-              </TabPanel>
-              <TabPanel value={tabIndex} index={1}>
-                By hashtag list
-              </TabPanel>
-            </Box>
-          </Box>
-        </Paper>
-        {boxRef.current && (
-          <Popper
-            ref={poperRef}
-            open={isCreatingMode}
-            className={styles.creatingCloud}
-            disablePortal={false}
-            anchorEl={boxRef.current}
-            placement="right-start"
+          <Tabs
+            value={tabIndex}
+            classes={{
+              flexContainer: styles.tabs,
+            }}
+            onChange={handleTabChange}
+            aria-label="basic tabs example"
           >
-            <Paper
-              className={styles.creatingWrapper}
-              elevation={6}
-              sx={{
-                width: 350,
-                minHeight: 400,
-              }}
-            >
-              <AddNote onAdd={addNote} />
-            </Paper>
-          </Popper>
-        )}
+            <Tab label="By notes" />
+            <Tab label="By hashtag" />
+
+            <div className={styles.actions}>
+              <div className={styles.actionWrapper}>
+                <IconButton
+                  active={isEditMode}
+                  appearance="primary"
+                  color={'green'}
+                  icon={<EditIcon />}
+                  onClick={togleEditMode}
+                  circle
+                />
+              </div>
+              <div className={styles.actionWrapper}>
+                <Whisper
+                  trigger="click"
+                  placement="rightStart"
+                  speaker={
+                    <Popover ref={poperRef} className={styles.creatingCloud}>
+                      <Panel className={styles.creatingWrapper}>
+                        <AddNote onAdd={addNote} />
+                      </Panel>
+                    </Popover>
+                  }
+                >
+                  <IconButton
+                    active={isCreatingMode}
+                    appearance="primary"
+                    icon={<PlusIcon />}
+                    color={'blue'}
+                    onClick={handleCreatingMode}
+                    circle
+                  />
+                </Whisper>
+              </div>
+            </div>
+          </Tabs>
+          <div>
+            <DateRangePicker className={styles.datePicker} />
+          </div>
+          <TabPanel value={tabIndex} index={0}>
+            <NoteList notes={notes} />
+          </TabPanel>
+          <TabPanel value={tabIndex} index={1}>
+            By hashtag list
+          </TabPanel>
+        </Panel>
       </Rnd>
     </div>
   );

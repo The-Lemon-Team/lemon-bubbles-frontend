@@ -12,12 +12,22 @@
     position: relative;
     height: 100%;
     width: 100%;
+
+    & div:first-child {
+        padding: 0;
+        margin: 0;
+    }
 }
 
 .actions {
+    display: flex;
     margin-left: auto;
     justify-content: end;
     margin-right: 12px;
+}
+
+.actionWrapper {
+    margin: 0 4px;
 }
 
 .tabs {
@@ -30,11 +40,13 @@
     position: relative;
     z-index: 2;
     margin-left: 1rem !important;
+    padding: 0;
 }
 
 .creatingWrapper {
-    padding: 1rem 2rem;
     margin-bottom: 2rem;
+    width: 350px;
+    min-height: 400px;
 }
 
 .datePicker {

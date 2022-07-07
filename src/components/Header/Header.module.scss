@@ -1,9 +1,18 @@
 @import '../../styles/_variables';
 
 .main {
+    background: #42a5f5;
+}
+
+.navbar {
+    align-items: center;
+    background-color: #42a5f5 !important;
 }
 
 .title {
-    margin: 0 0 0.625rem 0;
     color: $white;
+}
+
+.avatar {
+    padding-top: 7.5px;
 }
