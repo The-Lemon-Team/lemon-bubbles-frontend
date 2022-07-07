@@ -1,5 +1,4 @@
 import React from 'react';
-import MDEditor from '@uiw/react-md-editor';
 import { MentionsInput, Mention } from 'react-mentions';
 
 interface MdEditorProps {
