@@ -1,0 +1,1 @@
+export { HashTextArea } from './HashTextArea';

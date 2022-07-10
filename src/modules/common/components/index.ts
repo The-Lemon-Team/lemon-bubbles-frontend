@@ -1,1 +1,1 @@
-export * from './MdEditor';
+export * from './HashTextArea';

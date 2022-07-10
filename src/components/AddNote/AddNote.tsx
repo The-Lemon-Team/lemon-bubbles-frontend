@@ -1,11 +1,10 @@
 import React, { useCallback, useRef } from 'react';
 
 import { Divider, IconButton, Input } from 'rsuite';
-import { Formik, FormikProps, Field } from 'formik';
-import type { FieldProps } from 'formik';
+import { Formik, FormikProps, Field, FieldProps } from 'formik';
 import CheckIcon from '@rsuite/icons/Check';
 
-import { MdEditor } from '../../modules/common/components';
+import { HashTextArea } from '../../modules/common/components';
 
 import styles from './AddNote.module.scss';
 
@@ -79,7 +78,7 @@ export const AddNote = ({ onAdd }: AddNoteProps) => {
                 <Field name="description">
                   {({ field }: FieldProps) => {
                     return (
-                      <MdEditor
+                      <HashTextArea
                         value={field.value}
                         onChange={handleTextChange}
                       />
@@ -87,13 +86,13 @@ export const AddNote = ({ onAdd }: AddNoteProps) => {
                   }}
                 </Field>
               </div>
-              <div className={styles.hashtagField}>
+              {/* <div className={styles.hashtagField}>
                 <Field name="hashTags">
                   {({ field, form }: FieldProps) => {
                     return <div>hashtags</div>;
                   }}
                 </Field>
-              </div>
+              </div> */}
             </div>
           </div>
         );
