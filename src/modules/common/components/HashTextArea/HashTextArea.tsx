@@ -41,6 +41,10 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
             id: 'id-1',
             display: '#first',
           },
+          {
+            id: 'id-2',
+            display: '#MASK',
+          },
         ]}
         renderSuggestion={(renderItem) => {
           return <p>{renderItem.display}</p>;
