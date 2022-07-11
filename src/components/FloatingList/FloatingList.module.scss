@@ -5,17 +5,16 @@
 .resizbleContainer {
     position: relative;
     background: #fff;
-    border: 2px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.1);
 }
 
 .wrapper {
     position: relative;
     height: 100%;
     width: 100%;
-
-    & div:first-child {
-        padding: 0;
-        margin: 0;
+    
+    [class~="rs-panel-body"] {
+        padding: 0.5rem;
     }
 }
 
@@ -32,7 +31,6 @@
 
 .tabs {
     padding: 10px 0 4px !important;
-    // border: 2px solid rgba(0,0,0,0.1);
     display: flex;
     align-items: center;
 }

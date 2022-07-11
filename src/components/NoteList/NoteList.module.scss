@@ -1,17 +1,40 @@
-.titleWrapper {
-    margin-right: 24px;;
+
+
+.panelGroup {
+    margin-bottom: 0.5rem;
 }
 
-.accordion {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    margin: 0!important;
-}
-
-.hashTagWrapper {
-    margin: 3px;
+.datePanel {
+    [class~="rs-panel-header"] {
+        padding: 0.5rem !important;
+    }
 }
 
 .dayLabel {
-    display: block;
-    padding: 0.5rem 1rem !important;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #575757;
+}
+
+.notePanel {
+    padding: 0 1rem !important;
+
+    [class~="rs-panel-body"] {
+        padding: 0.5rem 1.25rem !important;
+    }
+
+    [class~="rs-icon"] {
+        top: 10px !important;
+    }
+}
+
+.noteWrapper {
+    display: flex;
+}
+
+.noteLabel {
+    font-size: 1rem;
+    font-weight: 500;
+    padding-right: 15px;
+    color: #575757;
 }

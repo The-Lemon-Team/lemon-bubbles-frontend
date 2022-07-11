@@ -62,7 +62,7 @@ export const FloatingList: React.FC<FloatingListProps> = () => {
         {
           id: 'h-1',
           created: new Date().toString(),
-          text: 'Юнг',
+          text: 'Пожрал',
           color: '#1976d2',
         },
       ],
@@ -74,9 +74,15 @@ export const FloatingList: React.FC<FloatingListProps> = () => {
       created: new Date().toString(),
       hashTags: [
         {
-          id: 'h-2',
+          id: 'h-3233',
           created: new Date().toString(),
-          text: 'Юнг',
+          text: 'Пожрал',
+          color: '#42a5f5',
+        },
+        {
+          id: 'h-4112',
+          created: new Date().toString(),
+          text: 'посрал',
           color: '#42a5f5',
         },
       ],

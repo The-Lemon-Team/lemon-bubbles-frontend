@@ -30,6 +30,12 @@ export const AddNote = ({ onAdd }: AddNoteProps) => {
     },
     [formikRef],
   );
+  const handleTitleChange = useCallback(
+    (text?: string) => {
+      formikRef.current?.setFieldValue('title', text || '');
+    },
+    [formikRef],
+  );
 
   return (
     <Formik<FormikValues>
@@ -69,6 +75,7 @@ export const AddNote = ({ onAdd }: AddNoteProps) => {
                         id="outlined-basic"
                         placeholder="Заголовок"
                         {...field}
+                        onChange={handleTitleChange}
                       />
                     );
                   }}

@@ -3,6 +3,8 @@ import { useMemo } from 'react';
 import { Panel, PanelGroup } from 'rsuite';
 import { format } from 'date-fns';
 
+import { Hashtag } from '../Hashtag';
+
 import styles from './NoteList.module.scss';
 
 import { INote } from '../../interfaces';
@@ -27,23 +29,42 @@ export const NoteList: React.FC<NoteListProps> = ({ notes = [] }) => {
   }, [notes]);
 
   return (
-    <PanelGroup accordion defaultActiveKey={1} bordered>
+    <div>
       {Object.keys(notesByDay).map((date, index) => {
         const notes = notesByDay[date];
 
         return (
-          <div>
-            <p className={styles.dayLabel}>{date}</p>
-            {notes.map((note) => {
-              return (
-                <Panel header={note.title} eventKey={index}>
-                  <p>{note.description}</p>
-                </Panel>
-              );
-            })}
-          </div>
+          <PanelGroup accordion bordered>
+            <Panel
+              eventKey={date}
+              header={<p className={styles.dayLabel}>{date}</p>}
+              className={styles.datePanel}
+            >
+              {notes.map((note, index) => (
+                <PanelGroup accordion className={styles.panelGroup}>
+                  <Panel
+                    shaded
+                    className={styles.notePanel}
+                    header={
+                      <div className={styles.noteWrapper}>
+                        <p className={styles.noteLabel}>{note.title}</p>
+                        <div>
+                          {note.hashTags.map((hashTag) => (
+                            <Hashtag {...hashTag} key={hashTag.id} />
+                          ))}
+                        </div>
+                      </div>
+                    }
+                    eventKey={index}
+                  >
+                    <p>{note.description}</p>
+                  </Panel>
+                </PanelGroup>
+              ))}
+            </Panel>
+          </PanelGroup>
         );
       })}
-    </PanelGroup>
+    </div>
   );
 };

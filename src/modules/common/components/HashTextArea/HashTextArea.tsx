@@ -21,7 +21,6 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
       style={{
         '&multiLine': {
           input: {
-            color: '#123',
             backgroundColor: '#fff',
             border: '1px solid #e5e5ea',
             transition: 'border-color .3s ease-in-out',
@@ -29,9 +28,6 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
             outline: 0,
             padding: '7px 11px',
             minHeight: '200px',
-            '&:focus': {
-              color: 'red',
-            },
           },
         },
       }}
