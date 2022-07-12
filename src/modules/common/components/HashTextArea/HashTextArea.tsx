@@ -1,16 +1,43 @@
 import React from 'react';
 import { MentionsInput, Mention } from 'react-mentions';
 
+import { Hashtag } from '../../../../components/Hashtag';
+
 import styles from './HashTextArea.module.scss';
 
+import { IHashTag } from '../../../../interfaces';
+
 interface HashTextAreaProps {
+  hashtags?: IHashTag[];
   value: string;
   onChange: (text?: string) => void;
 }
 
+const hashtagExamples = [
+  {
+    id: 'h-1',
+    created: new Date().toString(),
+    text: 'Пожрал',
+    color: '#1976d2',
+  },
+  {
+    id: 'h-3233',
+    created: new Date().toString(),
+    text: 'Пожрал',
+    color: '#42a5f5',
+  },
+  {
+    id: 'h-4112',
+    created: new Date().toString(),
+    text: 'посрал',
+    color: '#fcc690',
+  },
+];
+
 export const HashTextArea: React.FC<HashTextAreaProps> = ({
   value,
   onChange,
+  hashtags = hashtagExamples,
 }) => {
   return (
     <MentionsInput
@@ -19,6 +46,20 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
       className={styles.textArea}
       value={value}
       style={{
+        suggestions: {
+          list: {
+            backgroundColor: 'white',
+            border: '1px solid rgba(0,0,0,0.15)',
+            fontSize: 14,
+          },
+          item: {
+            padding: '5px 15px',
+            borderBottom: '1px solid rgba(0,0,0,0.15)',
+            '&focused': {
+              backgroundColor: '#cee4e5',
+            },
+          },
+        },
         '&multiLine': {
           input: {
             backgroundColor: '#fff',
@@ -35,19 +76,30 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
       onChange={({ target }) => onChange(target.value)}
     >
       <Mention
+        style={{ backgroundColor: '#d1c4e9' }}
         trigger="#"
+        displayTransform={(id: string, display: string) => `#${display}`}
         data={[
           {
-            id: 'id-1',
-            display: '#first',
+            id: 'h-3233',
+            display: 'Пожрал',
           },
           {
-            id: 'id-2',
-            display: '#MASK',
+            id: 'h-4112',
+            display: 'посрал',
           },
         ]}
         renderSuggestion={(renderItem) => {
-          return <p>{renderItem.display}</p>;
+          const currentHashtag = hashtags.find(
+            (hashtag) => hashtag.id === renderItem.id,
+          );
+
+          return (
+            <Hashtag
+              color={currentHashtag?.color}
+              text={currentHashtag?.text}
+            />
+          );
         }}
       />
     </MentionsInput>
