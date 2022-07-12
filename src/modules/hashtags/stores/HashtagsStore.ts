@@ -19,6 +19,11 @@ export const HashtagsStore = types
       get isSucceed() {
         return self.status === 'success';
       },
+      mapTagNamesOnTags(tagNames: string[]) {
+        const usedHashTags = tagNames.map((tagName) =>
+          self.hashTags.find((hashTag) => hashTag.text === tagName),
+        );
+      },
     };
   })
   .actions((self) => {

@@ -7,3 +7,7 @@ export interface INote {
   description: string;
   hashTags: IHashTag[];
 }
+
+export interface INoteForm extends Omit<INote, 'hashTags'> {
+  hashTags: string[];
+}

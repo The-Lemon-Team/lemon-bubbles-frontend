@@ -15,7 +15,7 @@ import PlusIcon from '@rsuite/icons/Plus';
 
 import { useModalManager } from './useModalManager';
 import { NoteList } from '../NoteList';
-import { AddNote } from '../AddNote';
+import { AddNote } from '../../modules/notes/components/AddNote';
 
 import styles from './FloatingList.module.scss';
 

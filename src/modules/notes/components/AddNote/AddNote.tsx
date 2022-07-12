@@ -1,32 +1,41 @@
 import React, { useCallback, useRef } from 'react';
-
 import { Divider, IconButton, Input } from 'rsuite';
 import { Formik, FormikProps, Field, FieldProps } from 'formik';
 import CheckIcon from '@rsuite/icons/Check';
 
-import { HashTextArea } from '../../modules/common/components';
+import { HashTextAreaContainer } from '../../containers';
+import { HashtagListContainer } from '../../containers';
 
 import styles from './AddNote.module.scss';
 
-import { INote } from '../../interfaces';
+import { INoteForm } from '../../../../interfaces';
 
-interface FormikValues extends Partial<INote> {}
+function findHashtags(searchText: string) {
+  const regexp = /\B\#\w\w+\b/g;
 
-interface AddNoteProps {
-  onAdd: (payload: INote) => void;
+  return searchText.match(regexp) || [];
+}
+
+interface FormikValues extends Partial<INoteForm> {}
+
+export interface AddNoteProps {
+  onAdd: (payload: INoteForm) => void;
 }
 
 export const AddNote = ({ onAdd }: AddNoteProps) => {
   const handleSubmit = useCallback(
     (values: FormikValues) => {
-      onAdd(values as INote);
+      onAdd(values as INoteForm);
     },
     [onAdd],
   );
   const formikRef = useRef<FormikProps<FormikValues>>(null);
   const handleTextChange = useCallback(
     (text?: string) => {
+      const hashtags = findHashtags(text || '');
+
       formikRef.current?.setFieldValue('description', text || '');
+      formikRef.current?.setFieldValue('hashTags', hashtags);
     },
     [formikRef],
   );
@@ -85,7 +94,7 @@ export const AddNote = ({ onAdd }: AddNoteProps) => {
                 <Field name="description">
                   {({ field }: FieldProps) => {
                     return (
-                      <HashTextArea
+                      <HashTextAreaContainer
                         value={field.value}
                         onChange={handleTextChange}
                       />
@@ -93,13 +102,13 @@ export const AddNote = ({ onAdd }: AddNoteProps) => {
                   }}
                 </Field>
               </div>
-              {/* <div className={styles.hashtagField}>
+              <div className={styles.hashtagField}>
                 <Field name="hashTags">
-                  {({ field, form }: FieldProps) => {
-                    return <div>hashtags</div>;
+                  {({ field }: FieldProps) => {
+                    return <HashtagListContainer hashtagNames={field.value} />;
                   }}
                 </Field>
-              </div> */}
+              </div>
             </div>
           </div>
         );

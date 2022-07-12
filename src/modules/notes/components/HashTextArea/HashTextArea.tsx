@@ -7,37 +7,16 @@ import styles from './HashTextArea.module.scss';
 
 import { IHashTag } from '../../../../interfaces';
 
-interface HashTextAreaProps {
+export interface HashTextAreaProps {
   hashtags?: IHashTag[];
   value: string;
   onChange: (text?: string) => void;
 }
 
-const hashtagExamples = [
-  {
-    id: 'h-1',
-    created: new Date().toString(),
-    text: 'Пожрал',
-    color: '#1976d2',
-  },
-  {
-    id: 'h-3233',
-    created: new Date().toString(),
-    text: 'Пожрал',
-    color: '#42a5f5',
-  },
-  {
-    id: 'h-4112',
-    created: new Date().toString(),
-    text: 'посрал',
-    color: '#fcc690',
-  },
-];
-
 export const HashTextArea: React.FC<HashTextAreaProps> = ({
   value,
   onChange,
-  hashtags = hashtagExamples,
+  hashtags,
 }) => {
   return (
     <MentionsInput
@@ -78,6 +57,7 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
       <Mention
         style={{ backgroundColor: '#d1c4e9' }}
         trigger="#"
+        onAdd={console.log}
         displayTransform={(id: string, display: string) => `#${display}`}
         data={[
           {

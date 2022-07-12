@@ -15,7 +15,26 @@ export const rootStore = RootStore.create({
     created: [],
   },
   hashtagsStore: {
-    hashTags: [],
+    hashTags: [
+      {
+        id: 'h-1',
+        created: new Date().toString(),
+        text: 'Пожрал',
+        color: '#1976d2',
+      },
+      {
+        id: 'h-3233',
+        created: new Date().toString(),
+        text: 'Почитал',
+        color: '#42a5f5',
+      },
+      {
+        id: 'h-4112',
+        created: new Date().toString(),
+        text: 'Посрал',
+        color: '#fcc690',
+      },
+    ],
   },
 });
 
