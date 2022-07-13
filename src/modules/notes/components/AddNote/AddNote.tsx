@@ -10,18 +10,18 @@ import styles from './AddNote.module.scss';
 
 import { INoteForm } from '../../../../interfaces';
 
+interface FormikValues extends Partial<INoteForm> {}
+
+export interface AddNoteProps {
+  onAdd: (payload: INoteForm) => void;
+}
+
 function findHashtags(searchText: string) {
   const messageText = searchText.replace(/[{}]{2,}/g, '');
 
   return twitterUtils.extractHashtags(messageText).reduce((acc, cur) => {
     return acc.includes(cur) ? acc : [...acc, cur];
   }, [] as string[]);
-}
-
-interface FormikValues extends Partial<INoteForm> {}
-
-export interface AddNoteProps {
-  onAdd: (payload: INoteForm) => void;
 }
 
 export const AddNote = ({ onAdd }: AddNoteProps) => {

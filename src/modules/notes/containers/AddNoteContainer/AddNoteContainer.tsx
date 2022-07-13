@@ -23,7 +23,7 @@ export const AddNoteContainer: React.FC<AddNoteContainerProps> = ({
 
       onAdd(newNote);
     },
-    [hashtagsStore.hashTags],
+    [onAdd, hashtagsStore],
   );
 
   return <AddNote onAdd={handleAdd} />;

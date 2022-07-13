@@ -47,7 +47,6 @@ export const FloatingList: React.FC<FloatingListProps> = () => {
   const {
     isCreatingMode,
     isEditMode,
-    openCreatingMode,
     closeCreatingMode,
     toggleCreatingMode,
     togleEditMode,
@@ -97,14 +96,6 @@ export const FloatingList: React.FC<FloatingListProps> = () => {
     height: '300',
     width: '450',
   });
-
-  const handleCreatingMode = useCallback(() => {
-    if (isCreatingMode) {
-      closeCreatingMode();
-    } else {
-      openCreatingMode();
-    }
-  }, [isCreatingMode, closeCreatingMode, openCreatingMode]);
 
   const addNote = useCallback(
     (newNote: INote) => {
@@ -158,7 +149,7 @@ export const FloatingList: React.FC<FloatingListProps> = () => {
               <div className={styles.actionWrapper}>
                 <Whisper
                   open={isCreatingMode}
-                  onClick={handleCreatingMode}
+                  onClick={toggleCreatingMode}
                   trigger="none"
                   placement="rightStart"
                   speaker={

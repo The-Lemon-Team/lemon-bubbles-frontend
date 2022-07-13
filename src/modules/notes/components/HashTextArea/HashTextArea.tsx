@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { MentionsInput, Mention } from 'react-mentions';
 
 import { Hashtag } from '../../../../components/Hashtag';
