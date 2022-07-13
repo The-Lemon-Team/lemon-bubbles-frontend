@@ -14,8 +14,14 @@
     width: 100%;
     
     [class~="rs-panel-body"] {
+        height: 100%;
         padding: 0.5rem;
     }
+}
+
+.menuWrapper {
+    display: flex;
+    padding: 10px 0;
 }
 
 .actions {
@@ -23,6 +29,8 @@
     margin-left: auto;
     justify-content: end;
     margin-right: 12px;
+    position: relative;
+    z-index: 10;
 }
 
 .actionWrapper {
@@ -30,9 +38,10 @@
 }
 
 .tabs {
-    padding: 10px 0 4px !important;
+    padding: 10px 0 !important;
     display: flex;
     align-items: center;
+    flex-grow: 1;
 }
 
 .creatingCloud {
@@ -51,3 +60,9 @@
 .datePicker {
     width: 100%;
 }
+
+
+.contentWrapper {
+    height: 100%;
+}
+

@@ -2,18 +2,20 @@ import React, { useCallback, useRef } from 'react';
 import { Divider, IconButton, Input } from 'rsuite';
 import { Formik, FormikProps, Field, FieldProps } from 'formik';
 import CheckIcon from '@rsuite/icons/Check';
+import twitterUtils from 'twitter-text';
 
-import { HashTextAreaContainer } from '../../containers';
-import { HashtagListContainer } from '../../containers';
+import { HashTextAreaContainer, HashtagListContainer } from '../../containers';
 
 import styles from './AddNote.module.scss';
 
 import { INoteForm } from '../../../../interfaces';
 
 function findHashtags(searchText: string) {
-  const regexp = /\B\#\w\w+\b/g;
+  const messageText = searchText.replace(/[{}]{2,}/g, '');
 
-  return searchText.match(regexp) || [];
+  return twitterUtils.extractHashtags(messageText).reduce((acc, cur) => {
+    return acc.includes(cur) ? acc : [...acc, cur];
+  }, [] as string[]);
 }
 
 interface FormikValues extends Partial<INoteForm> {}

@@ -16,6 +16,10 @@ export const useModalManager = () => {
     () => setIsCreatingMode(false),
     [setIsCreatingMode],
   );
+  const openCreatingMode = useCallback(
+    () => setIsCreatingMode(true),
+    [setIsCreatingMode],
+  );
 
   return {
     isCreatingMode,
@@ -23,5 +27,6 @@ export const useModalManager = () => {
     closeCreatingMode,
     toggleCreatingMode,
     togleEditMode,
+    openCreatingMode,
   };
 };

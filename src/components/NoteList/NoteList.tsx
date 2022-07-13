@@ -41,7 +41,11 @@ export const NoteList: React.FC<NoteListProps> = ({ notes = [] }) => {
               className={styles.datePanel}
             >
               {notes.map((note, index) => (
-                <PanelGroup accordion className={styles.panelGroup}>
+                <PanelGroup
+                  accordion
+                  className={styles.panelGroup}
+                  key={note.id}
+                >
                   <Panel
                     shaded
                     className={styles.notePanel}

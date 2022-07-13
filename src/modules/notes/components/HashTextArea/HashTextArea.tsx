@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { MentionsInput, Mention } from 'react-mentions';
 
 import { Hashtag } from '../../../../components/Hashtag';
@@ -16,7 +16,7 @@ export interface HashTextAreaProps {
 export const HashTextArea: React.FC<HashTextAreaProps> = ({
   value,
   onChange,
-  hashtags,
+  hashtags = [],
 }) => {
   return (
     <MentionsInput
@@ -25,6 +25,11 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
       className={styles.textArea}
       value={value}
       style={{
+        control: {
+          fontSize: 14,
+          fontWeight: 'normal',
+          minHeight: '200px',
+        },
         suggestions: {
           list: {
             backgroundColor: 'white',
@@ -40,8 +45,15 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
           },
         },
         '&multiLine': {
+          control: {
+            fontFamily: 'monospace',
+            minHeight: 200,
+          },
+          highlighter: {
+            padding: '7px 11px',
+            border: '1px solid transparent',
+          },
           input: {
-            backgroundColor: '#fff',
             border: '1px solid #e5e5ea',
             transition: 'border-color .3s ease-in-out',
             borderRadius: 9,
@@ -55,21 +67,15 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
       onChange={({ target }) => onChange(target.value)}
     >
       <Mention
-        style={{ backgroundColor: '#d1c4e9' }}
+        style={{
+          backgroundColor: '#d1c4e9',
+          color: 'red !important',
+        }}
         trigger="#"
-        onAdd={console.log}
+        markup="#{{__display__}}"
         displayTransform={(id: string, display: string) => `#${display}`}
-        data={[
-          {
-            id: 'h-3233',
-            display: 'Пожрал',
-          },
-          {
-            id: 'h-4112',
-            display: 'посрал',
-          },
-        ]}
-        renderSuggestion={(renderItem) => {
+        data={hashtags.map(({ id, text }) => ({ id, display: text }))}
+        renderSuggestion={(renderItem, search, highlightedDisplay) => {
           const currentHashtag = hashtags.find(
             (hashtag) => hashtag.id === renderItem.id,
           );

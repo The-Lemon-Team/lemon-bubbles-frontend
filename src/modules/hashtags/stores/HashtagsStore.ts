@@ -1,12 +1,12 @@
 import { types, flow } from 'mobx-state-tree';
+import { IHashTag } from '../../../interfaces';
 
-import { HashtagStore } from './HashtagStore';
 import { hashTagsService } from '../services';
 
 export const HashtagsStore = types
   .model('HashtagsStore', {
     status: types.maybeNull(types.enumeration(['error', 'success', 'loading'])),
-    hashTags: types.array(HashtagStore),
+    hashTags: types.array(types.frozen()),
   })
   .views((self) => {
     return {
@@ -20,9 +20,25 @@ export const HashtagsStore = types
         return self.status === 'success';
       },
       mapTagNamesOnTags(tagNames: string[]) {
-        const usedHashTags = tagNames.map((tagName) =>
-          self.hashTags.find((hashTag) => hashTag.text === tagName),
+        const usedHashTags = tagNames.reduce(
+          (acc, cur) => {
+            const usedHashtag: IHashTag = self.hashTags.find(
+              (hashTag) => hashTag.text === cur,
+            );
+
+            if (usedHashtag) {
+              return [[...acc[0], usedHashtag], [...acc[1]]] as [
+                IHashTag[],
+                string[],
+              ];
+            }
+
+            return [[...acc[0]], [...acc[1], cur]] as [IHashTag[], string[]];
+          },
+          [[], []] as [IHashTag[], string[]],
         );
+
+        return usedHashTags;
       },
     };
   })

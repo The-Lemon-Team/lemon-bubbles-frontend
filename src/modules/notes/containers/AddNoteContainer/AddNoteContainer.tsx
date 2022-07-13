@@ -15,8 +15,13 @@ export const AddNoteContainer: React.FC<AddNoteContainerProps> = ({
   const { hashtagsStore } = useRootStore();
   const handleAdd = useCallback(
     (payload: INoteForm) => {
-      console.log('trying to add a note');
-      //   onAdd(payload);
+      const [hashTags] = hashtagsStore.mapTagNamesOnTags(payload.hashTags);
+      const newNote: INote = {
+        ...payload,
+        hashTags,
+      };
+
+      onAdd(newNote);
     },
     [hashtagsStore.hashTags],
   );

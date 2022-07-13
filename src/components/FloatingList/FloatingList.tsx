@@ -15,7 +15,7 @@ import PlusIcon from '@rsuite/icons/Plus';
 
 import { useModalManager } from './useModalManager';
 import { NoteList } from '../NoteList';
-import { AddNote } from '../../modules/notes/components/AddNote';
+import { AddNoteContainer } from '../../modules/notes/containers';
 
 import styles from './FloatingList.module.scss';
 
@@ -47,6 +47,7 @@ export const FloatingList: React.FC<FloatingListProps> = () => {
   const {
     isCreatingMode,
     isEditMode,
+    openCreatingMode,
     closeCreatingMode,
     toggleCreatingMode,
     togleEditMode,
@@ -97,15 +98,20 @@ export const FloatingList: React.FC<FloatingListProps> = () => {
     width: '450',
   });
 
-  const handleCreatingMode = () => {
-    toggleCreatingMode();
-  };
+  const handleCreatingMode = useCallback(() => {
+    if (isCreatingMode) {
+      closeCreatingMode();
+    } else {
+      openCreatingMode();
+    }
+  }, [isCreatingMode, closeCreatingMode, openCreatingMode]);
 
   const addNote = useCallback(
     (newNote: INote) => {
+      closeCreatingMode();
       setNotes([...notes, newNote]);
     },
-    [notes, setNotes],
+    [notes, setNotes, closeCreatingMode],
   );
 
   return (
@@ -127,21 +133,17 @@ export const FloatingList: React.FC<FloatingListProps> = () => {
         }}
         size={sizes}
       >
-        <Panel
-          shaded
-          className={classNames(styles.wrapper, 'rnd-drag')}
-          ref={boxRef}
-        >
-          <Nav
-            activeKey={activeTab}
-            appearance="subtle"
-            className={styles.tabs}
-            onSelect={handleTabChange}
-            aria-label="basic tabs example"
-          >
-            <Nav.Item eventKey="notes">By notes</Nav.Item>
-            <Nav.Item eventKey="hashtags">By hashtag</Nav.Item>
-
+        <Panel shaded className={classNames(styles.wrapper)} ref={boxRef}>
+          <div className={styles.menuWrapper}>
+            <Nav
+              activeKey={activeTab}
+              appearance="subtle"
+              className={classNames(styles.tabs, 'rnd-drag')}
+              onSelect={handleTabChange}
+            >
+              <Nav.Item eventKey="notes">By notes</Nav.Item>
+              <Nav.Item eventKey="hashtags">By hashtag</Nav.Item>
+            </Nav>
             <div className={styles.actions}>
               <div className={styles.actionWrapper}>
                 <IconButton
@@ -155,12 +157,14 @@ export const FloatingList: React.FC<FloatingListProps> = () => {
               </div>
               <div className={styles.actionWrapper}>
                 <Whisper
-                  trigger="click"
+                  open={isCreatingMode}
+                  onClick={handleCreatingMode}
+                  trigger="none"
                   placement="rightStart"
                   speaker={
                     <Popover ref={poperRef} className={styles.creatingCloud}>
                       <Panel className={styles.creatingWrapper}>
-                        <AddNote onAdd={addNote} />
+                        <AddNoteContainer onAdd={addNote} />
                       </Panel>
                     </Popover>
                   }
@@ -170,22 +174,23 @@ export const FloatingList: React.FC<FloatingListProps> = () => {
                     appearance="primary"
                     icon={<PlusIcon />}
                     color={'blue'}
-                    onClick={handleCreatingMode}
                     circle
                   />
                 </Whisper>
               </div>
             </div>
-          </Nav>
-          <div>
-            <DateRangePicker className={styles.datePicker} />
           </div>
-          <TabPanel active={activeTab === 'notes'} eventKey="notes">
-            <NoteList notes={notes} />
-          </TabPanel>
-          <TabPanel active={activeTab === 'hashtags'} eventKey="hashtags">
-            By hashtag list
-          </TabPanel>
+
+          <DateRangePicker className={styles.datePicker} />
+
+          <div className={classNames(styles.contentWrapper, 'rnd-drag')}>
+            <TabPanel active={activeTab === 'notes'} eventKey="notes">
+              <NoteList notes={notes} />
+            </TabPanel>
+            <TabPanel active={activeTab === 'hashtags'} eventKey="hashtags">
+              By hashtag list
+            </TabPanel>
+          </div>
         </Panel>
       </Rnd>
     </div>
