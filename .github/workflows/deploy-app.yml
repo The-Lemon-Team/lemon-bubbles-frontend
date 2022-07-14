@@ -39,17 +39,9 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
-      # - name: Setup SSH key
-      #   uses: shimataro/ssh-key-action@v2
-      #   with:
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
-      # - name: Adding known hosts
-      #   run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts 
       - name: Copy build to the server
         run: |
-          ssh $SSH_USER@$SSH_HOST "mkdir -p ~/app/${{ github.head_ref }}/public"
-          rsync -ravz build/* $SSH_USER@$SSH_HOST:~/app/${{ github.head_ref }}/public/
+          scp -r build/* $SSH_USER@$SSH_HOST:/var/www/html
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
