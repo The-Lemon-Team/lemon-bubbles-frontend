@@ -40,7 +40,7 @@ jobs:
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
       - name: Copy build to the server
         run: |
-          scp -r build/* $SSH_USER@$SSH_HOST:
+          scp -r build/* $SSH_USER@$SSH_HOST:~/site
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
