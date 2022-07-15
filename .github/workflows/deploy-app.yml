@@ -1,7 +1,21 @@
 ---
 name: Deploy Lemon Bubbles app
 
-on: push
+on: 
+  workflow_call:
+    inputs:
+      ENVIRONMENT:
+        required: true
+        type: string
+    secrets:
+      SSH_PRIVATE_KEY: 
+        required: true
+      SSH_KNOWN_HOSTS: 
+        required: true
+      SSH_HOST: 
+        required: true
+      SSH_USER: 
+        required: true
 
 jobs:
   build:
@@ -41,7 +55,7 @@ jobs:
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
       - name: Copy build to the server
         run: |
-          scp -r build/* $SSH_USER@$SSH_HOST:~/site
+          scp -r build/* $SSH_USER@$SSH_HOST:
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
