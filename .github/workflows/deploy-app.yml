@@ -10,12 +10,6 @@ on:
     secrets:
       SSH_PRIVATE_KEY: 
         required: true
-      SSH_KNOWN_HOSTS: 
-        required: true
-      SSH_HOST: 
-        required: true
-      SSH_USER: 
-        required: true
 
 jobs:
   build:
