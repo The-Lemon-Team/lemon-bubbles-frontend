@@ -10,7 +10,9 @@ export const Header = () => {
       <Grid>
         <Row>
           <Navbar className={styles.navbar}>
-            <Navbar.Brand className={styles.title}>Lemon Bubbles</Navbar.Brand>
+            <Navbar.Brand className={styles.title}>
+              Lemon Bubbles - deployed!
+            </Navbar.Brand>
             <Nav pullRight>
               <div className={styles.avatar}>
                 <Avatar src={avatarSrc} circle />
