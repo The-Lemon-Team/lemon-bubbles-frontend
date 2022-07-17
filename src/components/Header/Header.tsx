@@ -11,7 +11,7 @@ export const Header = () => {
         <Row>
           <Navbar className={styles.navbar}>
             <Navbar.Brand className={styles.title}>
-              Lemon Bubbles - deployed!
+              Lemon Bubbles - deployed twice!
             </Navbar.Brand>
             <Nav pullRight>
               <div className={styles.avatar}>
