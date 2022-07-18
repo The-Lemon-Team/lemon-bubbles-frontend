@@ -34,7 +34,7 @@ export const NoteList: React.FC<NoteListProps> = ({ notes = [] }) => {
         const notes = notesByDay[date];
 
         return (
-          <PanelGroup accordion bordered>
+          <PanelGroup accordion bordered key={date}>
             <Panel
               eventKey={date}
               header={<p className={styles.dayLabel}>{date}</p>}

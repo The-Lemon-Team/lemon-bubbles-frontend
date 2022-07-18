@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { observer } from 'mobx-react-lite';
 
 import { AddNote } from '../../components';
 
@@ -9,22 +10,22 @@ interface AddNoteContainerProps {
   onAdd: (payload: INote) => void;
 }
 
-export const AddNoteContainer: React.FC<AddNoteContainerProps> = ({
-  onAdd,
-}) => {
-  const { hashtagsStore } = useRootStore();
-  const handleAdd = useCallback(
-    (payload: INoteForm) => {
-      const [hashTags] = hashtagsStore.mapTagNamesOnTags(payload.hashTags);
-      const newNote: INote = {
-        ...payload,
-        hashTags,
-      };
+export const AddNoteContainer: React.FC<AddNoteContainerProps> = observer(
+  ({ onAdd }) => {
+    const { hashtagsStore } = useRootStore();
+    const handleAdd = useCallback(
+      (payload: INoteForm) => {
+        const [hashTags] = hashtagsStore.mapTagNamesOnTags(payload.hashTags);
+        const newNote: INote = {
+          ...payload,
+          hashTags,
+        };
 
-      onAdd(newNote);
-    },
-    [onAdd, hashtagsStore],
-  );
+        onAdd(newNote);
+      },
+      [onAdd, hashtagsStore],
+    );
 
-  return <AddNote onAdd={handleAdd} />;
-};
+    return <AddNote onAdd={handleAdd} />;
+  },
+);

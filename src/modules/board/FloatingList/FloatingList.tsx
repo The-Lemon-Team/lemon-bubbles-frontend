@@ -1,6 +1,7 @@
 import React, { useRef, useState, useCallback } from 'react';
-import { Rnd } from 'react-rnd';
+import { Rnd, DraggableData, RndDragEvent, RndResizeCallback } from 'react-rnd';
 import { subDays } from 'date-fns';
+import { observer } from 'mobx-react-lite';
 import EditIcon from '@rsuite/icons/Edit';
 import classNames from 'classnames';
 import {
@@ -14,15 +15,20 @@ import {
 import PlusIcon from '@rsuite/icons/Plus';
 
 import { useModalManager } from './useModalManager';
-import { NoteList } from '../NoteList';
-import { AddNoteContainer } from '../../modules/notes/containers';
+import { NoteList } from '../../../components/NoteList';
+import { AddNoteContainer } from '../../notes/containers';
 
 import styles from './FloatingList.module.scss';
 
-import { INote } from '../../interfaces';
+import { ICoordinates, INote, ISizes } from '../../../interfaces';
 
 interface FloatingListProps {
+  sizes: ISizes;
+  position: ICoordinates;
   notes?: INote[];
+
+  onChangePosition?: (x: number, y: number) => void;
+  onSizeChange?: (width: number, height: number) => void;
 }
 
 interface TabPanelProps {
@@ -41,7 +47,12 @@ const TabPanel = (props: TabPanelProps) => {
   );
 };
 
-export const FloatingList: React.FC<FloatingListProps> = () => {
+export const FloatingList: React.FC<FloatingListProps> = ({
+  position,
+  sizes,
+  onChangePosition,
+  onSizeChange,
+}) => {
   const boxRef = useRef(null);
   const poperRef = useRef(null);
   const {
@@ -92,10 +103,6 @@ export const FloatingList: React.FC<FloatingListProps> = () => {
   const handleTabChange = (newValue: string) => {
     setActiveTab(newValue);
   };
-  const [sizes, setSizes] = useState({
-    height: '300',
-    width: '450',
-  });
 
   const addNote = useCallback(
     (newNote: INote) => {
@@ -105,6 +112,13 @@ export const FloatingList: React.FC<FloatingListProps> = () => {
     [notes, setNotes, closeCreatingMode],
   );
 
+  const handleDragEnd = useCallback(
+    (e: RndDragEvent, data: DraggableData) => {
+      onChangePosition && onChangePosition(data.x, data.y);
+    },
+    [onChangePosition],
+  );
+
   return (
     <div className={styles.container}>
       <Rnd
@@ -112,15 +126,17 @@ export const FloatingList: React.FC<FloatingListProps> = () => {
         minHeight={300}
         className={styles.resizbleContainer}
         dragHandleClassName="rnd-drag"
+        onDragStop={handleDragEnd}
+        position={position}
         minWidth={480}
         onDragStart={() => {
           closeCreatingMode();
         }}
         onResizeStop={(e, direction, ref, delta, position) => {
-          setSizes({
-            width: ref.style.width,
-            height: ref.style.height,
-          });
+          const height = +ref.style.height.replace('px', '');
+          const width = +ref.style.width.replace('px', '');
+
+          onSizeChange && onSizeChange(width, height);
         }}
         size={sizes}
       >

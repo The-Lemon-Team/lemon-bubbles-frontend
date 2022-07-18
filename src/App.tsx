@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { RootStoreContext, rootStore } from './modules/common/stores/RootStore';
-import { Board, Header } from './components';
+import { Header } from './components';
+import { Board } from './modules/board';
 
 export const App = () => {
   return (
