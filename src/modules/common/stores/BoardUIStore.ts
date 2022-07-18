@@ -1,5 +1,7 @@
 import { types } from 'mobx-state-tree';
 
+import { ThemeMode } from '../../../enums';
+
 const CoordStore = types.snapshotProcessor(
   types
     .model('CoordStore', {
@@ -75,6 +77,37 @@ const ResizerStore = types.snapshotProcessor(
   },
 );
 
+const ThemeStore = types.snapshotProcessor(
+  types
+    .model('ThemeStore', {
+      mode: types.enumeration<ThemeMode>('ThemeMode', Object.values(ThemeMode)),
+    })
+    .views((self) => ({
+      get isLightMode() {
+        return self.mode === ThemeMode.LIGHT;
+      },
+      get isDarkMode() {
+        return self.mode === ThemeMode.DARK;
+      },
+    }))
+    .actions((self) => ({
+      setLightMode() {
+        self.mode = ThemeMode.LIGHT;
+      },
+      setDarkMode() {
+        self.mode = ThemeMode.DARK;
+      },
+      swtichMode() {
+        if (self.mode === ThemeMode.DARK) {
+          self.mode = ThemeMode.LIGHT;
+        } else {
+          self.mode = ThemeMode.DARK;
+        }
+      },
+    })),
+  {},
+);
+
 const FloatingListStore = types.model('FloatingListStore', {
   position: CoordStore,
   sizes: ResizerStore,
@@ -82,4 +115,5 @@ const FloatingListStore = types.model('FloatingListStore', {
 
 export const BoardUIStore = types.model('BoardUIStore', {
   floatingList: FloatingListStore,
+  themeStore: ThemeStore,
 });

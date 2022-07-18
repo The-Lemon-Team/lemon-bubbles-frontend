@@ -1,18 +1,29 @@
 @import '../../styles/_variables';
 
 .main {
-    background: #42a5f5;
+    background: #000;
 }
 
 .navbar {
-    align-items: center;
-    background-color: #42a5f5 !important;
+    padding: 22px 0 26px;
+    position: relative;
+    background-color: #000 !important;
+}
+
+.logo {
+    margin: 0 auto;
 }
 
 .title {
+    width: 100%;
     color: $white;
+    padding: 0 !important;;
+    height: auto !important;
 }
 
-.avatar {
-    padding-top: 7.5px;
+.nav {
+    top: 27px;
+    position: absolute !important;
+    right: 0;
+    z-index: 1;
 }

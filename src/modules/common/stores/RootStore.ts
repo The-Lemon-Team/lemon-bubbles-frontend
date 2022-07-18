@@ -3,6 +3,7 @@ import { createContext, useContext } from 'react';
 
 import { BoardUIStore } from './BoardUIStore';
 import { HashtagsStore } from '../../hashtags/stores/HashtagsStore';
+import { ThemeMode } from '../../../enums';
 
 export const RootStore = types.model({
   boardUIStore: BoardUIStore,
@@ -23,6 +24,9 @@ export const rootStore = RootStore.create({
         width: 350,
         height: 350,
       },
+    },
+    themeStore: {
+      mode: ThemeMode.DARK,
     },
   },
   hashtagsStore: {
