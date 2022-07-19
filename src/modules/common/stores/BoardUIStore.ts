@@ -65,13 +65,13 @@ const ResizerStore = types.snapshotProcessor(
     })),
   {
     preProcessor() {
-      const restoredCoordinates = JSON.parse(
-        localStorage.getItem('floatingList_sizes') || '',
-      );
-      return restoredCoordinates
+      const storageItem = localStorage.getItem('floatingList_sizes');
+      const restoredSizes = storageItem && JSON.parse(storageItem);
+
+      return restoredSizes
         ? {
-            width: +restoredCoordinates.width,
-            height: +restoredCoordinates.height,
+            width: +restoredSizes.width,
+            height: +restoredSizes.height,
           }
         : sizes;
     },
