@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, Row, Navbar, Nav, Toggle } from 'rsuite';
+import { Container, Grid, Row, Navbar, Nav } from 'rsuite';
 
 import { Logo } from '../../modules/common/components';
 import { ThemeSwitcherContainer } from '../../modules/common/containers';

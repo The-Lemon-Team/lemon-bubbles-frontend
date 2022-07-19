@@ -7,8 +7,6 @@ import styles from './Board.module.scss';
 export const Board = observer(() => {
   const isFloatingWindowActivated = useFeatureFlag('floatingWindow');
 
-  console.log('isFloatingWindowActivated', isFloatingWindowActivated);
-
   return (
     <div className={styles.main}>
       {isFloatingWindowActivated && <FloatingListContainer />}

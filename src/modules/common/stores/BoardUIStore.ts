@@ -1,7 +1,7 @@
 import { types } from 'mobx-state-tree';
 
 import { ThemeMode } from '../../../enums';
-import { sizes, coordinates, featureFlags } from './appDefaults';
+import { sizes, coordinates } from './appDefaults';
 
 const CoordStore = types.snapshotProcessor(
   types
