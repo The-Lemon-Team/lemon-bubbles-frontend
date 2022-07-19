@@ -44,3 +44,10 @@ jobs:
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
+     
+      - name: Notify Telegram
+        uses: yanzay/notify-telegram@v0.1.0
+        with:
+          chat: ${{ secrets.TELEGRAM_CHAT }}
+          token: ${{ secrets.TELEGRAM_BOT_ID }}
+          status: ${{ job.status }} # do not modify this line
