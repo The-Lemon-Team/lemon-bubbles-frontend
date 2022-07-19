@@ -1,6 +1,7 @@
 import { types } from 'mobx-state-tree';
 
 import { ThemeMode } from '../../../enums';
+import { sizes, coordinates, featureFlags } from './appDefaults';
 
 const CoordStore = types.snapshotProcessor(
   types
@@ -24,11 +25,12 @@ const CoordStore = types.snapshotProcessor(
     })),
   {
     preProcessor() {
-      const restoredCoordinates = JSON.parse(
-        localStorage.getItem('floatingList_coordinates') || '',
-      );
+      const storedData = localStorage.getItem('floatingList_coordinates');
+      const restoredCoordinates = storedData && JSON.parse(storedData);
 
-      return restoredCoordinates ? { ...restoredCoordinates } : { x: 0, y: 0 };
+      return restoredCoordinates
+        ? { x: +restoredCoordinates.x, y: +restoredCoordinates.y }
+        : coordinates;
     },
     postProcessor(snapshot) {
       localStorage.setItem(
@@ -67,8 +69,11 @@ const ResizerStore = types.snapshotProcessor(
         localStorage.getItem('floatingList_sizes') || '',
       );
       return restoredCoordinates
-        ? { ...restoredCoordinates }
-        : { width: 480, height: 300 };
+        ? {
+            width: +restoredCoordinates.width,
+            height: +restoredCoordinates.height,
+          }
+        : sizes;
     },
     postProcessor(snapshot) {
       localStorage.setItem('floatingList_sizes', JSON.stringify(snapshot));
@@ -113,7 +118,18 @@ const FloatingListStore = types.model('FloatingListStore', {
   sizes: ResizerStore,
 });
 
+const FeatureFlagsStore = types
+  .model('FeatureFlagsStore', {
+    features: types.map(types.boolean),
+  })
+  .views((self) => ({
+    getFeature(featureName: string) {
+      return self.features.get(featureName);
+    },
+  }));
+
 export const BoardUIStore = types.model('BoardUIStore', {
   floatingList: FloatingListStore,
   themeStore: ThemeStore,
+  featureFlags: FeatureFlagsStore,
 });

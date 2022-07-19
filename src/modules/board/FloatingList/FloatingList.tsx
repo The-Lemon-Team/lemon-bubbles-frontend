@@ -1,7 +1,6 @@
-import React, { useRef, useState, useCallback } from 'react';
-import { Rnd, DraggableData, RndDragEvent, RndResizeCallback } from 'react-rnd';
+import React, { useRef, useCallback } from 'react';
+import { Rnd, DraggableData, RndDragEvent } from 'react-rnd';
 import { subDays } from 'date-fns';
-import { observer } from 'mobx-react-lite';
 import EditIcon from '@rsuite/icons/Edit';
 import classNames from 'classnames';
 import {
@@ -17,6 +16,10 @@ import PlusIcon from '@rsuite/icons/Plus';
 import { useModalManager } from './useModalManager';
 import { NoteList } from '../../../components/NoteList';
 import { AddNoteContainer } from '../../notes/containers';
+import {
+  DEFAULT_FLOATING_MAX_WIDTH,
+  DEFAULT_FLOATING_MAX_HEIGHT,
+} from '../../../constants';
 
 import styles from './FloatingList.module.scss';
 
@@ -123,12 +126,12 @@ export const FloatingList: React.FC<FloatingListProps> = ({
     <div className={styles.container}>
       <Rnd
         resizible="true"
-        minHeight={300}
+        minHeight={DEFAULT_FLOATING_MAX_HEIGHT}
         className={styles.resizbleContainer}
         dragHandleClassName="rnd-drag"
         onDragStop={handleDragEnd}
         position={position}
-        minWidth={480}
+        minWidth={DEFAULT_FLOATING_MAX_WIDTH}
         onDragStart={() => {
           closeCreatingMode();
         }}

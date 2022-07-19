@@ -7,8 +7,6 @@ import { useRootStore } from '../../stores';
 export const ThemeSwitcherContainer = observer(() => {
   const { boardUIStore } = useRootStore();
 
-  // console.log(boardUIStore.themeStore.isDarkMode);
-
   return (
     <Toggle
       size="lg"

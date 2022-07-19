@@ -4,26 +4,21 @@ import { createContext, useContext } from 'react';
 import { BoardUIStore } from './BoardUIStore';
 import { HashtagsStore } from '../../hashtags/stores/HashtagsStore';
 import { ThemeMode } from '../../../enums';
+import { sizes, coordinates, featureFlags } from './appDefaults';
 
 export const RootStore = types.model({
   boardUIStore: BoardUIStore,
   hashtagsStore: HashtagsStore,
 });
 
-const DEFAULT_X_POSITION = 300;
-const DEFAULT_Y_POSITION = 150;
-
 export const rootStore = RootStore.create({
   boardUIStore: {
+    featureFlags: {
+      features: featureFlags,
+    },
     floatingList: {
-      position: {
-        x: DEFAULT_X_POSITION,
-        y: DEFAULT_Y_POSITION,
-      },
-      sizes: {
-        width: 350,
-        height: 350,
-      },
+      position: coordinates,
+      sizes: sizes,
     },
     themeStore: {
       mode: ThemeMode.DARK,
