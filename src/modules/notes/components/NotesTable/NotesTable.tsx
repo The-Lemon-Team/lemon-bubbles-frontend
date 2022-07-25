@@ -19,40 +19,6 @@ interface NotesTableProps {
   toggleCreatingMode: () => void;
 }
 
-const defaultColumns = [
-  // {
-  //   key: 'image',
-  //   label: 'image',
-  //   fixed: true,
-  //   // width: 70,
-  //   flexGrow: 1,
-  // },
-  {
-    key: 'title',
-    label: 'Title',
-    // width: 130,
-    flexGrow: 3,
-  },
-  {
-    key: 'description',
-    label: 'Description',
-    // width: 200,
-    flexGrow: 2,
-  },
-  {
-    key: 'created',
-    label: 'Created Date',
-    // width: 123,
-    flexGrow: 2,
-  },
-  // {
-  //   key: 'hashTags',
-  //   label: 'Hashtags',
-  //   // width: 123,
-  //   flexGrow: 4,
-  // },
-];
-
 export const NotesTable: React.FC<NotesTableProps> = ({
   notes,
   isLoading,
