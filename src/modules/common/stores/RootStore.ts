@@ -4,11 +4,14 @@ import { createContext, useContext } from 'react';
 import { BoardUIStore } from './BoardUIStore';
 import { HashtagsStore } from '../../hashtags/stores/HashtagsStore';
 import { ThemeMode } from '../../../enums';
+import { NotesStore, NotesTableStore } from '../../notes/stores';
 import { sizes, coordinates, featureFlags } from './appDefaults';
 
 export const RootStore = types.model({
   boardUIStore: BoardUIStore,
   hashtagsStore: HashtagsStore,
+  notesStore: NotesStore,
+  notesTable: NotesTableStore,
 });
 
 export const rootStore = RootStore.create({
@@ -23,6 +26,12 @@ export const rootStore = RootStore.create({
     themeStore: {
       mode: ThemeMode.DARK,
     },
+  },
+  notesStore: {
+    loading: {
+      status: null,
+    },
+    notes: [],
   },
   hashtagsStore: {
     hashTags: [
@@ -45,6 +54,10 @@ export const rootStore = RootStore.create({
         color: '#fcc690',
       },
     ],
+  },
+  notesTable: {
+    isCreatingMode: false,
+    mode: 'table',
   },
 });
 

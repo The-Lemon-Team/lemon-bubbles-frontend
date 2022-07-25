@@ -1,3 +1,7 @@
+import { types } from 'mobx-state-tree';
+
+import { ThemeMode } from '../../../../enums';
+
 export const ThemeStore = types.snapshotProcessor(
   types
     .model('ThemeStore', {

@@ -4,8 +4,17 @@
     bottom: 0;
     right: 0;
     left: 0;
+    padding-top: 90px;
 }
 
 .floatingContainer {
     position: fixed;
+}
+
+.tableWrapper {
+    padding-top: 35px;
+}
+
+.grid {
+    width: 1200px;
 }
