@@ -2,6 +2,10 @@
     width: 100%;
 }
 
+.tableCreatingMode {
+    width: 57% !important;
+}
+
 .header {
     font-size: 1rem;
 }
@@ -14,4 +18,19 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.formWrapper {
+    width: 40% !important;
+}
+
+.headerCell {
+    [class~="rs-table-cell"] {
+        transition: none !important;
+    }
 }

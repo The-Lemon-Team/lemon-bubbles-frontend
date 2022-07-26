@@ -12,7 +12,7 @@ interface AddNoteContainerProps {
 
 export const AddNoteContainer: React.FC<AddNoteContainerProps> = observer(
   ({ onAdd }) => {
-    const { hashtagsStore } = useRootStore();
+    const { hashtagsStore, notesStore } = useRootStore();
     const handleAdd = useCallback(
       (payload: INoteForm) => {
         const [hashTags] = hashtagsStore.mapTagNamesOnTags(payload.hashTags);
@@ -21,9 +21,10 @@ export const AddNoteContainer: React.FC<AddNoteContainerProps> = observer(
           hashTags,
         };
 
+        notesStore.addNote(newNote);
         onAdd(newNote);
       },
-      [onAdd, hashtagsStore],
+      [onAdd, hashtagsStore, notesStore],
     );
 
     return <AddNote onAdd={handleAdd} />;
