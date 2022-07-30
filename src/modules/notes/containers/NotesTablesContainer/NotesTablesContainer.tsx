@@ -20,7 +20,7 @@ export const NotesTablesContainer = observer(() => {
     <NotesTable
       mode={notesTable.mode as 'table' | 'cards'}
       isCreatingMode={notesTable.isCreatingMode}
-      notes={notesStore.notes}
+      notes={notesStore.getNotes()}
       isLoading={notesStore.loading.getIsLoading()}
       toggleCreatingMode={notesTable.toggleCreatingMode}
     />

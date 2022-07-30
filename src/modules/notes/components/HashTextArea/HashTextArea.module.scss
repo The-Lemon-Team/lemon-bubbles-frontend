@@ -4,7 +4,6 @@
     border: 0;
 
     textarea {
-        height: 200px !important;
         width: 100% !important;
 
         &:focus {
@@ -14,3 +13,20 @@
         }
     }
 }
+
+.inputWrapper {
+    overflow: auto;
+    resize: vertical;
+    [class~="public-DraftEditor-content"] {
+        min-height: 120px;
+        overflow: auto;
+    }
+}
+  
+  .editor :global(.public-DraftEditor-content) {
+    min-height: 140px;
+  }
+
+  .popup {
+    border: 2px solid red;
+  }

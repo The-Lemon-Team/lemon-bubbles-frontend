@@ -1,9 +1,18 @@
-import React from 'react';
-import { MentionsInput, Mention } from 'react-mentions';
+import React, { useCallback } from 'react';
+import { EditorState, ContentState } from 'draft-js';
+import Editor from '@draft-js-plugins/editor';
+import createHashtagPlugin from '@draft-js-plugins/hashtag';
+import classNames from 'classnames';
+import createMentionPlugin, { defaultTheme } from '@draft-js-plugins/mention';
+import { EntryComponentProps } from '@draft-js-plugins/mention/lib/MentionSuggestions/Entry/Entry';
 
 import { Hashtag } from '../../../../components/Hashtag';
 
 import styles from './HashTextArea.module.scss';
+import hashTagStyles from './HashTagStyles.module.scss';
+import mentionsStyles from './Mentions.module.scss';
+
+import '@draft-js-plugins/mention/lib/plugin.css';
 
 import { IHashTag } from '../../../../interfaces';
 
@@ -13,81 +22,75 @@ export interface HashTextAreaProps {
   onChange: (text?: string) => void;
 }
 
+const mentionPlugin = createMentionPlugin({
+  theme: {
+    ...defaultTheme,
+    ...mentionsStyles,
+  },
+  mentionPrefix: '#',
+  mentionTrigger: ['#'],
+});
+const hashtagPlugin = createHashtagPlugin({ theme: hashTagStyles });
+const plugins = [mentionPlugin, hashtagPlugin];
+
+const Entry = ({
+  theme,
+  mention,
+  selectMention,
+  isFocused,
+  searchValue,
+  ...props
+}: EntryComponentProps) => {
+  return (
+    <div {...props}>
+      <Hashtag color={mention?.color} text={mention?.name} />
+    </div>
+  );
+};
+
 export const HashTextArea: React.FC<HashTextAreaProps> = ({
   value,
   onChange,
   hashtags = [],
 }) => {
-  return (
-    <MentionsInput
-      singleLine={false}
-      placeholder="Текст"
-      className={styles.textArea}
-      value={value}
-      style={{
-        control: {
-          fontSize: 14,
-          fontWeight: 'normal',
-          minHeight: '200px',
-        },
-        suggestions: {
-          list: {
-            backgroundColor: 'white',
-            border: '1px solid rgba(0,0,0,0.15)',
-            fontSize: 14,
-          },
-          item: {
-            padding: '5px 15px',
-            borderBottom: '1px solid rgba(0,0,0,0.15)',
-            '&focused': {
-              backgroundColor: '#cee4e5',
-            },
-          },
-        },
-        '&multiLine': {
-          control: {
-            fontFamily: 'monospace',
-            minHeight: 200,
-          },
-          highlighter: {
-            padding: '7px 11px',
-            border: '1px solid transparent',
-          },
-          input: {
-            border: '1px solid #e5e5ea',
-            transition: 'border-color .3s ease-in-out',
-            borderRadius: 9,
-            outline: 0,
-            padding: '7px 11px',
-            minHeight: '200px',
-          },
-        },
-      }}
-      rows={10}
-      onChange={({ target }) => onChange(target.value)}
-    >
-      <Mention
-        style={{
-          backgroundColor: '#d1c4e9',
-          color: 'red !important',
-        }}
-        trigger="#"
-        markup="#{{__display__}}"
-        displayTransform={(id: string, display: string) => `#${display}`}
-        data={hashtags.map(({ id, text }) => ({ id, display: text }))}
-        renderSuggestion={(renderItem, search, highlightedDisplay) => {
-          const currentHashtag = hashtags.find(
-            (hashtag) => hashtag.id === renderItem.id,
-          );
+  const [open, setOpen] = React.useState(false);
+  const [editorValue, setEditorValue] = React.useState(
+    value
+      ? EditorState.createWithContent(ContentState.createFromText(value))
+      : EditorState.createEmpty(),
+  );
+  const mentions = hashtags.map(({ text, ...hashTag }) => ({
+    name: text,
+    ...hashTag,
+  }));
+  const [suggestions] = React.useState(mentions);
+  const onOpenChange = React.useCallback((_open: boolean) => {
+    setOpen(_open);
+  }, []);
+  const handleValueChange = useCallback(
+    (newValue: EditorState) => {
+      const text = newValue.getCurrentContent().getPlainText();
 
-          return (
-            <Hashtag
-              color={currentHashtag?.color}
-              text={currentHashtag?.text}
-            />
-          );
-        }}
+      setEditorValue(newValue);
+      onChange(text);
+    },
+    [onChange],
+  );
+
+  return (
+    <div className={classNames('rs-input', styles.inputWrapper, styles.editor)}>
+      <Editor
+        plugins={plugins}
+        onChange={handleValueChange}
+        editorState={editorValue}
       />
-    </MentionsInput>
+      <mentionPlugin.MentionSuggestions
+        open={open}
+        onSearchChange={() => void 0}
+        suggestions={suggestions}
+        onOpenChange={onOpenChange}
+        entryComponent={Entry}
+      />
+    </div>
   );
 };

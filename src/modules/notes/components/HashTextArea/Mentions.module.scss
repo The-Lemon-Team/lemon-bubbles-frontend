@@ -1,0 +1,28 @@
+.mention {
+  background-color: #7c7c7c;
+  padding: 1px;
+  border-radius: 2px;
+}
+
+.mentionSuggestionsEntry {
+    padding: 5px 15px !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      background-color: rgb(206, 228, 229) !important;
+    }
+
+    &:active {
+      background-color: #b9b9b9 !important;
+    }
+  }
+  
+.mentionSuggestionsPopup {
+  padding: 0 !important;
+  box-shadow: none !important;
+  background: #7c7c7c !important;
+}
+
+.mentionSuggestionsEntryFocused {
+  composes: mentionSuggestionsEntry;
+}

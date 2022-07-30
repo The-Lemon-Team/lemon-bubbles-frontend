@@ -13,6 +13,11 @@ export const NotesStore = types
     loading: LoadingStore,
     notes: types.array(NoteStore),
   })
+  .views((self) => ({
+    getNotes() {
+      return self.notes.map((note) => note);
+    },
+  }))
   .actions((self) => ({
     loadNotes: flow(function* (startDate?: string, endDate?: string) {
       self.loading.setLoading();
@@ -34,7 +39,7 @@ export const NotesStore = types
         id: +new Date() + '',
       };
 
-      yield wait();
+      yield wait(100);
 
       self.notes.push(newNote);
     }),

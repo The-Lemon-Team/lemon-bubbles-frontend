@@ -25,13 +25,15 @@ function findHashtags(searchText: string) {
 }
 
 export const AddNote = ({ onAdd }: AddNoteProps) => {
+  const formikRef = useRef<FormikProps<FormikValues>>(null);
+
   const handleSubmit = useCallback(
     (values: FormikValues) => {
       onAdd(values as INoteForm);
+      formikRef.current?.resetForm();
     },
-    [onAdd],
+    [onAdd, formikRef],
   );
-  const formikRef = useRef<FormikProps<FormikValues>>(null);
   const handleTextChange = useCallback(
     (text?: string) => {
       const hashtags = findHashtags(text || '');
