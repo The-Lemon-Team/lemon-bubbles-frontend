@@ -18,3 +18,21 @@
 .grid {
     width: 1200px !important;
 }
+
+.backgroundWrapper {
+    position: relative;
+}
+
+.background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -2;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+}

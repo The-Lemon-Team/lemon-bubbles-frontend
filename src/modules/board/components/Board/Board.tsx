@@ -4,6 +4,7 @@ import { Container, Grid, Row, Col } from 'rsuite';
 import { useFeatureFlag } from '../../../common/hooks/useFeatureFlag';
 import { NotesTablesContainer } from '../../../notes/containers';
 import { FloatingListContainer } from '../../containers';
+import { LivingBackground } from '../../../common/components';
 
 import styles from './Board.module.scss';
 
@@ -12,7 +13,7 @@ export const Board = observer(() => {
 
   return (
     <div className={styles.main}>
-      <Container>
+      <Container className={styles.container}>
         <Grid className={styles.grid}>
           <Row className={styles.tableWrapper}>
             <Col xl={24}>
@@ -22,6 +23,10 @@ export const Board = observer(() => {
         </Grid>
       </Container>
       {isFloatingWindowActivated && <FloatingListContainer />}
+
+      <div className={styles.background}>
+        <LivingBackground />
+      </div>
     </div>
   );
 });

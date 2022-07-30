@@ -1,6 +1,6 @@
 import React from 'react';
 import { format } from 'date-fns';
-import { IconButton, Table, Panel } from 'rsuite';
+import { IconButton, Table } from 'rsuite';
 import { observer } from 'mobx-react-lite';
 import AddOutlineIcon from '@rsuite/icons/AddOutline';
 import MenuIcon from '@rsuite/icons/Menu';
@@ -61,9 +61,7 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
         <div className={cn({ [styles.content]: isCreatingMode })}>
           {isCreatingMode && (
             <div className={styles.formWrapper}>
-              <Panel bordered>
-                <AddNoteContainer onAdd={() => void 0} />
-              </Panel>
+              <AddNoteContainer onAdd={() => void 0} />
             </div>
           )}
           <Table

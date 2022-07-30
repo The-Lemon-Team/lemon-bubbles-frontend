@@ -1,6 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import { Divider, IconButton, Input } from 'rsuite';
 import { Formik, FormikProps, Field, FieldProps } from 'formik';
+import { Panel } from 'rsuite';
 import CheckIcon from '@rsuite/icons/Check';
 import twitterUtils from 'twitter-text';
 
@@ -63,7 +64,7 @@ export const AddNote = ({ onAdd }: AddNoteProps) => {
     >
       {({ handleSubmit }) => {
         return (
-          <div>
+          <Panel bordered shaded expanded className={styles.panel}>
             <div className={styles.titleWrapper}>
               <p className={styles.title}>Добавить новую запись</p>
               <div>
@@ -114,7 +115,7 @@ export const AddNote = ({ onAdd }: AddNoteProps) => {
                 </Field>
               </div>
             </div>
-          </div>
+          </Panel>
         );
       }}
     </Formik>
