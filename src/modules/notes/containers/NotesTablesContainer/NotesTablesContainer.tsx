@@ -23,6 +23,7 @@ export const NotesTablesContainer = observer(() => {
       notes={notesStore.getNotes()}
       isLoading={notesStore.loading.getIsLoading()}
       toggleCreatingMode={notesTable.toggleCreatingMode}
+      onDelete={notesStore.deleteNote}
     />
   );
 });

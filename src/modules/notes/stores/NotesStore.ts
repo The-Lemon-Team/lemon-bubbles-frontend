@@ -1,4 +1,4 @@
-import { types, flow } from 'mobx-state-tree';
+import { types, flow, destroy } from 'mobx-state-tree';
 
 import { notesService } from '../servies';
 
@@ -16,6 +16,11 @@ export const NotesStore = types
   .views((self) => ({
     getNotes() {
       return self.notes.map((note) => note);
+    },
+    findNote(id: string | number) {
+      return self.notes.find((note) => {
+        return note.id === id.toString();
+      });
     },
   }))
   .actions((self) => ({
@@ -42,5 +47,12 @@ export const NotesStore = types
       yield wait(100);
 
       self.notes.push(newNote);
+    }),
+    deleteNote: flow(function* (id: string) {
+      const note = self.findNote(id);
+
+      yield wait(500);
+
+      destroy(note);
     }),
   }));

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useMemo } from 'react';
 import { Panel, PanelGroup } from 'rsuite';
-import { format } from 'date-fns';
 
+import { groupNotesByDays } from '../../modules/notes/utils/groupNotesByDays';
 import { Hashtag } from '../Hashtag';
 
 import styles from './NoteList.module.scss';
@@ -15,18 +15,7 @@ interface NoteListProps {
 }
 
 export const NoteList: React.FC<NoteListProps> = ({ notes = [] }) => {
-  const notesByDay = useMemo(() => {
-    return notes.reduce((result, cur) => {
-      const formattedDate = format(new Date(cur.created), 'd MMM Y');
-
-      return {
-        ...result,
-        [formattedDate]: result[formattedDate]
-          ? [...result[formattedDate], cur]
-          : [cur],
-      };
-    }, {} as { [key: string]: INote[] });
-  }, [notes]);
+  const notesByDay = useMemo(() => groupNotesByDays(notes), [notes]);
 
   return (
     <div>

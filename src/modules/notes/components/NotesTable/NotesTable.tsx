@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { format } from 'date-fns';
-import { IconButton, Table } from 'rsuite';
+import { Dropdown, IconButton, Popover, Table, Whisper } from 'rsuite';
 import { observer } from 'mobx-react-lite';
 import AddOutlineIcon from '@rsuite/icons/AddOutline';
 import MenuIcon from '@rsuite/icons/Menu';
+import MoreIcon from '@rsuite/icons/More';
 import GridIcon from '@rsuite/icons/Grid';
 import cn from 'classnames';
 
@@ -21,6 +22,7 @@ interface NotesTableProps {
   notes: INote[];
 
   toggleCreatingMode: () => void;
+  onDelete: (id: string) => void;
 }
 
 export const NotesTable: React.FC<NotesTableProps> = observer(
@@ -30,9 +32,16 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
     isCreatingMode,
     mode,
 
+    onDelete,
     toggleCreatingMode,
   }) => {
     const isTableMode = mode === 'table';
+    const handleDelete = useCallback(
+      (id: string) => {
+        onDelete(id);
+      },
+      [onDelete],
+    );
 
     return (
       <div>
@@ -79,11 +88,15 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
             <Table.Column flexGrow={2} key="title">
               <Table.HeaderCell
                 className={styles.headerCell}
-                style={{ padding: '4px 20px' }}
+                style={{ padding: '4px 20px', marginRight: '2px' }}
               >
                 <h3 className={styles.header}>Title</h3>
               </Table.HeaderCell>
-              <Table.Cell dataKey="title" style={{ padding: '4px 20px' }}>
+              <Table.Cell
+                dataKey="title"
+                wordWrap="break-word"
+                style={{ padding: '4px 20px' }}
+              >
                 {({ title }) => {
                   return <h4 className={styles.title}>{title}</h4>;
                 }}
@@ -128,6 +141,48 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
                       text={hashTag.text}
                     />
                   ));
+                }}
+              </Table.Cell>
+            </Table.Column>
+            <Table.Column width={60}>
+              <Table.HeaderCell
+                className={styles.headerCell}
+                style={{ padding: '4px 20px 4px 0' }}
+              >
+                <></>
+              </Table.HeaderCell>
+              <Table.Cell dataKey="id" style={{ padding: 4 }}>
+                {({ id }) => {
+                  return (
+                    <Whisper
+                      placement="autoVerticalStart"
+                      trigger="click"
+                      speaker={({ className, left, top, onClose }, ref) => {
+                        return (
+                          <Popover
+                            ref={ref}
+                            className={className}
+                            style={{ left, top }}
+                            full
+                          >
+                            <Dropdown.Menu onSelect={() => onClose()}>
+                              <Dropdown.Item
+                                eventKey={1}
+                                onSelect={handleDelete}
+                              >
+                                Удалить
+                              </Dropdown.Item>
+                              <Dropdown.Item eventKey={2}>
+                                Редактировать
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Popover>
+                        );
+                      }}
+                    >
+                      <IconButton appearance="subtle" icon={<MoreIcon />} />
+                    </Whisper>
+                  );
                 }}
               </Table.Cell>
             </Table.Column>

@@ -51,6 +51,6 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT }}
           token: ${{ secrets.TELEGRAM_BOT_ID }}
           message: |
-            New version in da home, dawgs!
-            Look at this: http://${{ secrets.SSH_HOST }}/
-            5$
+            New version of the app was deployed
+            URL: http://${{ secrets.SSH_HOST }}/
+            Notes: ${{ github.event.head_commit.message }}
