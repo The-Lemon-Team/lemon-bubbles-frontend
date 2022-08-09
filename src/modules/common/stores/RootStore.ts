@@ -1,5 +1,6 @@
 import { types, Instance } from 'mobx-state-tree';
 import { createContext, useContext } from 'react';
+import { subDays } from 'date-fns';
 
 import { BoardUIStore } from './BoardUIStore';
 import { HashtagsStore } from '../../hashtags/stores/HashtagsStore';
@@ -30,6 +31,10 @@ export const rootStore = RootStore.create({
   notesStore: {
     loading: {
       status: null,
+    },
+    dateRange: {
+      end: new Date(subDays(new Date(), 1)),
+      start: new Date(),
     },
     notes: [],
   },

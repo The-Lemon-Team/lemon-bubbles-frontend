@@ -1,5 +1,4 @@
 import React from 'react';
-import fontColorContrast from 'font-color-contrast';
 import cn from 'classnames';
 import { Divider } from 'rsuite';
 
@@ -25,7 +24,7 @@ export const HashtagList: React.FC<HashtagListProps> = ({
             className={styles.item}
             style={{
               backgroundColor: hashtag.color,
-              color: fontColorContrast(hashtag.color),
+              color: hashtag.color,
             }}
           >
             #{hashtag.text}

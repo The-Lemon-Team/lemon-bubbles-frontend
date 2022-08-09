@@ -1,3 +1,5 @@
+import { subDays } from 'date-fns';
+
 import {
   DEFAULT_FLOATING_HEIGHT,
   DEFAULT_FLOATING_WIDTH,
@@ -14,4 +16,9 @@ export const coordinates = { x: DEFAULT_FLOATING_X, y: DEFAULT_FLOATING_Y };
 
 export const featureFlags = {
   floatingWindow: false,
+};
+
+export const defaultDateRange = {
+  end: new Date(subDays(new Date(), 1)),
+  start: new Date(),
 };

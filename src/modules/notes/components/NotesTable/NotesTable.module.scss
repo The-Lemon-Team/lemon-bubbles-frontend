@@ -1,5 +1,10 @@
 .table {
     width: 100%;
+    // height: auto !important;
+}
+
+.tableWrapper {
+    // min-height: 200px;
 }
 
 .tableCreatingMode {
@@ -33,5 +38,21 @@
 .headerCell {
     [class~="rs-table-cell"] {
         transition: none !important;
+    }
+}
+
+.filters {
+    display: flex;
+}
+
+.filterItem {
+    &:not(:last-child) {
+        margin-right: 0.5rem;
+    }
+}
+
+.dateBtn {
+    [class~="rs-picker-toggle"] {
+        border-radius: 1.115rem !important;
     }
 }

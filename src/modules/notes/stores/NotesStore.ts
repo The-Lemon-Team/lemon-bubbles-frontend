@@ -4,6 +4,8 @@ import { notesService } from '../servies';
 
 import { NoteStore } from './NoteStore';
 import { LoadingStore } from '../../common/stores/LoadingStore';
+import { DateRangeStore } from '../../common/stores/DateRangeStore';
+
 import { INote } from '../../../interfaces';
 
 const wait = (ms = 1000) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -11,6 +13,7 @@ const wait = (ms = 1000) => new Promise((resolve) => setTimeout(resolve, ms));
 export const NotesStore = types
   .model('NotesStore', {
     loading: LoadingStore,
+    dateRange: DateRangeStore,
     notes: types.array(NoteStore),
   })
   .views((self) => ({
@@ -24,7 +27,10 @@ export const NotesStore = types
     },
   }))
   .actions((self) => ({
-    loadNotes: flow(function* (startDate?: string, endDate?: string) {
+    afterCreate() {
+      this.loadNotes(self.dateRange.start, self.dateRange.end);
+    },
+    loadNotes: flow(function* (startDate?: Date, endDate?: Date) {
       self.loading.setLoading();
       try {
         self.loading.setLoading();
