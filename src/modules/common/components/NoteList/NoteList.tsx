@@ -2,12 +2,12 @@ import React from 'react';
 import { useMemo } from 'react';
 import { Panel, PanelGroup } from 'rsuite';
 
-import { groupNotesByDays } from '../../modules/notes/utils/groupNotesByDays';
-import { Hashtag } from '../Hashtag';
+import { groupNotesByDays } from '../../../notes/utils/groupNotesByDays';
+import { LineTag } from '../LineTag';
 
 import styles from './NoteList.module.scss';
 
-import { INote } from '../../interfaces';
+import { INote } from '../../../../interfaces';
 
 interface NoteListProps {
   className?: string;
@@ -43,7 +43,7 @@ export const NoteList: React.FC<NoteListProps> = ({ notes = [] }) => {
                         <p className={styles.noteLabel}>{note.title}</p>
                         <div>
                           {note.hashTags.map((hashTag) => (
-                            <Hashtag {...hashTag} key={hashTag.id} />
+                            <LineTag {...hashTag} key={hashTag.id} />
                           ))}
                         </div>
                       </div>

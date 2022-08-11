@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import createMentionPlugin, { defaultTheme } from '@draft-js-plugins/mention';
 import { EntryComponentProps } from '@draft-js-plugins/mention/lib/MentionSuggestions/Entry/Entry';
 
-import { Hashtag } from '../../../../components/Hashtag';
+import { LineTag } from '../../../common/components';
 
 import styles from './HashTextArea.module.scss';
 import hashTagStyles from './HashTagStyles.module.scss';
@@ -43,7 +43,7 @@ const Entry = ({
 }: EntryComponentProps) => {
   return (
     <div {...props}>
-      <Hashtag color={mention?.color} text={mention?.name} />
+      <LineTag color={mention?.color} text={mention?.name} />
     </div>
   );
 };

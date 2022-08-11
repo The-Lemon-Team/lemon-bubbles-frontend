@@ -1,8 +1,7 @@
-import React from 'react';
 import { Container, Grid, Row, Navbar, Nav } from 'rsuite';
 
-import { Logo } from '../../modules/common/components';
-import { ThemeSwitcherContainer } from '../../modules/common/containers';
+import { Logo } from '../Logo';
+import { ThemeSwitcherContainer } from '../../containers';
 
 import styles from './Header.module.scss';
 

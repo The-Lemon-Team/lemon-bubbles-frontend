@@ -14,7 +14,7 @@ import {
 import PlusIcon from '@rsuite/icons/Plus';
 
 import { useModalManager } from './useModalManager';
-import { NoteList } from '../../../components/NoteList';
+import { NoteList } from '../../common/components/NoteList';
 import { AddNoteContainer } from '../../notes/containers';
 import {
   DEFAULT_FLOATING_MAX_WIDTH,

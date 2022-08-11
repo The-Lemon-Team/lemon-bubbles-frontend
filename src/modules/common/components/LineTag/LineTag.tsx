@@ -1,13 +1,12 @@
-import React from 'react';
 import { Tag } from 'rsuite';
 
-interface IHashtagProps {
+interface ILineTagProps {
   className?: string;
   color?: string;
   text?: string;
 }
 
-export const Hashtag: React.FC<IHashtagProps> = ({
+export const LineTag: React.FC<ILineTagProps> = ({
   className,
   text = '',
   color,

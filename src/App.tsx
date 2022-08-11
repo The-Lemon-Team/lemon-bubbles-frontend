@@ -1,7 +1,6 @@
 import { RootStoreContext, rootStore } from './modules/common/stores/RootStore';
-import { Header } from './components';
 import { Board } from './modules/board';
-import { ThemeProvider } from './modules/common/components';
+import { Header, ThemeProvider } from './modules/common/components';
 
 export const App = () => {
   return (

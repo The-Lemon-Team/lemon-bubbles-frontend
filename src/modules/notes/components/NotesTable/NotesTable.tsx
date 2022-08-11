@@ -15,7 +15,7 @@ import MoreIcon from '@rsuite/icons/More';
 import GridIcon from '@rsuite/icons/Grid';
 import cn from 'classnames';
 
-import { Hashtag } from '../../../../components/Hashtag';
+import { LineTag } from '../../../common/components';
 import { AddNoteContainer } from '../../containers/AddNoteContainer';
 import { groupNotesByDays } from '../../utils/groupNotesByDays';
 
@@ -120,7 +120,6 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
             disabledScroll={true}
             renderEmpty={() => <></>}
             loading={isLoading}
-            // minHeight={300}
             fillHeight
             data={tableData}
             renderRow={(children, item) => {
@@ -185,7 +184,7 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
               <Table.Cell dataKey="hashTags" style={{ padding: 4 }}>
                 {({ hashTags }) => {
                   return hashTags.map((hashTag: IHashTag) => (
-                    <Hashtag
+                    <LineTag
                       key={hashTag.id}
                       color={hashTag.color}
                       text={hashTag.text}
