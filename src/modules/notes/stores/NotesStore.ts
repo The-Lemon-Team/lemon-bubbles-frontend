@@ -27,19 +27,19 @@ export const NotesStore = types
     },
   }))
   .actions((self) => ({
-    afterCreate() {
-      this.loadNotes(self.dateRange.start, self.dateRange.end);
-    },
-    loadNotes: flow(function* (startDate?: Date, endDate?: Date) {
+    loadNotes: flow(function* (startDate: Date, endDate: Date) {
       self.loading.setLoading();
       try {
+        self.dateRange.setDateRange(startDate, endDate);
         self.loading.setLoading();
         const notes = yield notesService.loadNotes();
+
         yield wait();
 
         self.notes = notes;
         self.loading.setSucceed();
       } catch (error) {
+        self.dateRange.setDateRange(self.dateRange.start, self.dateRange.end);
         self.loading.setError();
       }
       return self.notes.length;
