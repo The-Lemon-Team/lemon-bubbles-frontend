@@ -14,16 +14,16 @@ import {
 import PlusIcon from '@rsuite/icons/Plus';
 
 import { useModalManager } from './useModalManager';
-import { NoteList } from '../../common/components/NoteList';
-import { AddNoteContainer } from '../../notes/containers';
+import { NoteList } from '../../../common/components/NoteList';
+import { AddNoteContainer } from '../../../notes/containers';
 import {
   DEFAULT_FLOATING_MAX_WIDTH,
   DEFAULT_FLOATING_MAX_HEIGHT,
-} from '../../../constants';
+} from '../../../../constants';
 
 import styles from './FloatingList.module.scss';
 
-import { ICoordinates, INote, ISizes } from '../../../interfaces';
+import { ICoordinates, INote, ISizes } from '../../../../interfaces';
 
 interface FloatingListProps {
   sizes: ISizes;

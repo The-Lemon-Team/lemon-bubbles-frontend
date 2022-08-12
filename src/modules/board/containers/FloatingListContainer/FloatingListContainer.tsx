@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { useRootStore } from '../../../common/stores';
 
-import { FloatingList } from '../../FloatingList';
+import { FloatingList } from '../../components/FloatingList';
 
 export const FloatingListContainer = observer(() => {
   const { boardUIStore } = useRootStore();

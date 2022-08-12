@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { EditorState, ContentState } from 'draft-js';
 import Editor from '@draft-js-plugins/editor';
 import createHashtagPlugin from '@draft-js-plugins/hashtag';
@@ -54,6 +54,7 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
   hashtags = [],
 }) => {
   const [open, setOpen] = React.useState(false);
+  const editorRef = useRef<Editor>(null);
   const [editorValue, setEditorValue] = React.useState(
     value
       ? EditorState.createWithContent(ContentState.createFromText(value))
@@ -77,9 +78,24 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
     [onChange],
   );
 
+  useEffect(() => {
+    if (editorValue.getCurrentContent().getPlainText() !== value) {
+      // console.log('value', value);
+      // // editorValue.set(ContentState.createFromText(value));
+      const editorState = EditorState.push(
+        editorValue,
+        EditorState.createEmpty().getCurrentContent(),
+        'insert-characters',
+      );
+
+      setEditorValue(editorState);
+    }
+  }, [editorValue, value]);
+
   return (
     <div className={classNames('rs-input', styles.inputWrapper, styles.editor)}>
       <Editor
+        ref={editorRef}
         plugins={plugins}
         onChange={handleValueChange}
         editorState={editorValue}
