@@ -1,4 +1,5 @@
+export * from './ICoordinates';
 export * from './IHashTag';
 export * from './INote';
-export * from './ICoordinates';
 export * from './ISizes';
+export * from './ITokens';

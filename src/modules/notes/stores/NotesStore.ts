@@ -32,7 +32,7 @@ export const NotesStore = types
       try {
         self.dateRange.setDateRange(startDate, endDate);
         self.loading.setLoading();
-        const notes = yield notesService.loadNotes();
+        const notes = yield notesService.loadNotes(startDate, endDate);
 
         yield wait();
 
@@ -45,12 +45,7 @@ export const NotesStore = types
       return self.notes.length;
     }),
     addNote: flow(function* (payload: INote) {
-      const newNote = {
-        ...payload,
-        id: +new Date() + '',
-      };
-
-      yield wait(100);
+      const newNote = yield notesService.createNote(payload);
 
       self.notes.push(newNote);
     }),

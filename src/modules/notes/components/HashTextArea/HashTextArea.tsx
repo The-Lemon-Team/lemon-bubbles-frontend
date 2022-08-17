@@ -80,8 +80,6 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
 
   useEffect(() => {
     if (editorValue.getCurrentContent().getPlainText() !== value) {
-      // console.log('value', value);
-      // // editorValue.set(ContentState.createFromText(value));
       const editorState = EditorState.push(
         editorValue,
         EditorState.createEmpty().getCurrentContent(),
