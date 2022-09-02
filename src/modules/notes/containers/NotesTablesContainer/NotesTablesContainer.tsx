@@ -17,7 +17,7 @@ export const NotesTablesContainer = observer(() => {
       boardStore.loadNotes(dateRange.start, dateRange.end);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [boardStore.dateRange]);
 
   return (
     <NotesTable
@@ -29,7 +29,7 @@ export const NotesTablesContainer = observer(() => {
       isCreatingMode={notesTable.isCreatingMode}
       notes={notesStore.getNotes()}
       isLoading={notesStore.loading.getIsLoading()}
-      onDateChange={boardStore.dateRange.setDateRange}
+      onDateChange={boardStore.loadNotes}
       toggleCreatingMode={notesTable.toggleCreatingMode}
       onDelete={notesStore.deleteNote}
     />
