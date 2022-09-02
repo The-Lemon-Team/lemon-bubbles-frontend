@@ -1,2 +1,2 @@
-export * from './containers/FloatingListContainer/FloatingListContainer';
-export * from './components/Board/Board';
+export * from './containers';
+export * from './components';

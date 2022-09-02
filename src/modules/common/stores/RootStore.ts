@@ -2,21 +2,21 @@ import { types, Instance } from 'mobx-state-tree';
 import { createContext, useContext } from 'react';
 import { subDays } from 'date-fns';
 
-import { BoardUIStore } from './BoardUIStore';
-import { HashtagsStore } from '../../hashtags/stores/HashtagsStore';
+import { SettingsStore } from './SettingsStore';
+
+import { BoardStore } from '../../board/stores';
 import { ThemeMode } from '../../../enums';
-import { NotesStore, NotesTableStore } from '../../notes/stores';
+import { NotesTableStore } from '../../notes/stores';
 import { sizes, coordinates, featureFlags } from './appDefaults';
 
 export const RootStore = types.model({
-  boardUIStore: BoardUIStore,
-  hashtagsStore: HashtagsStore,
-  notesStore: NotesStore,
+  settingsStore: SettingsStore,
+  boardStore: BoardStore,
   notesTable: NotesTableStore,
 });
 
 export const rootStore = RootStore.create({
-  boardUIStore: {
+  settingsStore: {
     featureFlags: {
       features: featureFlags,
     },
@@ -28,37 +28,24 @@ export const rootStore = RootStore.create({
       mode: ThemeMode.DARK,
     },
   },
-  notesStore: {
-    loading: {
-      status: null,
-    },
+  boardStore: {
     dateRange: {
       end: new Date(subDays(new Date(), 1)),
       start: new Date(),
     },
-    notes: [],
-  },
-  hashtagsStore: {
-    hashTags: [
-      {
-        id: 'h-1',
-        created: new Date().toString(),
-        text: 'Пожрал',
-        color: '#1976d2',
+    notesStore: {
+      loading: {
+        status: null,
       },
-      {
-        id: 'h-3233',
-        created: new Date().toString(),
-        text: 'Почитал',
-        color: '#42a5f5',
+      notes: [],
+    },
+    hashTagsStore: {
+      heap: [],
+      searchValue: null,
+      loading: {
+        status: null,
       },
-      {
-        id: 'h-4112',
-        created: new Date().toString(),
-        text: 'Посрал',
-        color: '#fcc690',
-      },
-    ],
+    },
   },
   notesTable: {
     isCreatingMode: false,

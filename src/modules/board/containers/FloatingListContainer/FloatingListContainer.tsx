@@ -4,14 +4,14 @@ import { useRootStore } from '../../../common/stores';
 import { FloatingList } from '../../components/FloatingList';
 
 export const FloatingListContainer = observer(() => {
-  const { boardUIStore } = useRootStore();
+  const { settingsStore } = useRootStore();
 
   return (
     <FloatingList
-      sizes={boardUIStore.floatingList.sizes.getSizes()}
-      position={boardUIStore.floatingList.position.getCoordinates()}
-      onChangePosition={boardUIStore.floatingList.position.setCoordinates}
-      onSizeChange={boardUIStore.floatingList.sizes.setSizes}
+      sizes={settingsStore.floatingList.sizes.getSizes()}
+      position={settingsStore.floatingList.position.getCoordinates()}
+      onChangePosition={settingsStore.floatingList.position.setCoordinates}
+      onSizeChange={settingsStore.floatingList.sizes.setSizes}
     />
   );
 });

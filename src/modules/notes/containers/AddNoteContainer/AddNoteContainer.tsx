@@ -5,26 +5,32 @@ import { AddNote } from '../../components';
 
 import { INote, INoteForm } from '../../../../interfaces';
 import { useRootStore } from '../../../common/stores';
+import { generateHashTag } from '../../../common/api/dev/hashTags.mock';
 
 interface AddNoteContainerProps {
   onAdd: (payload: INote) => void;
 }
 
 export const AddNoteContainer: React.FC<AddNoteContainerProps> = observer(
-  ({ onAdd }) => {
-    const { hashtagsStore, notesStore } = useRootStore();
+  () => {
+    const { boardStore } = useRootStore();
+    const { hashTagsStore } = boardStore;
     const handleAdd = useCallback(
       (payload: INoteForm) => {
-        const [hashTags] = hashtagsStore.mapTagNamesOnTags(payload.hashTags);
+        const [hashTags, unusedTags] = hashTagsStore.mapTagNamesOnTags(
+          payload.hashTags,
+        );
+        const generatedTags = unusedTags.map((text) =>
+          generateHashTag({ text, id: undefined }),
+        );
         const newNote: INote = {
           ...payload,
-          hashTags,
+          hashTags: [...hashTags, ...generatedTags],
         };
 
-        notesStore.addNote(newNote);
-        onAdd(newNote);
+        boardStore.addNote(newNote);
       },
-      [onAdd, hashtagsStore, notesStore],
+      [hashTagsStore, boardStore],
     );
 
     return <AddNote onAdd={handleAdd} />;

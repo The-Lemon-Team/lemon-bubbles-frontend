@@ -1,6 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import { Divider } from 'rsuite';
+import getCurrentContrastText from 'font-color-contrast';
 
 import styles from './HashtagList.module.scss';
 
@@ -24,7 +25,7 @@ export const HashtagList: React.FC<HashtagListProps> = ({
             className={styles.item}
             style={{
               backgroundColor: hashtag.color,
-              color: hashtag.color,
+              color: getCurrentContrastText(hashtag.color),
             }}
           >
             #{hashtag.text}

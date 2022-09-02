@@ -1,6 +1,9 @@
-import { IHashTag } from '../../../interfaces';
+import { IHashTag, IDateRange } from '../../../interfaces';
 
 export interface IHashTagServices {
   createHashTag: (payload: Partial<IHashTag>) => Promise<IHashTag>;
-  loadHashTags: () => Promise<IHashTag[]>;
+  findHashTags: (
+    text: string,
+    options?: { excludeDateRange: IDateRange | null },
+  ) => Promise<IHashTag[]>;
 }

@@ -1,7 +1,7 @@
 import { useRootStore } from '../stores';
 
 export function useFeatureFlag(featureFlag: string) {
-  const { boardUIStore } = useRootStore();
+  const { settingsStore } = useRootStore();
 
-  return boardUIStore.featureFlags.getFeature(featureFlag);
+  return settingsStore.featureFlags.getFeature(featureFlag);
 }

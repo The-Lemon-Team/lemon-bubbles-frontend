@@ -1,10 +1,10 @@
-import { BoardUIStore } from './BoardUIStore';
+import { SettingsStore } from './SettingsStore';
 import { ThemeMode } from '../../../../enums';
 import { coordinates, sizes, featureFlags } from '../appDefaults';
 
 describe('BoardUIStore', () => {
   it('test initial values', () => {
-    const boardUiStore = BoardUIStore.create({
+    const boardUiStore = SettingsStore.create({
       featureFlags: {
         features: featureFlags,
       },

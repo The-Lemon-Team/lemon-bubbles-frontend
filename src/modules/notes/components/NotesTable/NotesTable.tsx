@@ -117,10 +117,8 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
           )}
 
           <Table
-            disabledScroll={true}
-            renderEmpty={() => <></>}
+            height={450}
             loading={isLoading}
-            fillHeight
             data={tableData}
             renderRow={(children, item) => {
               return item?.dayLabel ? (

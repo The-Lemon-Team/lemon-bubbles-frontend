@@ -6,14 +6,15 @@ import { useRootStore } from '../../../common/stores';
 import { NotesTable } from '../../components';
 
 export const NotesTablesContainer = observer(() => {
-  const { notesStore, notesTable } = useRootStore();
+  const { boardStore, notesTable } = useRootStore();
+  const { notesStore } = boardStore;
 
   useEffect(() => {
-    const dateRange = notesStore.dateRange.getDateRange();
+    const dateRange = boardStore.dateRange.getDateRange();
     const status = notesStore.loading.status;
 
     if (!['loading', 'success'].includes(status || '')) {
-      notesStore.loadNotes(dateRange.start, dateRange.end);
+      boardStore.loadNotes(dateRange.start, dateRange.end);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -21,14 +22,14 @@ export const NotesTablesContainer = observer(() => {
   return (
     <NotesTable
       dateRange={{
-        start: notesStore.dateRange.start,
-        end: notesStore.dateRange.end,
+        start: boardStore.dateRange.start,
+        end: boardStore.dateRange.end,
       }}
       mode={notesTable.mode as 'table' | 'cards'}
       isCreatingMode={notesTable.isCreatingMode}
       notes={notesStore.getNotes()}
       isLoading={notesStore.loading.getIsLoading()}
-      onDateChange={notesStore.dateRange.setDateRange}
+      onDateChange={boardStore.dateRange.setDateRange}
       toggleCreatingMode={notesTable.toggleCreatingMode}
       onDelete={notesStore.deleteNote}
     />

@@ -10,9 +10,9 @@ interface HashtagListContainerProps {
 export const HashtagListContainer: React.FC<HashtagListContainerProps> = ({
   hashtagNames,
 }) => {
-  const { hashtagsStore } = useRootStore();
+  const { boardStore } = useRootStore();
   const [usedHashtags, unusedHashtags] =
-    hashtagsStore.mapTagNamesOnTags(hashtagNames);
+    boardStore.hashTagsStore.mapTagNamesOnTags(hashtagNames);
 
   return (
     <HashtagList usedHashtags={usedHashtags} unusedHashtags={unusedHashtags} />

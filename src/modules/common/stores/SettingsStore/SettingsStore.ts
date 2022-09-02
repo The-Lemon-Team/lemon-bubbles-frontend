@@ -10,7 +10,7 @@ const FloatingListStore = types.model('FloatingListStore', {
   sizes: ResizerStore,
 });
 
-export const BoardUIStore = types.model('BoardUIStore', {
+export const SettingsStore = types.model('SettingsStore', {
   floatingList: FloatingListStore,
   themeStore: ThemeStore,
   featureFlags: FeatureFlagsStore,

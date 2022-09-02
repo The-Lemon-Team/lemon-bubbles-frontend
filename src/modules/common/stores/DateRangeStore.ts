@@ -1,4 +1,5 @@
 import { types } from 'mobx-state-tree';
+import { differenceInDays, subDays } from 'date-fns';
 
 import { defaultDateRange } from './appDefaults';
 
@@ -26,11 +27,17 @@ export const DateRangeStore = types.snapshotProcessor(
     preProcessor() {
       const storageItem = localStorage.getItem('dateRange');
       const restoredDate = storageItem && JSON.parse(storageItem);
+      const dayRange =
+        restoredDate &&
+        differenceInDays(
+          new Date(restoredDate.end),
+          new Date(restoredDate.start),
+        );
 
       return restoredDate
         ? {
-            start: new Date(restoredDate.start),
-            end: new Date(restoredDate.end),
+            start: new Date(subDays(new Date(), dayRange)),
+            end: new Date(),
           }
         : defaultDateRange;
     },

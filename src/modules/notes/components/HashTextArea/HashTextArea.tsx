@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
+import { debounce } from 'lodash';
 import { EditorState, ContentState } from 'draft-js';
 import Editor from '@draft-js-plugins/editor';
 import createHashtagPlugin from '@draft-js-plugins/hashtag';
@@ -19,6 +20,8 @@ import { IHashTag } from '../../../../interfaces';
 export interface HashTextAreaProps {
   hashtags?: IHashTag[];
   value: string;
+
+  onSearch: (query: string) => void;
   onChange: (text?: string) => void;
 }
 
@@ -48,12 +51,16 @@ const Entry = ({
   );
 };
 
+const LENGHT_TO_SEARCH = 1;
+
 export const HashTextArea: React.FC<HashTextAreaProps> = ({
   value,
-  onChange,
   hashtags = [],
+
+  onSearch,
+  onChange,
 }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const editorRef = useRef<Editor>(null);
   const [editorValue, setEditorValue] = React.useState(
     value
@@ -64,8 +71,7 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
     name: text,
     ...hashTag,
   }));
-  const [suggestions] = React.useState(mentions);
-  const onOpenChange = React.useCallback((_open: boolean) => {
+  const onOpenChange = useCallback((_open: boolean) => {
     setOpen(_open);
   }, []);
   const handleValueChange = useCallback(
@@ -76,6 +82,15 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
       onChange(text);
     },
     [onChange],
+  );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleSearchChange = useCallback(
+    debounce((e: { trigger: string; value: string }) => {
+      if (e.value.length > LENGHT_TO_SEARCH) {
+        onSearch(e.value);
+      }
+    }, 500),
+    [onSearch],
   );
 
   useEffect(() => {
@@ -100,8 +115,8 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
       />
       <mentionPlugin.MentionSuggestions
         open={open}
-        onSearchChange={() => void 0}
-        suggestions={suggestions}
+        onSearchChange={handleSearchChange}
+        suggestions={mentions}
         onOpenChange={onOpenChange}
         entryComponent={Entry}
       />
