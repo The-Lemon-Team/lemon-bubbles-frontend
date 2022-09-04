@@ -7,6 +7,7 @@ import { SettingsStore } from './SettingsStore';
 import { BoardStore } from '../../board/stores';
 import { ThemeMode } from '../../../enums';
 import { NotesTableStore } from '../../notes/stores';
+import { notifierStore } from './NotifierStore';
 import { sizes, coordinates, featureFlags } from './appDefaults';
 
 export const RootStore = types.model({
@@ -15,43 +16,46 @@ export const RootStore = types.model({
   notesTable: NotesTableStore,
 });
 
-export const rootStore = RootStore.create({
-  settingsStore: {
-    featureFlags: {
-      features: featureFlags,
-    },
-    floatingList: {
-      position: coordinates,
-      sizes: sizes,
-    },
-    themeStore: {
-      mode: ThemeMode.DARK,
-    },
-  },
-  boardStore: {
-    dateRange: {
-      end: endOfDay(new Date()),
-      start: startOfDay(subWeeks(new Date(), 1)),
-    },
-    notesStore: {
-      loading: {
-        status: null,
+export const rootStore = RootStore.create(
+  {
+    settingsStore: {
+      featureFlags: {
+        features: featureFlags,
       },
-      notes: [],
-    },
-    hashTagsStore: {
-      heap: [],
-      searchValue: null,
-      loading: {
-        status: null,
+      floatingList: {
+        position: coordinates,
+        sizes: sizes,
+      },
+      themeStore: {
+        mode: ThemeMode.DARK,
       },
     },
+    boardStore: {
+      dateRange: {
+        end: endOfDay(new Date()),
+        start: startOfDay(subWeeks(new Date(), 1)),
+      },
+      notesStore: {
+        loading: {
+          status: null,
+        },
+        notes: [],
+      },
+      hashTagsStore: {
+        heap: [],
+        searchValue: null,
+        loading: {
+          status: null,
+        },
+      },
+    },
+    notesTable: {
+      isCreatingMode: false,
+      mode: 'table',
+    },
   },
-  notesTable: {
-    isCreatingMode: false,
-    mode: 'table',
-  },
-});
+  { notifier: notifierStore },
+);
 
 export type RootInstance = Instance<typeof RootStore>;
 export const RootStoreContext = createContext<RootInstance>(rootStore);

@@ -1,10 +1,12 @@
-import { types, flow } from 'mobx-state-tree';
+import { types, flow, Instance, getEnv } from 'mobx-state-tree';
 import { flatten } from 'lodash';
 
-import { notesService } from '../../notes/servies';
 import { DateRangeStore } from '../../common/stores/DateRangeStore';
 import { NotesStore } from '../../notes/stores';
 import { HashtagsStore } from '../../hashtags/stores';
+import { NotifierStore } from '../../common/stores/NotifierStore';
+
+import { notesService } from '../../notes/servies';
 
 import { IHashTag, INote } from '../../../interfaces';
 
@@ -18,11 +20,21 @@ export const BoardStore = types
   })
   .actions((self) => ({
     addNote: flow(function* (payload: INote) {
-      const newNote = yield notesService.createNote(payload);
+      try {
+        const newNote = yield notesService.createNote(payload);
 
-      self.hashTagsStore.mergeHashTags(newNote.hashTags);
+        self.hashTagsStore.mergeHashTags(newNote.hashTags);
 
-      self.notesStore.notes.unshift(newNote);
+        self.notesStore.notes.unshift(newNote);
+        getEnv<{ notifier: Instance<typeof NotifierStore> }>(
+          self,
+        ).notifier.showSuccess(
+          `Сообщение с заголовком "${payload.title}" успешно добавлено`,
+        );
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      }
     }),
     loadNotes: flow(function* (startDate: Date, endDate: Date) {
       try {
@@ -47,6 +59,9 @@ export const BoardStore = types
         self.notesStore.setNotes(notes);
         self.notesStore.loading.setSucceed();
       } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+
         self.dateRange.setDateRange(self.dateRange.start, self.dateRange.end);
         self.notesStore.loading.setError();
       }
