@@ -14,6 +14,7 @@ import MenuIcon from '@rsuite/icons/Menu';
 import MoreIcon from '@rsuite/icons/More';
 import GridIcon from '@rsuite/icons/Grid';
 import cn from 'classnames';
+import { DateRange } from 'rsuite/esm/DateRangePicker';
 
 import { LineTag } from '../../../common/components';
 import { AddNoteContainer } from '../../containers/AddNoteContainer';
@@ -21,20 +22,19 @@ import { groupNotesByDays } from '../../utils/groupNotesByDays';
 
 import styles from './NotesTable.module.scss';
 
-import { IHashTag, INote } from '../../../../interfaces';
-import { DateRange } from 'rsuite/esm/DateRangePicker';
+import { IDateRange, IHashTag, INote } from '../../../../interfaces';
 
 interface NotesTableProps {
   dateRange: {
-    end: Date;
-    start: Date;
+    end: string;
+    start: string;
   };
   isCreatingMode: boolean;
   mode: 'table' | 'cards';
   isLoading: boolean;
   notes: INote[];
 
-  onDateChange: (start: Date, end: Date) => void;
+  onDateChange: (payload: IDateRange) => void;
   toggleCreatingMode: () => void;
   onDelete: (id: string) => void;
 }
@@ -54,6 +54,11 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
     toggleCreatingMode,
   }) => {
     const isTableMode = mode === 'table';
+    const dateRangeValue = useMemo(
+      () =>
+        [new Date(dateRange.start), new Date(dateRange.end)] as [Date, Date],
+      [dateRange],
+    );
     const tableData = useMemo(() => {
       const notesByDay = groupNotesByDays(notes);
 
@@ -71,7 +76,7 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
     );
     const handleDateChange = useCallback(
       (value: DateRange | null) => {
-        value && onDateChange(value[0], value[1]);
+        value && onDateChange({ start: value[0], end: value[1] });
       },
       [onDateChange],
     );
@@ -90,7 +95,7 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
             </div>
             <div className={styles.filterItem}>
               <DateRangePicker
-                value={[dateRange.start, dateRange.end]}
+                value={dateRangeValue}
                 onChange={handleDateChange}
                 className={styles.dateBtn}
               />

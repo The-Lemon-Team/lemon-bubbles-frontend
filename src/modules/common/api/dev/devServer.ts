@@ -54,7 +54,7 @@ export const setupDevServer = () => {
       hashTags: mappedTags,
     };
 
-    notesMock.push(withNewTags);
+    notesMock.unshift(withNewTags);
 
     res.status(200).json(withNewTags);
   });

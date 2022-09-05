@@ -1,37 +1,30 @@
-import { useEffect } from 'react';
-import { observer } from 'mobx-react-lite';
+import { useSelector } from 'react-redux';
 
+import { selectDateRange } from '../../../common/redux/store';
+import { useGetNotesQuery } from '../../stores/notesApi';
 import { useRootStore } from '../../../common/stores';
+import { useActions } from '../../../common/redux/store';
 
 import { NotesTable } from '../../components';
 
-export const NotesTablesContainer = observer(() => {
+export const NotesTablesContainer = () => {
   const { boardStore, notesTable } = useRootStore();
+  const dateRange = useSelector(selectDateRange);
+  const { setDateRange } = useActions();
+
+  const { isLoading, data } = useGetNotesQuery(dateRange);
   const { notesStore } = boardStore;
-
-  useEffect(() => {
-    const dateRange = boardStore.dateRange.getDateRange();
-    const status = notesStore.loading.status;
-
-    if (!['loading', 'success'].includes(status || '')) {
-      boardStore.loadNotes(dateRange.start, dateRange.end);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [boardStore.dateRange]);
 
   return (
     <NotesTable
-      dateRange={{
-        start: boardStore.dateRange.start,
-        end: boardStore.dateRange.end,
-      }}
+      dateRange={dateRange}
       mode={notesTable.mode as 'table' | 'cards'}
       isCreatingMode={notesTable.isCreatingMode}
-      notes={notesStore.getNotes()}
-      isLoading={notesStore.loading.getIsLoading()}
-      onDateChange={boardStore.loadNotes}
+      notes={data}
+      isLoading={isLoading}
+      onDateChange={setDateRange}
       toggleCreatingMode={notesTable.toggleCreatingMode}
       onDelete={notesStore.deleteNote}
     />
   );
-});
+};

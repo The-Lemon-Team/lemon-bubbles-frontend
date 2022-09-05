@@ -3,9 +3,11 @@ import { observer } from 'mobx-react-lite';
 
 import { AddNote } from '../../components';
 
-import { INote, INoteForm } from '../../../../interfaces';
+import { useCreateNoteMutation } from '../../stores/notesApi';
 import { useRootStore } from '../../../common/stores';
 import { generateHashTag } from '../../../common/api/dev/hashTags.mock';
+
+import { INote, INoteForm } from '../../../../interfaces';
 
 interface AddNoteContainerProps {
   onAdd: (payload: INote) => void;
@@ -13,6 +15,7 @@ interface AddNoteContainerProps {
 
 export const AddNoteContainer: React.FC<AddNoteContainerProps> = observer(
   () => {
+    const [createNote, result] = useCreateNoteMutation();
     const { boardStore } = useRootStore();
     const { hashTagsStore } = boardStore;
     const handleAdd = useCallback(
@@ -28,9 +31,9 @@ export const AddNoteContainer: React.FC<AddNoteContainerProps> = observer(
           hashTags: [...hashTags, ...generatedTags],
         };
 
-        boardStore.addNote(newNote);
+        createNote(newNote);
       },
-      [hashTagsStore, boardStore],
+      [hashTagsStore, boardStore, createNote],
     );
 
     return <AddNote onAdd={handleAdd} />;
