@@ -1,7 +1,10 @@
 ---
 name: Deploy Lemon Bubbles app
 
-on: [push]
+on: 
+  push:
+    branches:
+      - dev
 
 jobs:
   build:
