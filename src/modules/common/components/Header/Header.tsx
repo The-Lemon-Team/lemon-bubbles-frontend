@@ -2,6 +2,7 @@ import { Container, Grid, Row, Navbar, Nav } from 'rsuite';
 
 import { Logo } from '../Logo';
 import { ThemeSwitcherContainer } from '../../containers';
+import { BoardGlobalLoader } from '../../../board';
 
 import styles from './Header.module.scss';
 
@@ -21,6 +22,7 @@ export const Header = () => {
           </Navbar>
         </Row>
       </Grid>
+      <BoardGlobalLoader />
     </Container>
   );
 };

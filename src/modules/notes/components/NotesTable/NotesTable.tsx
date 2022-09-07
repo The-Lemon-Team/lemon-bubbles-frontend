@@ -215,7 +215,7 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
                             <Dropdown.Menu onSelect={() => onClose()}>
                               <Dropdown.Item
                                 eventKey={1}
-                                onSelect={handleDelete}
+                                onSelect={() => handleDelete(id)}
                               >
                                 Удалить
                               </Dropdown.Item>

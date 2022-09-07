@@ -76,4 +76,8 @@ export const setupDevServer = () => {
 
     res.status(200).json(tagsOutOfRange);
   });
+
+  server.delete('/api/notes/:id').intercept((req, res) => {
+    res.status(200).send(true);
+  });
 };

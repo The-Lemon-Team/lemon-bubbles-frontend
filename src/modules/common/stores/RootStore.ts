@@ -39,6 +39,9 @@ export const rootStore = RootStore.create(
         loading: {
           status: null,
         },
+        deleteLoading: {
+          status: null,
+        },
         notes: [],
       },
       hashTagsStore: {

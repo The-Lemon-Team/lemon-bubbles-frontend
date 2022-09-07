@@ -1,7 +1,15 @@
-import { castToSnapshot, types, flow, destroy } from 'mobx-state-tree';
+import {
+  castToSnapshot,
+  types,
+  flow,
+  destroy,
+  getEnv,
+  Instance,
+} from 'mobx-state-tree';
 
 import { notesService } from '../servies';
 
+import { NotifierStore } from '../../common/stores';
 import { NoteStore } from './NoteStore';
 import { LoadingStore } from '../../common/stores/LoadingStore';
 
@@ -13,6 +21,7 @@ export const NotesStore = types
   .model('NotesStore', {
     loading: LoadingStore,
     notes: types.array(NoteStore),
+    deleteLoading: LoadingStore,
   })
   .views((self) => ({
     getNotes() {
@@ -36,8 +45,23 @@ export const NotesStore = types
     deleteNote: flow(function* (id: string) {
       const note = self.findNote(id);
 
-      yield wait(500);
+      self.deleteLoading.setLoading();
+      try {
+        notesService.deleteNote(id);
 
-      destroy(note);
+        yield wait(500);
+
+        destroy(note);
+        getEnv<{ notifier: Instance<typeof NotifierStore> }>(
+          self,
+        ).notifier.showSuccess(`Запись "${note?.title}" успешно удалена.`);
+        self.deleteLoading.setSucceed();
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+        getEnv<{ notifier: Instance<typeof NotifierStore> }>(
+          self,
+        ).notifier.showError(`Удалить не удалось`);
+      }
     }),
   }));

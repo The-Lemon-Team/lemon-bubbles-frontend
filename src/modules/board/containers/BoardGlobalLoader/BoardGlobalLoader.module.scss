@@ -1,0 +1,19 @@
+.wrapper {
+    padding: 0 !important;
+
+    [class~="rs-progress-line-inner"] {
+        border-radius: 0;
+    }
+
+    [class~="rs-progress-line-outer"] {
+        border-radius: 0;
+    }
+
+    [class~="rs-progress-line-bg"] {
+        border-radius: 0;
+
+        &:before {
+            animation: progress-active 6s cubic-bezier(0.95,-0.07, 0.58, 1) infinite;
+        }
+    }
+}   
