@@ -40,6 +40,7 @@ export const BoardStore = types
       try {
         self.dateRange.setDateRange(startDate, endDate);
         self.notesStore.loading.setLoading();
+        yield wait();
         const notes = yield notesService.loadNotes(startDate, endDate);
         const hashtags = flatten(
           notes.map((note: INote) => note.hashTags) as IHashTag[],
@@ -67,4 +68,7 @@ export const BoardStore = types
       }
       return self.notesStore.notes.length;
     }),
+  }))
+  .actions((self) => ({
+    reloadNotes: () => self.loadNotes(self.dateRange.start, self.dateRange.end),
   }));

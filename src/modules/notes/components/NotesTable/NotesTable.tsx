@@ -7,6 +7,8 @@ import {
   Popover,
   Table,
   Whisper,
+  Message,
+  Button,
 } from 'rsuite';
 import { observer } from 'mobx-react-lite';
 import AddOutlineIcon from '@rsuite/icons/AddOutline';
@@ -29,11 +31,13 @@ interface NotesTableProps {
     end: Date;
     start: Date;
   };
+  error: boolean;
   isCreatingMode: boolean;
   mode: 'table' | 'cards';
   isLoading: boolean;
   notes: INote[];
 
+  onRefresh: () => void;
   onDateChange: (start: Date, end: Date) => void;
   toggleCreatingMode: () => void;
   onDelete: (id: string) => void;
@@ -41,14 +45,46 @@ interface NotesTableProps {
 
 type TableData = Array<INote | { dayLabel: string }>;
 
+interface IEmptyPlaceholderProps {
+  onRefresh: () => void;
+}
+
+const EmptyPlaceholder = ({ onRefresh }: IEmptyPlaceholderProps) => {
+  return (
+    <div className={cn(styles.notFoundWrapper, styles.messageWrapper)}>
+      <Message
+        showIcon
+        type="error"
+        header="Ошибка загрузки"
+        className={styles.message}
+      >
+        <span>
+          Попробуйте ещё раз <br />
+        </span>
+        <Button
+          appearance="subtle"
+          color="cyan"
+          size="md"
+          className={styles.refreshBtn}
+          onClick={onRefresh}
+        >
+          Обновить
+        </Button>
+      </Message>
+    </div>
+  );
+};
+
 export const NotesTable: React.FC<NotesTableProps> = observer(
   ({
     dateRange,
+    error,
     notes = [],
     isLoading,
     isCreatingMode,
     mode,
 
+    onRefresh,
     onDateChange,
     onDelete,
     toggleCreatingMode,
@@ -119,6 +155,13 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
           <Table
             height={450}
             loading={isLoading}
+            renderEmpty={() => {
+              return error ? (
+                <EmptyPlaceholder onRefresh={onRefresh} />
+              ) : (
+                'Not found'
+              );
+            }}
             data={tableData}
             renderRow={(children, item) => {
               return item?.dayLabel ? (

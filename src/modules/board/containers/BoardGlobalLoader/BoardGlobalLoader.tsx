@@ -9,7 +9,7 @@ export const BoardGlobalLoader = observer(() => {
   const {
     boardStore: { notesStore },
   } = useRootStore();
-  const isLoading = notesStore.deleteLoading.getIsLoading();
+  const isLoading = notesStore.deleteLoading.isLoading;
 
   return isLoading ? (
     <Progress.Line

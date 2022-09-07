@@ -10,8 +10,11 @@ export const LoadingStore = types
     getStatus() {
       return self.status;
     },
-    getIsLoading() {
+    get isLoading() {
       return self.status === 'loading';
+    },
+    get error() {
+      return self.status === 'error';
     },
   }))
   .actions((self) => ({

@@ -25,13 +25,15 @@ export const NotesTablesContainer = observer(() => {
         start: boardStore.dateRange.start,
         end: boardStore.dateRange.end,
       }}
+      error={notesStore.loading.error}
       mode={notesTable.mode as 'table' | 'cards'}
       isCreatingMode={notesTable.isCreatingMode}
       notes={notesStore.getNotes()}
-      isLoading={notesStore.loading.getIsLoading()}
+      isLoading={notesStore.loading.isLoading}
       onDateChange={boardStore.loadNotes}
       toggleCreatingMode={notesTable.toggleCreatingMode}
       onDelete={notesStore.deleteNote}
+      onRefresh={boardStore.reloadNotes}
     />
   );
 });
