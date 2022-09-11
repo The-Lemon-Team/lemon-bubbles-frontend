@@ -25,3 +25,13 @@
 .hashtagField {
     margin: 2rem 0;
 }
+
+.actionPanel {
+    display: flex;
+}
+
+.actionWrapper {
+    &:not(:last-child) {
+        margin-right: 0.5rem;
+    }
+}

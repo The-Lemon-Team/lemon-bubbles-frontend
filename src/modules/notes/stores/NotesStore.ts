@@ -1,4 +1,5 @@
 import {
+  applySnapshot,
   castToSnapshot,
   types,
   flow,
@@ -27,7 +28,7 @@ export const NotesStore = types
     getNotes() {
       return self.notes.map((note) => note);
     },
-    findNote(id: string | number) {
+    findNote(id: string | number = '') {
       return self.notes.find((note) => {
         return note.id === id.toString();
       });
@@ -42,6 +43,13 @@ export const NotesStore = types
 
       self.notes.unshift(newNote);
     }),
+    updateNote: (payload: INote) => {
+      const note = self.findNote(payload.id);
+
+      if (note) {
+        applySnapshot(note, payload);
+      }
+    },
     deleteNote: flow(function* (id: string) {
       const note = self.findNote(id);
 

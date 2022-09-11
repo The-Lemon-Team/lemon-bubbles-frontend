@@ -5,6 +5,7 @@ import { DateRangeStore } from '../../common/stores/DateRangeStore';
 import { NotesStore } from '../../notes/stores';
 import { HashtagsStore } from '../../hashtags/stores';
 import { NotifierStore } from '../../common/stores/NotifierStore';
+import { NotesTableStore } from '../../notes/stores';
 
 import { notesService } from '../../notes/servies';
 
@@ -17,6 +18,7 @@ export const BoardStore = types
     dateRange: DateRangeStore,
     hashTagsStore: HashtagsStore,
     notesStore: NotesStore,
+    notesTable: NotesTableStore,
   })
   .actions((self) => ({
     addNote: flow(function* (payload: INote) {
@@ -29,11 +31,32 @@ export const BoardStore = types
         getEnv<{ notifier: Instance<typeof NotifierStore> }>(
           self,
         ).notifier.showSuccess(
-          `Сообщение с заголовком "${payload.title}" успешно добавлено`,
+          `Запись с заголовком "${payload.title}" успешно добавлено`,
         );
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);
+      }
+    }),
+    editNote: flow(function* (payload: INote) {
+      try {
+        const updatedNote = yield notesService.updateNote(payload);
+
+        self.notesStore.updateNote(updatedNote);
+        self.notesTable.switchOnCreatingMode();
+        getEnv<{ notifier: Instance<typeof NotifierStore> }>(
+          self,
+        ).notifier.showSuccess(
+          `Запись с заголовком "${payload.title}" успешно обновлена`,
+        );
+      } catch (e) {
+        getEnv<{ notifier: Instance<typeof NotifierStore> }>(
+          self,
+        ).notifier.showSuccess(
+          `Запись с заголовком "${payload.title}" обновить не удалось, попробуйте ещё раз`,
+        );
+        // eslint-disable-next-line no-console
+        console.error(e);
       }
     }),
     loadNotes: flow(function* (startDate: Date, endDate: Date) {

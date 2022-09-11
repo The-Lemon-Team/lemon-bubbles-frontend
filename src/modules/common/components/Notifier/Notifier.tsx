@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Message, useToaster } from 'rsuite';
 import { observer } from 'mobx-react-lite';
 
@@ -19,6 +19,7 @@ const Notification = ({ status, message }: INotification) => {
 export const Notifier = observer(() => {
   const toaster = useToaster();
   const notifierStore = useNotifierStore();
+  const timersMap = useRef(new Map());
 
   useEffect(() => {
     notifierStore.notInProgress.forEach(({ status, message, startWork }) => {
@@ -36,10 +37,16 @@ export const Notifier = observer(() => {
     });
 
     notifierStore.inProgress.forEach(({ workId, remove }) => {
-      setTimeout(() => {
-        workId && toaster.remove(workId);
-        remove();
-      }, NOTIFICATION_DURATION);
+      const alreadyInWork = timersMap.current.get(workId);
+      if (!alreadyInWork) {
+        const timeOutTimer = setTimeout(() => {
+          workId && toaster.remove(workId);
+          timersMap.current.delete(workId);
+          remove();
+        }, NOTIFICATION_DURATION);
+
+        timersMap.current.set(workId, timeOutTimer);
+      }
     });
   }, [toaster, notifierStore.notInProgress, notifierStore.inProgress]);
 

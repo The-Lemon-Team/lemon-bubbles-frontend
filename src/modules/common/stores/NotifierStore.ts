@@ -34,7 +34,8 @@ export const NotifierStore = types
   }))
   .actions((self) => ({
     remove(notification: Instance<typeof Notification>) {
-      self.notifications.remove(notification);
+      self.notifications.splice(self.notifications.indexOf(notification), 1);
+      // destroy(notification);
     },
     showMessage(message: Omit<INotification, 'workId'>) {
       self.notifications.push(message);

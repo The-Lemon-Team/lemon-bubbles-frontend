@@ -15,7 +15,7 @@ import PlusIcon from '@rsuite/icons/Plus';
 
 import { useModalManager } from './useModalManager';
 import { NoteList } from '../../../common/components/NoteList';
-import { AddNoteContainer } from '../../../notes/containers';
+import { CreateNoteContainer } from '../../../notes/containers';
 import {
   DEFAULT_FLOATING_MAX_WIDTH,
   DEFAULT_FLOATING_MAX_HEIGHT,
@@ -107,7 +107,7 @@ export const FloatingList: React.FC<FloatingListProps> = ({
     setActiveTab(newValue);
   };
 
-  const addNote = useCallback(
+  const createNote = useCallback(
     (newNote: INote) => {
       closeCreatingMode();
       setNotes([...notes, newNote]);
@@ -174,7 +174,7 @@ export const FloatingList: React.FC<FloatingListProps> = ({
                   speaker={
                     <Popover ref={poperRef} className={styles.creatingCloud}>
                       <Panel className={styles.creatingWrapper}>
-                        <AddNoteContainer onAdd={addNote} />
+                        <CreateNoteContainer onAdd={createNote} />
                       </Panel>
                     </Popover>
                   }

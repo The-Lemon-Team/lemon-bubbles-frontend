@@ -1,4 +1,4 @@
 export * from './HashtagListContainer';
-export * from './AddNoteContainer';
+export * from './CreateNoteContainer';
 export * from './HashTextAreaContainer';
 export * from './NotesTablesContainer';

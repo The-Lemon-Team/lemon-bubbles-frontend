@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { format } from 'date-fns';
 import {
   DateRangePicker,
@@ -18,8 +18,7 @@ import GridIcon from '@rsuite/icons/Grid';
 import cn from 'classnames';
 
 import { LineTag } from '../../../common/components';
-import { AddNoteContainer } from '../../containers/AddNoteContainer';
-import { groupNotesByDays } from '../../utils/groupNotesByDays';
+import { CreateNoteContainer } from '../../containers/CreateNoteContainer';
 
 import styles from './NotesTable.module.scss';
 
@@ -32,18 +31,17 @@ interface NotesTableProps {
     start: Date;
   };
   error: boolean;
-  isCreatingMode: boolean;
-  mode: 'table' | 'cards';
+  isFormEnabled: boolean;
   isLoading: boolean;
+  mode: 'table' | 'cards';
   notes: INote[];
 
-  onRefresh: () => void;
   onDateChange: (start: Date, end: Date) => void;
-  toggleCreatingMode: () => void;
   onDelete: (id: string) => void;
+  onEdit: (note: INote) => void;
+  onRefresh: () => void;
+  toggleCreatingMode: () => void;
 }
-
-type TableData = Array<INote | { dayLabel: string }>;
 
 interface IEmptyPlaceholderProps {
   onRefresh: () => void;
@@ -81,30 +79,16 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
     error,
     notes = [],
     isLoading,
-    isCreatingMode,
+    isFormEnabled,
     mode,
 
+    onEdit,
     onRefresh,
     onDateChange,
     onDelete,
     toggleCreatingMode,
   }) => {
     const isTableMode = mode === 'table';
-    const tableData = useMemo(() => {
-      const notesByDay = groupNotesByDays(notes);
-
-      return Object.keys(notesByDay).reduce((acc, cur) => {
-        const notes = notesByDay[cur];
-
-        return [...acc, ...notes];
-      }, [] as TableData);
-    }, [notes]);
-    const handleDelete = useCallback(
-      (id: string) => {
-        onDelete(id);
-      },
-      [onDelete],
-    );
     const handleDateChange = useCallback(
       (value: DateRange | null) => {
         value && onDateChange(value[0], value[1]);
@@ -120,7 +104,7 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
               <IconButton
                 icon={<AddOutlineIcon />}
                 onClick={toggleCreatingMode}
-                active={isCreatingMode}
+                active={isFormEnabled}
                 circle
               />
             </div>
@@ -145,10 +129,10 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
             />
           </div>
         </div>
-        <div className={cn({ [styles.content]: isCreatingMode })}>
-          {isCreatingMode && (
+        <div className={cn({ [styles.content]: isFormEnabled })}>
+          {isFormEnabled && (
             <div className={styles.formWrapper}>
-              <AddNoteContainer onAdd={() => void 0} />
+              <CreateNoteContainer onAdd={() => void 0} />
             </div>
           )}
 
@@ -162,7 +146,7 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
                 'Not found'
               );
             }}
-            data={tableData}
+            data={notes}
             renderRow={(children, item) => {
               return item?.dayLabel ? (
                 <div>{item.dayLabel}</div>
@@ -172,7 +156,7 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
             }}
             headerHeight={50}
             className={cn(styles.table, {
-              [styles.tableCreatingMode]: isCreatingMode,
+              [styles.tableCreatingMode]: isFormEnabled,
             })}
           >
             <Table.Column flexGrow={2} key="title">
@@ -242,7 +226,7 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
                 <></>
               </Table.HeaderCell>
               <Table.Cell dataKey="id" style={{ padding: 4 }}>
-                {({ id }) => {
+                {(item) => {
                   return (
                     <Whisper
                       placement="autoVerticalStart"
@@ -258,11 +242,14 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
                             <Dropdown.Menu onSelect={() => onClose()}>
                               <Dropdown.Item
                                 eventKey={1}
-                                onSelect={() => handleDelete(id)}
+                                onSelect={() => onDelete(item.id)}
                               >
                                 Удалить
                               </Dropdown.Item>
-                              <Dropdown.Item eventKey={2}>
+                              <Dropdown.Item
+                                onSelect={() => onEdit(item as INote)}
+                                eventKey={2}
+                              >
                                 Редактировать
                               </Dropdown.Item>
                             </Dropdown.Menu>

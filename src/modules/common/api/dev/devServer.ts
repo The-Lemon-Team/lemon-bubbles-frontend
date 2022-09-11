@@ -8,7 +8,7 @@ import LocalStoragePersister from '@pollyjs/persister-local-storage';
 import { hashTagsMock } from './hashTags.mock';
 import { generateNote, notesMock } from './notes.mock';
 
-import { IDateRange } from '../../../../interfaces';
+import { IDateRange, INote } from '../../../../interfaces';
 
 export const setupDevServer = () => {
   Polly.register(FetchAdapter);
@@ -79,5 +79,17 @@ export const setupDevServer = () => {
 
   server.delete('/api/notes/:id').intercept((req, res) => {
     res.status(200).send(true);
+  });
+
+  server.patch('/api/notes/:id').intercept((req, res) => {
+    const updatingNote: INote = JSON.parse(req.body || '');
+
+    notesMock.forEach((note) => {
+      if (note.id === updatingNote.id) {
+        note = updatingNote;
+      }
+    });
+
+    res.status(200).json(updatingNote);
   });
 };

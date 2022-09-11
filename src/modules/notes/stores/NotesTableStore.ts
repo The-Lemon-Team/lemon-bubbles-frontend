@@ -1,12 +1,18 @@
-import { types } from 'mobx-state-tree';
+import { types, Instance } from 'mobx-state-tree';
+import { INote } from '../../../interfaces';
+import { NoteStore } from './NoteStore';
 
 export const NotesTableStore = types.snapshotProcessor(
   types
     .model('NotesTableStore', {
       isCreatingMode: types.boolean,
       mode: types.enumeration('mode', ['table', 'cards']),
+      selectedToEdit: types.maybe(types.reference(NoteStore)),
     })
     .views((self) => ({
+      get isEditingMode() {
+        return !!self.selectedToEdit;
+      },
       get isTableMode() {
         return self.mode === 'table';
       },
@@ -14,8 +20,14 @@ export const NotesTableStore = types.snapshotProcessor(
         return self.mode === 'cards';
       },
     }))
+    .views((self) => ({
+      get isEnabled() {
+        return self.isCreatingMode || self.isEditingMode;
+      },
+    }))
     .actions((self) => ({
       switchOnCreatingMode() {
+        self.selectedToEdit = undefined;
         self.isCreatingMode = true;
       },
       switchOffCreatingMode() {
@@ -34,11 +46,22 @@ export const NotesTableStore = types.snapshotProcessor(
       setCardsMode() {
         self.mode = 'cards';
       },
+    }))
+    .actions((self) => ({
+      setEditMode(note: INote) {
+        self.switchOffCreatingMode();
+        self.selectedToEdit = note as Instance<typeof NoteStore>;
+      },
+      resetEditMode() {
+        self.switchOnCreatingMode();
+        self.selectedToEdit = undefined;
+      },
     })),
   {
     preProcessor() {
       const storedData = localStorage.getItem('NotesTableStore');
-      const restoredData = storedData && JSON.parse(storedData);
+      const { selectedToEdit, ...restoredData } =
+        storedData && JSON.parse(storedData);
 
       return !restoredData
         ? { isCreatingMode: false, mode: 'table' }

@@ -6,6 +6,7 @@ import createHashtagPlugin from '@draft-js-plugins/hashtag';
 import classNames from 'classnames';
 import createMentionPlugin, { defaultTheme } from '@draft-js-plugins/mention';
 import { EntryComponentProps } from '@draft-js-plugins/mention/lib/MentionSuggestions/Entry/Entry';
+import getCurrentContrastText from 'font-color-contrast';
 
 import { LineTag } from '../../../common/components';
 
@@ -29,6 +30,18 @@ const mentionPlugin = createMentionPlugin({
   theme: {
     ...defaultTheme,
     ...mentionsStyles,
+  },
+  mentionComponent: ({ children, mention }) => {
+    return (
+      <span
+        style={{
+          background: mention.color,
+          color: getCurrentContrastText(mention.color),
+        }}
+      >
+        {children}
+      </span>
+    );
   },
   mentionPrefix: '#',
   mentionTrigger: ['#'],
@@ -97,10 +110,12 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
     if (editorValue.getCurrentContent().getPlainText() !== value) {
       const editorState = EditorState.push(
         editorValue,
-        EditorState.createEmpty().getCurrentContent(),
+        (value
+          ? EditorState.createWithContent(ContentState.createFromText(value))
+          : EditorState.createEmpty()
+        ).getCurrentContent(),
         'insert-characters',
       );
-
       setEditorValue(editorState);
     }
   }, [editorValue, value]);

@@ -6,8 +6,8 @@ import { useRootStore } from '../../../common/stores';
 import { NotesTable } from '../../components';
 
 export const NotesTablesContainer = observer(() => {
-  const { boardStore, notesTable } = useRootStore();
-  const { notesStore } = boardStore;
+  const { boardStore } = useRootStore();
+  const { notesStore, notesTable } = boardStore;
 
   useEffect(() => {
     const dateRange = boardStore.dateRange.getDateRange();
@@ -27,11 +27,12 @@ export const NotesTablesContainer = observer(() => {
       }}
       error={notesStore.loading.error}
       mode={notesTable.mode as 'table' | 'cards'}
-      isCreatingMode={notesTable.isCreatingMode}
+      isFormEnabled={notesTable.isEnabled}
       notes={notesStore.getNotes()}
       isLoading={notesStore.loading.isLoading}
       onDateChange={boardStore.loadNotes}
       toggleCreatingMode={notesTable.toggleCreatingMode}
+      onEdit={notesTable.setEditMode}
       onDelete={notesStore.deleteNote}
       onRefresh={boardStore.reloadNotes}
     />

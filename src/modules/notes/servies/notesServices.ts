@@ -1,5 +1,4 @@
-import { format } from 'date-fns';
-
+import { formatToIsoDate } from '../../common/utils';
 import { authTransport } from '../../common/api';
 
 import { INote } from '../../../interfaces';
@@ -12,15 +11,15 @@ export const notesService: INotesService = {
   loadNotes: (start: Date, end: Date): Promise<INote[]> => {
     return authTransport.get('/api/notes', {
       params: {
-        start: format(start, "yyyy-MM-dd'T'HH:mm:ss.SSS"),
-        end: format(end, "yyyy-MM-dd'T'HH:mm:ss.SSS"),
+        start: formatToIsoDate(start),
+        end: formatToIsoDate(end),
       },
     });
   },
   deleteNote: (id: string) => {
     return authTransport.delete(`/api/notes/${id}`);
   },
-  updateNote: ({ id, ...payload }: INote) => {
-    return authTransport.patch(`/api/notes/${id}`, payload);
+  updateNote: (payload: INote) => {
+    return authTransport.patch(`/api/notes/${payload.id}`, payload);
   },
 };

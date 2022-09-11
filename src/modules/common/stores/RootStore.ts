@@ -6,14 +6,12 @@ import { SettingsStore } from './SettingsStore';
 
 import { BoardStore } from '../../board/stores';
 import { ThemeMode } from '../../../enums';
-import { NotesTableStore } from '../../notes/stores';
 import { notifierStore } from './NotifierStore';
 import { sizes, coordinates, featureFlags } from './appDefaults';
 
 export const RootStore = types.model({
   settingsStore: SettingsStore,
   boardStore: BoardStore,
-  notesTable: NotesTableStore,
 });
 
 export const rootStore = RootStore.create(
@@ -51,10 +49,10 @@ export const rootStore = RootStore.create(
           status: null,
         },
       },
-    },
-    notesTable: {
-      isCreatingMode: false,
-      mode: 'table',
+      notesTable: {
+        isCreatingMode: false,
+        mode: 'table',
+      },
     },
   },
   { notifier: notifierStore },

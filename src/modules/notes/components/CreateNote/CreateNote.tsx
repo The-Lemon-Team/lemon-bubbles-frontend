@@ -1,20 +1,25 @@
-import React, { useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { Divider, IconButton, Input } from 'rsuite';
 import { Formik, FormikProps, Field, FieldProps } from 'formik';
 import { Panel } from 'rsuite';
-import CheckIcon from '@rsuite/icons/Check';
 import twitterUtils from 'twitter-text';
+import CheckIcon from '@rsuite/icons/Check';
+import ReloadIcon from '@rsuite/icons/Reload';
 
 import { HashTextAreaContainer, HashtagListContainer } from '../../containers';
 
-import styles from './AddNote.module.scss';
+import styles from './CreateNote.module.scss';
 
+import { INote } from '../../../../interfaces';
 import { INoteForm } from '../../../../interfaces';
 
 interface FormikValues extends Partial<INoteForm> {}
 
-export interface AddNoteProps {
-  onAdd: (payload: INoteForm) => void;
+export interface CreateNoteProps {
+  selectedToEdit?: INote;
+
+  onSubmit: (payload: INoteForm) => void;
+  onReset: () => void;
 }
 
 function findHashtags(searchText: string) {
@@ -25,15 +30,32 @@ function findHashtags(searchText: string) {
   }, [] as string[]);
 }
 
-export const AddNote = ({ onAdd }: AddNoteProps) => {
+const inititalFormValues: FormikValues = {
+  title: '',
+  description: '',
+  created: new Date().toString(),
+  hashTags: [],
+};
+
+export const CreateNote = ({
+  selectedToEdit,
+  onSubmit,
+  onReset,
+}: CreateNoteProps) => {
   const formikRef = useRef<FormikProps<FormikValues>>(null);
+  const initialValues = selectedToEdit
+    ? {
+        ...selectedToEdit,
+        hashTags: selectedToEdit.hashTags.map((hashTag) => hashTag.text),
+      }
+    : inititalFormValues;
 
   const handleSubmit = useCallback(
     (values: FormikValues) => {
-      onAdd(values as INoteForm);
+      onSubmit(values as INoteForm);
       formikRef.current?.resetForm();
     },
-    [onAdd, formikRef],
+    [onSubmit, formikRef],
   );
   const handleTextChange = useCallback(
     (text?: string) => {
@@ -54,28 +76,40 @@ export const AddNote = ({ onAdd }: AddNoteProps) => {
   return (
     <Formik<FormikValues>
       onSubmit={handleSubmit}
+      enableReinitialize
       innerRef={formikRef}
-      initialValues={{
-        title: '',
-        description: '',
-        created: new Date().toString(),
-        hashTags: [],
-      }}
+      initialValues={initialValues}
     >
-      {({ handleSubmit }) => {
+      {({ values, handleSubmit }) => {
+        const isEditMode = !!values.id;
+
         return (
           <Panel bordered shaded expanded className={styles.panel}>
             <div className={styles.titleWrapper}>
-              <p className={styles.title}>Добавить новую запись</p>
-              <div>
-                <IconButton
-                  size="sm"
-                  appearance="primary"
-                  icon={<CheckIcon />}
-                  onClick={() => handleSubmit()}
-                  variant="contained"
-                  color="green"
-                />
+              <p className={styles.title}>
+                {isEditMode ? `Редактировать запись` : 'Добавить новую запись'}
+              </p>
+              <div className={styles.actionPanel}>
+                <div className={styles.actionWrapper}>
+                  <IconButton
+                    size="sm"
+                    appearance="primary"
+                    icon={<CheckIcon />}
+                    onClick={() => handleSubmit()}
+                    variant="contained"
+                    color="green"
+                  />
+                </div>
+                <div className={styles.actionWrapper}>
+                  <IconButton
+                    size="sm"
+                    appearance="primary"
+                    icon={<ReloadIcon />}
+                    onClick={() => onReset()}
+                    variant="contained"
+                    color="violet"
+                  />
+                </div>
               </div>
             </div>
             <Divider />
