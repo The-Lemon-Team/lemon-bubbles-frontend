@@ -4,10 +4,12 @@ import { observer } from 'mobx-react-lite';
 import { useRootStore } from '../../../common/stores';
 
 import { NotesTable } from '../../components';
+import { useFirebaseAuth } from '../../../firebase';
 
 export const NotesTablesContainer = observer(() => {
   const { boardStore } = useRootStore();
   const { notesStore, notesTable } = boardStore;
+  const { isLoading } = useFirebaseAuth();
 
   useEffect(() => {
     const dateRange = boardStore.dateRange.getDateRange();
@@ -29,7 +31,7 @@ export const NotesTablesContainer = observer(() => {
       mode={notesTable.mode as 'table' | 'cards'}
       isFormEnabled={notesTable.isEnabled}
       notes={notesStore.getNotes()}
-      isLoading={notesStore.loading.isLoading}
+      isLoading={notesStore.loading.isLoading || isLoading}
       onDateChange={boardStore.loadNotes}
       toggleCreatingMode={notesTable.toggleCreatingMode}
       onEdit={notesTable.setEditMode}

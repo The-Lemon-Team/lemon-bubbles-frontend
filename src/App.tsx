@@ -35,7 +35,7 @@ export const App = () => {
                   </PrivateRoute>
                 }
               />
-              <Route path="/auth" element={<AuthScreenContainer />} />
+              <Route path="/auth/*" element={<AuthScreenContainer />} />
             </Routes>
             <Notifier />
           </ThemeProvider>

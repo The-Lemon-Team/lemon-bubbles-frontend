@@ -8,7 +8,7 @@ interface IPrivateRouteProps extends RouteProps {
 }
 
 export const PrivateRoute: React.FC<IPrivateRouteProps> = ({ children }) => {
-  const { user } = useFirebaseAuth();
+  const { user, isLoading } = useFirebaseAuth();
 
-  return user ? <>{children}</> : <Navigate to="/auth" />;
+  return user || isLoading ? <>{children}</> : <Navigate to="/auth" />;
 };
