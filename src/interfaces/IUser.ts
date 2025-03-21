@@ -3,3 +3,24 @@ export interface IUser {
   username: string;
   email: string;
 }
+
+export interface ILoginByEmailRequestDto {
+  email: string;
+  password: string;
+}
+
+export interface ILoginByNicknameRequestDto {
+  username: string;
+  password: string;
+}
+
+export interface ICreateUserRequestDto extends ILoginByNicknameRequestDto {
+  email: string;
+}
+
+export interface ILoginForm extends ILoginByEmailRequestDto {}
+
+export interface ISignUpForm extends ILoginForm {
+  username: string;
+  repeatedPassword: string;
+}

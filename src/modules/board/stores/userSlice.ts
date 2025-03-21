@@ -2,7 +2,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { authTransport } from '../../common/api';
 
-import { ILoginByEmailRequestPayload } from '../../common/api';
+import {
+  ILoginByEmailRequestDto,
+  ICreateUserRequestDto,
+  IUser,
+} from '../../../interfaces';
 import { IUserStore } from '../../common/api/interfaces/IStore';
 
 const initialState: IUserStore = {
@@ -11,11 +15,15 @@ const initialState: IUserStore = {
     isLoading: false,
     error: false,
   },
+  create: {
+    isLoading: false,
+    error: false,
+  },
 };
 
 const loginByEmail = createAsyncThunk(
   'user/loginByEmail',
-  (payload: ILoginByEmailRequestPayload) => {
+  (payload: ILoginByEmailRequestDto) => {
     return authTransport
       .loginByEmail(payload)
       .then(() => authTransport.userByToken());
@@ -25,6 +33,22 @@ const loginByEmail = createAsyncThunk(
 const userByToken = createAsyncThunk('user/userByToken', () => {
   return authTransport.userByToken();
 });
+
+const createUser = createAsyncThunk(
+  'user/create',
+  (payload: ICreateUserRequestDto, thunkApi) => {
+    return authTransport
+      .post<IUser, ICreateUserRequestDto>('/api/users/create', payload)
+      .then(() => {
+        thunkApi.dispatch(
+          loginByEmail({
+            email: payload.email,
+            password: payload.password,
+          }),
+        );
+      });
+  },
+);
 
 export const userSlice = createSlice({
   name: 'user',
@@ -40,8 +64,9 @@ export const userSlice = createSlice({
     builder
       .addCase(userByToken.pending, (state) => {
         state.loading.isLoading = true;
+        state.loading.error = false;
       })
-      .addCase(userByToken.rejected, (state, action) => {
+      .addCase(userByToken.rejected, (state) => {
         state.loading.error = true;
         state.loading.isLoading = false;
       })
@@ -67,10 +92,27 @@ export const userSlice = createSlice({
       .addCase(loginByEmail.rejected, (state) => {
         state.loading.error = true;
         state.loading.isLoading = false;
+      })
+
+      .addCase(createUser.pending, (state) => {
+        state.create.isLoading = true;
+        state.create.error = false;
+      })
+      .addCase(createUser.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.data = action.payload;
+        }
+
+        state.create.isLoading = false;
+        state.create.error = false;
+      })
+      .addCase(createUser.rejected, (state) => {
+        state.create.isLoading = false;
+        state.create.error = false;
       });
   },
 });
 
 const clearUser = userSlice.actions.clearUser;
 
-export { loginByEmail, userByToken, clearUser };
+export { loginByEmail, userByToken, clearUser, createUser };

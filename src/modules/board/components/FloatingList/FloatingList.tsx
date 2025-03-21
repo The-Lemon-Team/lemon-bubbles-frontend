@@ -21,8 +21,8 @@ import {
   DEFAULT_FLOATING_MAX_HEIGHT,
 } from '../../../../constants';
 
-import styles from './FloatingList.module.scss';
 import { useFloatingList } from './useFloatingList';
+import styles from './FloatingList.module.scss';
 
 import { INote } from '../../../../interfaces';
 

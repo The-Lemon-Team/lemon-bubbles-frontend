@@ -1,7 +1,7 @@
 ---
 name: Deploy Lemon Bubbles app
 
-on: 
+on:
   push:
     branches:
       - dev
@@ -17,13 +17,6 @@ jobs:
       - run: npm install
       - name: Build
         run: npm run build
-        env:
-          REACT_APP_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
-          REACT_APP_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
-          REACT_APP_PROJECT_ID: ${{ secrets.REACT_APP_PROJECT_ID }}
-          REACT_APP_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
-          REACT_APP_MESSAGE_SENDER_ID: ${{ secrets.FIREBASE_MESSAGE_SENDER_ID }}
-          REACT_APP_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
       - name: Archive build
         uses: actions/upload-artifact@v2
         with:
@@ -54,7 +47,7 @@ jobs:
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
-     
+
       - name: send telegram message on push
         uses: appleboy/telegram-action@master
         with:

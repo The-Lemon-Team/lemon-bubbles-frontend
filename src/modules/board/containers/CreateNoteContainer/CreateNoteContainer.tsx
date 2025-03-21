@@ -5,14 +5,8 @@ import twitterUtils from 'twitter-text';
 import { CreateNote } from '../../components/CreateNote';
 
 import { useBoard } from '../../hooks/useBoard';
-import { useHashTagAdapter } from './useHashTagAdapter';
 
-import {
-  IHashTag,
-  INote,
-  INoteForm,
-  INoteFormikValues,
-} from '../../../../interfaces';
+import { IHashTag, INoteFormikValues } from '../../../../interfaces';
 import { useHashTags } from '../../../common/hooks/useHashTags';
 
 const inititalFormValues: INoteFormikValues = {

@@ -19,5 +19,6 @@ export const signUpFormValidationSchema = Schema.Model.combine(
         return true;
       }, 'Пароли не совпадают')
       .isRequired('Обязательное поле'),
+    username: Schema.Types.StringType().isRequired('Обязательное поле'),
   }),
 );

@@ -13,15 +13,15 @@ import GoogleIcon from '@rsuite/icons/legacy/Google';
 import { useNavigate } from 'react-router-dom';
 
 import { loginFormValidationSchema } from '../../../utils/validation/authSchemas';
-import { useLoginWithEmail } from '../../../../firebase';
+import { useLoginWithEmail } from '../../../../board/hooks/useLogingWithEmail';
 
-import { ILoginForm } from '../../../../../interfaces/ILoginForm';
+import { ILoginByEmailRequestDto } from '../../../../../interfaces';
 
 import styles from './LoginForm.module.scss';
 
 export interface ILoginFormProps {}
 
-const initialValues: ILoginForm = {
+const initialValues: ILoginByEmailRequestDto = {
   email: '',
   password: '',
 };

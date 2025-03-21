@@ -11,11 +11,12 @@ interface SignUpFormProps {
   isLoading?: boolean;
   errors?: Dictionary<string>;
 
-  onSignUp: (email: string, password: string) => void;
+  onSignUp: (payload: ISignUpForm) => void;
 }
 
 const initialValues: ISignUpForm = {
   email: '',
+  username: '',
   password: '',
   repeatedPassword: '',
 };
@@ -29,16 +30,15 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
     initialValues,
     initialErrors: errors,
     enableReinitialize: true,
-    onSubmit: ({ email, password }) => {
-      onSignUp(email, password);
-    },
+    onSubmit: onSignUp,
     validate: (values) => {
-      const { email, password, repeatedPassword } =
+      const { username, email, password, repeatedPassword } =
         signUpFormValidationSchema.check(values);
       const errors = {
         email: email.errorMessage,
         password: password.errorMessage,
         repeatedPassword: repeatedPassword.errorMessage,
+        username: username.errorMessage,
       };
 
       return pickBy(errors, identity);
@@ -66,7 +66,18 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
         </Form.ErrorMessage>
       </Form.Group>
       <Form.Group>
-        <Form.ControlLabel>Пароль</Form.ControlLabel>
+        <Form.ControlLabel>Никнейм: </Form.ControlLabel>
+        <Input
+          name="username"
+          onChange={handleFormikChange}
+          disabled={isLoading}
+        />
+        <Form.ErrorMessage show={!!formik.errors.username}>
+          {formik.errors.username}
+        </Form.ErrorMessage>
+      </Form.Group>
+      <Form.Group>
+        <Form.ControlLabel>Пароль: </Form.ControlLabel>
         <Input
           name="password"
           type="password"
@@ -79,7 +90,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
         </Form.ErrorMessage>
       </Form.Group>
       <Form.Group>
-        <Form.ControlLabel>Повторить пароль</Form.ControlLabel>
+        <Form.ControlLabel>Повторить пароль: </Form.ControlLabel>
         <Input
           name="repeatedPassword"
           type="password"

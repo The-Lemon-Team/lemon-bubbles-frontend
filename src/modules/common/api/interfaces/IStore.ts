@@ -1,15 +1,26 @@
 import { ThemeMode } from '../../../../enums';
-import { IUser, ILoadingState, IDateRange } from '../../../../interfaces';
-import { ICoordinates, ISizes } from '../../../../interfaces';
-
-export interface IUserStore {
-  data: IUser | null;
-  loading: ILoadingState;
-}
+import {
+  IUser,
+  ILoadingState,
+  IDateRange,
+  ICoordinates,
+  ISizes,
+  INotification,
+} from '../../../../interfaces';
 
 export interface ICommonStore {
   featureFlags: { [key: string]: boolean };
   theme: ThemeMode;
+}
+
+export interface INotifierStore {
+  notifications: INotification[];
+}
+
+export interface IUserStore {
+  data: IUser | null;
+  loading: ILoadingState;
+  create: ILoadingState;
 }
 
 export interface IFloatingList {

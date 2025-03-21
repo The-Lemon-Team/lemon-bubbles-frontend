@@ -3,16 +3,15 @@ import { useNavigate, Route, Routes, useMatch } from 'react-router-dom';
 import { Animation, Panel, IconButton } from 'rsuite';
 import PagePreviousIcon from '@rsuite/icons/PagePrevious';
 
+import { useUser } from '../../../board/hooks/useUser';
 import { LoginForm } from '../../auth/components';
 import { SignUpContainer } from '../../auth/containers';
 import { Layout } from './Layout';
 
-import { useLoginWithEmail } from '../../../firebase';
-
 import styles from './AuthScreen.module.scss';
 
 export const AuthScreen = () => {
-  const { user } = useLoginWithEmail();
+  const { user } = useUser();
   const navigate = useNavigate();
   const match = useMatch('/auth');
   const goToAuth = useCallback(() => {

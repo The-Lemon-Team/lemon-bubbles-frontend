@@ -5,7 +5,7 @@ import {
   IHttpTransportOptions,
   ILoginRequestPayload,
   ITokensResponse,
-  ILoginByEmailRequestPayload,
+  ILoginByEmailRequestDto,
 } from '../interfaces';
 import { ITokens, IUser } from '../../../../interfaces';
 
@@ -111,7 +111,7 @@ export class AuthTransport implements IAuthTransport {
     return response;
   }
 
-  async loginByEmail({ email, password }: ILoginByEmailRequestPayload) {
+  async loginByEmail({ email, password }: ILoginByEmailRequestDto) {
     const response = await this.client.post('/api/auth/signInByEmail', {
       email,
       password,

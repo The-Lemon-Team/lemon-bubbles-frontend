@@ -1,14 +1,15 @@
 import { useEffect, useRef } from 'react';
 import { Message, useToaster } from 'rsuite';
-import { observer } from 'mobx-react-lite';
-
-import { useNotifierStore } from '../../stores';
 
 import { INotification } from '../../../../interfaces/INotification';
+import { useNotifier } from '../../api/hooks/useNotifier';
 
 const NOTIFICATION_DURATION = 3000;
 
-const Notification = ({ status, message }: INotification) => {
+interface INotificationProps
+  extends Pick<INotification, 'message' | 'status'> {}
+
+const Notification = ({ status, message }: INotificationProps) => {
   return (
     <Message showIcon type={status} duration={0}>
       {message}
@@ -16,39 +17,44 @@ const Notification = ({ status, message }: INotification) => {
   );
 };
 
-export const Notifier = observer(() => {
+export const Notifier = () => {
   const toaster = useToaster();
-  const notifierStore = useNotifierStore();
+  const {
+    notificationsInProgress,
+    notificationsNotInProgress,
+    removeToaster,
+    startWork,
+  } = useNotifier();
+
   const timersMap = useRef(new Map());
 
   useEffect(() => {
-    notifierStore.notInProgress.forEach(({ status, message, startWork }) => {
+    notificationsNotInProgress.forEach((notification) => {
       const toasterId = toaster.push(
         <Notification
-          status={status as INotification['status']}
-          message={message}
+          status={notification.status as INotification['status']}
+          message={notification.message}
         />,
         {
           placement: 'topCenter',
         },
       );
-
-      toasterId && startWork(toasterId);
+      toasterId && startWork(notification, toasterId);
     });
 
-    notifierStore.inProgress.forEach(({ workId, remove }) => {
+    notificationsInProgress.forEach(({ workId, id }) => {
       const alreadyInWork = timersMap.current.get(workId);
       if (!alreadyInWork) {
         const timeOutTimer = setTimeout(() => {
           workId && toaster.remove(workId);
           timersMap.current.delete(workId);
-          remove();
+          removeToaster(id);
         }, NOTIFICATION_DURATION);
 
         timersMap.current.set(workId, timeOutTimer);
       }
     });
-  }, [toaster, notifierStore.notInProgress, notifierStore.inProgress]);
+  }, [toaster, notificationsInProgress, notificationsNotInProgress]);
 
   return null;
-});
+};

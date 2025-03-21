@@ -10,7 +10,6 @@ import {
   Message,
   Button,
 } from 'rsuite';
-import { observer } from 'mobx-react-lite';
 import AddOutlineIcon from '@rsuite/icons/AddOutline';
 import MenuIcon from '@rsuite/icons/Menu';
 import MoreIcon from '@rsuite/icons/More';
@@ -24,6 +23,7 @@ import { CreateNoteContainer } from '../../containers/CreateNoteContainer';
 import styles from './NotesTable.module.scss';
 
 import { IHashTag, INote } from '../../../../interfaces';
+import { useNotifier } from '../../../common/api/hooks/useNotifier';
 
 interface NotesTableProps {
   dateRange: {
@@ -88,6 +88,7 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
     onDelete,
     toggleCreatingMode,
   }) => {
+    const { showSuccess } = useNotifier();
     const isTableMode = mode === 'table';
     const handleDateChange = useCallback(
       (value: DateRange | null) => {
@@ -103,7 +104,8 @@ export const NotesTable: React.FC<NotesTableProps> = observer(
             <div className={styles.filterItem}>
               <IconButton
                 icon={<AddOutlineIcon />}
-                onClick={toggleCreatingMode}
+                // onClick={toggleCreatingMode}
+                onClick={() => showSuccess('Success message')}
                 active={isFormEnabled}
                 circle
               />

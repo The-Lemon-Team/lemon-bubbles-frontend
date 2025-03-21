@@ -16,6 +16,7 @@ import { notesApi } from '../../board/api/notesApi';
 import { commonSlice } from '../../board/stores/commonSlice';
 import { boardSlice } from '../../board/stores/boardSlice';
 import { hashTagsApi } from '../../board/api/hashTagsApi';
+import { notifierSlice } from './notifierSlice';
 
 const persistConfig = {
   key: 'user',
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   common: commonSlice.reducer,
   board: boardSlice.reducer,
   hashtags: hashTagsApi.reducer,
+  notifier: notifierSlice.reducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

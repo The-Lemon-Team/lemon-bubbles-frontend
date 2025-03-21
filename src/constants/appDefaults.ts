@@ -5,7 +5,7 @@ import {
   DEFAULT_FLOATING_WIDTH,
   DEFAULT_FLOATING_X,
   DEFAULT_FLOATING_Y,
-} from '../../../constants';
+} from './FloatingWindowDefaults';
 
 export const sizes = {
   width: DEFAULT_FLOATING_HEIGHT,
