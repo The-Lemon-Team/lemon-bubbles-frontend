@@ -1,7 +1,7 @@
-import { useRootStore } from '../stores';
+import { useAppSelector } from '../stores/hooks';
 
 export function useFeatureFlag(featureFlag: string) {
-  const { settingsStore } = useRootStore();
+  const featureFlags = useAppSelector((state) => state.common.featureFlags);
 
-  return settingsStore.featureFlags.getFeature(featureFlag);
+  return !!featureFlags[featureFlag];
 }

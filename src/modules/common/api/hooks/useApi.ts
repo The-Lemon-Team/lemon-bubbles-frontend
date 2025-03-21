@@ -1,5 +1,5 @@
 import { authTransport } from '../authTransport';
-import { notesService } from '../../../notes/servies';
+import { notesService } from '../../../board/servies';
 
 import { IApi } from '../interfaces';
 

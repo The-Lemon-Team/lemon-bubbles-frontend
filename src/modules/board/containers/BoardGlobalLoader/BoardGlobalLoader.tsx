@@ -1,15 +1,9 @@
-import { observer } from 'mobx-react-lite';
 import { Progress } from 'rsuite';
-
-import { useRootStore } from '../../../common/stores';
 
 import styles from './BoardGlobalLoader.module.scss';
 
-export const BoardGlobalLoader = observer(() => {
-  const {
-    boardStore: { notesStore },
-  } = useRootStore();
-  const isLoading = notesStore.deleteLoading.isLoading;
+export const BoardGlobalLoader = () => {
+  const isLoading = false;
 
   return isLoading ? (
     <Progress.Line
@@ -23,4 +17,4 @@ export const BoardGlobalLoader = observer(() => {
   ) : (
     <></>
   );
-});
+};

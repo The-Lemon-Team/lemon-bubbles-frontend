@@ -60,7 +60,7 @@ export class HttpTransport implements IHttpTransport {
     onFulfilled?: (value: IHttpTransportOptions) => IHttpTransportOptions,
     onRejected?: (error: any) => any,
   ): void {
-    this._client.interceptors.request.use(onFulfilled, onRejected);
+    this._client.interceptors.request.use(onFulfilled as any, onRejected);
   }
 
   responseMiddleware<R = any>(

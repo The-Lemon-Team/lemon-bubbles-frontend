@@ -11,3 +11,10 @@ export interface INote {
 export interface INoteForm extends Omit<INote, 'hashTags'> {
   hashTags: string[];
 }
+
+export interface IGetNotesRequestDto {
+  startDate: string;
+  endDate: string;
+}
+
+export interface INoteFormikValues extends Partial<INoteForm> {}

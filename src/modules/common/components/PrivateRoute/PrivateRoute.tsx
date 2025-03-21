@@ -1,14 +1,15 @@
 import React from 'react';
-import { Navigate, RouteProps } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-import { useFirebaseAuth } from '../../../firebase/useFirebaseAuth';
+import { useAppSelector } from '../../stores/hooks';
 
-interface IPrivateRouteProps extends RouteProps {
+interface IPrivateRouteProps {
   children?: React.ReactNode;
 }
 
 export const PrivateRoute: React.FC<IPrivateRouteProps> = ({ children }) => {
-  const { user, isLoading } = useFirebaseAuth();
+  const user = useAppSelector((state) => state.user.data);
+  const isLoading = useAppSelector((state) => state.user.loading.isLoading);
 
   return user || isLoading ? <>{children}</> : <Navigate to="/auth" />;
 };

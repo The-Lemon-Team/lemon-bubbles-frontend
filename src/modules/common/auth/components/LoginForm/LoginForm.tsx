@@ -8,44 +8,38 @@ import {
   Input,
 } from 'rsuite';
 import { useFormik } from 'formik';
-import { pickBy, identity, Dictionary } from 'lodash';
+import { pickBy, identity } from 'lodash';
 import GoogleIcon from '@rsuite/icons/legacy/Google';
+import { useNavigate } from 'react-router-dom';
 
 import { loginFormValidationSchema } from '../../../utils/validation/authSchemas';
+import { useLoginWithEmail } from '../../../../firebase';
 
 import { ILoginForm } from '../../../../../interfaces/ILoginForm';
 
 import styles from './LoginForm.module.scss';
 
-export interface ILoginFormProps {
-  isLoading?: boolean;
-  errors?: Dictionary<string>;
-
-  goToSignUp: () => void;
-  onGoogleAuth: () => void;
-  onSignIn: (email: string, password: string) => void;
-}
+export interface ILoginFormProps {}
 
 const initialValues: ILoginForm = {
   email: '',
   password: '',
 };
 
-export const LoginForm: React.FC<ILoginFormProps> = ({
-  isLoading = false,
-  errors = {},
+export const LoginForm: React.FC<ILoginFormProps> = () => {
+  // const onSignIn = () => {};
+  const { signInWithEmail, isLoading } = useLoginWithEmail();
+  const navigate = useNavigate();
 
-  goToSignUp,
-  onGoogleAuth,
-  onSignIn,
-}) => {
+  const onSignUp = useCallback(() => {
+    navigate('/auth/sign-up');
+  }, [navigate]);
+
   const formik = useFormik({
     initialValues,
-    initialErrors: errors,
+    // initialErrors: errors,
     enableReinitialize: true,
-    onSubmit: ({ email, password }) => {
-      onSignIn(email, password);
-    },
+    onSubmit: signInWithEmail,
     validate: (values) => {
       const { email, password } = loginFormValidationSchema.check(values);
       const errors = {
@@ -72,7 +66,7 @@ export const LoginForm: React.FC<ILoginFormProps> = ({
               color="red"
               appearance="primary"
               size="lg"
-              onClick={onGoogleAuth}
+              // onClick={onGoogleAuth}
               block
             >
               <GoogleIcon /> Авторизировать с помощью Google
@@ -112,7 +106,7 @@ export const LoginForm: React.FC<ILoginFormProps> = ({
       <Form.Group>
         <FlexboxGrid justify="start" align="middle">
           <span>Ещё не зарегистрированы? </span>
-          <Button appearance="link" onClick={goToSignUp} disabled={isLoading}>
+          <Button appearance="link" onClick={onSignUp} disabled={isLoading}>
             Создать аккаунт
           </Button>
         </FlexboxGrid>

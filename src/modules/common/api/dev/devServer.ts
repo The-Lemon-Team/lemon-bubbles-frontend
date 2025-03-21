@@ -8,7 +8,7 @@ import LocalStoragePersister from '@pollyjs/persister-local-storage';
 import { hashTagsMock } from './hashTags.mock';
 import { generateNote, notesMock } from './notes.mock';
 
-import { IDateRange, INote } from '../../../../interfaces';
+import { IDateRangeDto, INote } from '../../../../interfaces';
 
 export const setupDevServer = () => {
   Polly.register(FetchAdapter);
@@ -21,15 +21,8 @@ export const setupDevServer = () => {
     logLevel: 'info', // Log requests to console
   });
 
-  server.get('/api/notes').intercept((req, res) => {
-    const filteredNotes = notesMock.filter((note) => {
-      return isWithinInterval(new Date(note.created), {
-        start: new Date(req.query.start as string),
-        end: new Date(req.query.end as string),
-      });
-    });
-
-    res.status(200).json(filteredNotes);
+  server.post('/api/notes').intercept((req, res) => {
+    res.status(200).json(notesMock);
   });
 
   server.put('/api/notes').intercept((req, res) => {
@@ -59,23 +52,27 @@ export const setupDevServer = () => {
     res.status(200).json(withNewTags);
   });
 
-  server.get('/api/hashTags/').intercept((req, res) => {
-    const searchQuery = req.query.text;
-    const dateRange: IDateRange = JSON.parse(
-      req.query.excludeDateRange as string,
-    );
-    const tagsOutOfRange = hashTagsMock
-      .filter(
-        (tag) =>
-          !isWithinInterval(new Date(tag.created), {
-            start: new Date(dateRange.start),
-            end: new Date(dateRange.end),
-          }),
-      )
-      .filter((tag) => tag.text.startsWith(searchQuery as string));
-
-    res.status(200).json(tagsOutOfRange);
+  server.get('/api/hashTags').intercept((req, res) => {
+    res.status(200).json(hashTagsMock);
   });
+
+  // server.get('/api/hashTags/').intercept((req, res) => {
+  //   const searchQuery = req.query.text;
+  //   const dateRange: IDateRangeDto = JSON.parse(
+  //     req.query.excludeDateRange as string,
+  //   );
+  //   const tagsOutOfRange = hashTagsMock
+  //     .filter(
+  //       (tag) =>
+  //         !isWithinInterval(new Date(tag.created), {
+  //           start: new Date(dateRange.start),
+  //           end: new Date(dateRange.end),
+  //         }),
+  //     )
+  //     .filter((tag) => tag.text.startsWith(searchQuery as string));
+
+  //   res.status(200).json(tagsOutOfRange);
+  // });
 
   server.delete('/api/notes/:id').intercept((req, res) => {
     res.status(200).send(true);

@@ -3,15 +3,16 @@ import { useNavigate, Route, Routes, useMatch } from 'react-router-dom';
 import { Animation, Panel, IconButton } from 'rsuite';
 import PagePreviousIcon from '@rsuite/icons/PagePrevious';
 
-import { LoginFormContainer, SignUpContainer } from '../../auth/containers';
+import { LoginForm } from '../../auth/components';
+import { SignUpContainer } from '../../auth/containers';
 import { Layout } from './Layout';
 
-import { useFirebaseAuth } from '../../../firebase/useFirebaseAuth';
+import { useLoginWithEmail } from '../../../firebase';
 
 import styles from './AuthScreen.module.scss';
 
-export function AuthScreenContainer() {
-  const { user } = useFirebaseAuth();
+export const AuthScreen = () => {
+  const { user } = useLoginWithEmail();
   const navigate = useNavigate();
   const match = useMatch('/auth');
   const goToAuth = useCallback(() => {
@@ -20,7 +21,7 @@ export function AuthScreenContainer() {
 
   useEffect(() => {
     if (user) {
-      navigate('/');
+      navigate('/board');
     }
   }, [navigate, user]);
 
@@ -40,7 +41,7 @@ export function AuthScreenContainer() {
               >
                 {(props, ref) => (
                   <Panel {...props} style={{ overflow: 'initial' }} ref={ref}>
-                    <LoginFormContainer />
+                    <LoginForm />
                   </Panel>
                 )}
               </Animation.Bounce>
@@ -85,4 +86,4 @@ export function AuthScreenContainer() {
       </Routes>
     </div>
   );
-}
+};

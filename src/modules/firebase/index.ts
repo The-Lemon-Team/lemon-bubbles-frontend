@@ -1,3 +1,3 @@
 export * from './useCreatingFirebaseUser';
 export { useFirebaseAuth } from './useFirebaseAuth';
-export * from './useLogingWithEmail';
+export * from '../board/hooks/useLogingWithEmail';

@@ -1,1 +1,0 @@
-export { hashTagsService } from './hashtagsService';

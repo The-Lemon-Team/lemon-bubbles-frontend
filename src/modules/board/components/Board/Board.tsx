@@ -1,15 +1,28 @@
-import { observer } from 'mobx-react-lite';
+import { useEffect } from 'react';
 import { Container, Grid, Row, Col } from 'rsuite';
+import { useNavigate } from 'react-router-dom';
+
+import { FloatingList } from '../FloatingList';
+import { NotesTablesContainer } from '../../containers';
+import { LivingBackground } from '../../../common/components';
 
 import { useFeatureFlag } from '../../../common/hooks/useFeatureFlag';
-import { NotesTablesContainer } from '../../../notes/containers';
-import { FloatingListContainer } from '../../containers';
-import { LivingBackground } from '../../../common/components';
+import { useUser } from '../../hooks/useUser';
 
 import styles from './Board.module.scss';
 
-export const Board = observer(() => {
+export const Board = () => {
   const isFloatingWindowActivated = useFeatureFlag('floatingWindow');
+  const navigate = useNavigate();
+  const { user, isLoading, loadUserByToken } = useUser();
+
+  useEffect(() => {
+    if (!user && !isLoading) {
+      loadUserByToken()
+        .unwrap()
+        .catch(() => navigate('/'));
+    }
+  }, []);
 
   return (
     <div className={styles.main}>
@@ -22,11 +35,11 @@ export const Board = observer(() => {
           </Row>
         </Grid>
       </Container>
-      {isFloatingWindowActivated && <FloatingListContainer />}
+      {isFloatingWindowActivated && <FloatingList />}
 
       <div className={styles.background}>
         <LivingBackground />
       </div>
     </div>
   );
-});
+};

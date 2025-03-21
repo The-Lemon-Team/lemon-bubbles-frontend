@@ -5,9 +5,9 @@ import {
   IHttpTransportOptions,
   ILoginRequestPayload,
   ITokensResponse,
+  ILoginByEmailRequestPayload,
 } from '../interfaces';
-import { IUser } from '../../../users/interfaces';
-import { ITokens } from '../../../../interfaces';
+import { ITokens, IUser } from '../../../../interfaces';
 
 interface IAuthTransportOptions {
   httpTransport: IHttpTransport;
@@ -17,6 +17,8 @@ interface IAuthTransportOptions {
 }
 
 const REFRESH_TOKEN_URL = '/api/auth/refreshToken';
+
+const wait = () => new Promise((resolve) => setTimeout(resolve, 2000));
 
 export class AuthTransport implements IAuthTransport {
   private token: string | null;
@@ -67,8 +69,14 @@ export class AuthTransport implements IAuthTransport {
       );
   }
 
-  userByToken() {
-    return this.get<IUser>('/api/auth/userByToken');
+  async userByToken() {
+    await wait();
+
+    return this.get<IUser>('/api/auth/userByToken').catch((e) => {
+      this.logout();
+
+      throw e;
+    });
   }
 
   updateToken(refreshToken: string): Promise<ITokensResponse> {
@@ -103,10 +111,29 @@ export class AuthTransport implements IAuthTransport {
     return response;
   }
 
+  async loginByEmail({ email, password }: ILoginByEmailRequestPayload) {
+    const response = await this.client.post('/api/auth/signInByEmail', {
+      email,
+      password,
+    });
+
+    const { accessToken, refreshToken } = response;
+
+    if (accessToken && refreshToken) {
+      this.setToken({
+        refreshToken,
+        accessToken,
+      });
+
+      this.onLoginSubscribers.forEach((subscriber) => subscriber());
+    }
+
+    return response;
+  }
+
   logout = () => {
     this.clearToken();
-
-    this.onLogoutSubscribers.forEach((subscriber) => subscriber());
+    this.notifyLogoutSubcribers();
   };
 
   setTokens(tokens: ITokens | null) {
@@ -157,6 +184,17 @@ export class AuthTransport implements IAuthTransport {
   private onInit(): void {
     this.addAuthRequestMiddleware();
     this.addAuthResponseMiddleware();
+
+    try {
+      const tokens = localStorage.getItem('tokens');
+      if (tokens) {
+        const tokensObj = JSON.parse(tokens);
+
+        this.setTokens(tokensObj);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   private addAuthRequestMiddleware(): void {
@@ -206,6 +244,10 @@ export class AuthTransport implements IAuthTransport {
     );
   }
 
+  private notifyLogoutSubcribers() {
+    this.onLogoutSubscribers.forEach((subscriber) => subscriber());
+  }
+
   private subscribeConfig(
     config?: IHttpTransportOptions,
   ): IHttpTransportOptions {
@@ -223,6 +265,8 @@ export class AuthTransport implements IAuthTransport {
   private clearToken(): void {
     this.token = null;
     this.refreshToken = null;
+
+    localStorage.removeItem('tokens');
   }
 
   private setToken(
@@ -233,5 +277,13 @@ export class AuthTransport implements IAuthTransport {
   ): void {
     this.token = accessToken;
     this.refreshToken = refreshToken;
+
+    localStorage.setItem(
+      'tokens',
+      JSON.stringify({
+        accessToken,
+        refreshToken,
+      }),
+    );
   }
 }

@@ -5,42 +5,45 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import {
-  AuthScreenContainer,
-  PrivateRoute,
+  AuthScreen,
   Header,
   ThemeProvider,
   Notifier,
+  StartupActions,
 } from './modules/common/components';
-import { RootStoreContext, rootStore } from './modules/common/stores/RootStore';
 import { Board } from './modules/board';
+
+import { store, persistor } from './modules/common/stores';
 
 export const App = () => {
   return (
-    <StrictMode>
-      <Router>
-        <RootStoreContext.Provider value={rootStore}>
-          <ThemeProvider>
-            <Routes>
-              <Route path="/" element={<Navigate to="/board" />} />
-              <Route
-                path="/board"
-                element={
-                  <PrivateRoute>
+    <Router>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <StartupActions>
+            <ThemeProvider>
+              <Routes>
+                <Route path="/" element={<Navigate to="/auth" />} />
+                <Route
+                  path="/board"
+                  element={
                     <div>
                       <Header />
                       <Board />
                     </div>
-                  </PrivateRoute>
-                }
-              />
-              <Route path="/auth/*" element={<AuthScreenContainer />} />
-            </Routes>
-            <Notifier />
-          </ThemeProvider>
-        </RootStoreContext.Provider>
-      </Router>
-    </StrictMode>
+                  }
+                />
+                <Route path="/auth/*" element={<AuthScreen />} />
+              </Routes>
+              <Notifier />
+            </ThemeProvider>
+          </StartupActions>
+        </PersistGate>
+      </Provider>
+    </Router>
   );
 };

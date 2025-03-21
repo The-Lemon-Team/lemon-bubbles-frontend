@@ -1,1 +1,2 @@
-export * from './formatToIsoDate';
+export * from './dateFns';
+export * from './colorGenerator';

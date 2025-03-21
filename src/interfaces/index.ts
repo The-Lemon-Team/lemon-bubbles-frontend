@@ -6,3 +6,5 @@ export * from './INote';
 export * from './ISignUpForm';
 export * from './ISizes';
 export * from './ITokens';
+export * from './IUser';
+export * from './ILoadingState';
