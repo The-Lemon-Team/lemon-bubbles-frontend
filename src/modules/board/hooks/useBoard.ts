@@ -1,6 +1,6 @@
 import {
   resetEditId,
-  setEditId,
+  setEditId as setEditIdAction,
   setDelitingId,
   toggleCreatingMode as toggleCreatingModeAction,
   setDate,
@@ -14,13 +14,11 @@ export const useBoard = () => {
   const [loadNotes, { data, isLoading }] = useLazyLoadNotesQuery();
 
   const mode = useAppSelector((state) => state.board.mode);
-  const editId = useAppSelector((state) => state.board.editId);
   const isCreatingMode = useAppSelector((state) => state.board.isCreatingMode);
   const isEditingMode = useAppSelector((state) => !!state.board.editId);
-  const editingNote = data?.find((note) => note.id === editId);
 
-  const editNote = (id: string) => {
-    dispatch(setEditId(id));
+  const setEditId = (id: string) => {
+    dispatch(setEditIdAction(id));
   };
   const resetEditMode = () => {
     dispatch(resetEditId());
@@ -42,14 +40,13 @@ export const useBoard = () => {
   };
 
   return {
-    editingNote,
     notes: data,
     mode,
     isEditingMode,
     isCreatingMode,
     isLoading,
 
-    editNote,
+    setEditId,
     deleteNote,
     toggleCreatingMode,
     changeDate,

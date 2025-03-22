@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
-import { Container, Grid, Row, Col } from 'rsuite';
+import { Container, Grid, Row, Col, Modal } from 'rsuite';
 import { useNavigate } from 'react-router-dom';
 
 import { FloatingList } from '../FloatingList';
 import { NotesTablesContainer } from '../../containers';
 import { LivingBackground } from '../../../common/components';
+import { ModalsManager } from '../ModalsManager';
 
 import { useFeatureFlag } from '../../../common/hooks/useFeatureFlag';
 import { useUser } from '../../hooks/useUser';
@@ -36,6 +37,7 @@ export const Board = () => {
         </Grid>
       </Container>
       {isFloatingWindowActivated && <FloatingList />}
+      <ModalsManager />
 
       <div className={styles.background}>
         <LivingBackground />

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { INote, IDateRange } from '../../../interfaces';
+import { INote, IDateRange, INoteFormSubmitValues } from '../../../interfaces';
 
 export const notesApi = createApi({
   reducerPath: 'notes',
@@ -14,9 +14,34 @@ export const notesApi = createApi({
         body: { startDate, endDate },
       }),
       providesTags: (result) =>
-        result ? result.map(({ id }) => ({ type: 'Notes', id })) : [],
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: 'Notes', id }) as const),
+              { type: 'Notes', id: 'LIST' },
+            ]
+          : [{ type: 'Notes', id: 'LIST' }],
+    }),
+    editNote: build.mutation<INote, INoteFormSubmitValues>({
+      query: (payload) => ({
+        url: '/notes' + `/${payload.id}`,
+        method: 'PATCH',
+        body: payload,
+      }),
+      invalidatesTags: ['Notes'],
+    }),
+    createNote: build.mutation<INote, INoteFormSubmitValues>({
+      query: (payload) => ({
+        url: '/notes',
+        method: 'POST',
+        body: payload,
+      }),
+      invalidatesTags: [{ type: 'Notes', id: 'LIST' }],
     }),
   }),
 });
 
-export const { useLazyLoadNotesQuery } = notesApi;
+export const {
+  useLazyLoadNotesQuery,
+  useEditNoteMutation,
+  useCreateNoteMutation,
+} = notesApi;

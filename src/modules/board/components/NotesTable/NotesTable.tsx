@@ -18,7 +18,6 @@ import cn from 'classnames';
 import { DateRange } from 'rsuite/esm/DateRangePicker';
 
 import { LineTag } from '../../../common/components';
-import { CreateNoteContainer } from '../../containers/CreateNoteContainer';
 import { useNotifier } from '../../../common/api/hooks/useNotifier';
 
 import styles from './NotesTable.module.scss';
@@ -31,7 +30,6 @@ interface NotesTableProps {
     start: Date;
   };
   error?: boolean;
-  isFormEnabled?: boolean;
   isLoading: boolean;
   mode?: 'table' | 'cards';
   notes: INote[];
@@ -78,7 +76,6 @@ export const NotesTable: React.FC<NotesTableProps> = ({
   error,
   notes = [],
   isLoading,
-  isFormEnabled = false,
   mode = 'table',
 
   onEdit,
@@ -87,7 +84,6 @@ export const NotesTable: React.FC<NotesTableProps> = ({
   onDelete,
   toggleCreatingMode,
 }) => {
-  const { showSuccess } = useNotifier();
   const isTableMode = mode === 'table';
   const handleDateChange = useCallback(
     (value: DateRange | null) => {
@@ -103,9 +99,7 @@ export const NotesTable: React.FC<NotesTableProps> = ({
           <div className={styles.filterItem}>
             <IconButton
               icon={<AddOutlineIcon />}
-              // onClick={toggleCreatingMode}
-              onClick={() => showSuccess('Success message')}
-              active={isFormEnabled}
+              onClick={toggleCreatingMode}
               circle
             />
           </div>
@@ -130,13 +124,7 @@ export const NotesTable: React.FC<NotesTableProps> = ({
           />
         </div>
       </div>
-      <div className={cn({ [styles.content]: isFormEnabled })}>
-        {isFormEnabled && (
-          <div className={styles.formWrapper}>
-            <CreateNoteContainer />
-          </div>
-        )}
-
+      <div>
         <Table
           height={450}
           loading={isLoading}
@@ -156,9 +144,7 @@ export const NotesTable: React.FC<NotesTableProps> = ({
             );
           }}
           headerHeight={50}
-          className={cn(styles.table, {
-            [styles.tableCreatingMode]: isFormEnabled,
-          })}
+          className={cn(styles.table)}
         >
           <Table.Column flexGrow={2} key="title">
             <Table.HeaderCell

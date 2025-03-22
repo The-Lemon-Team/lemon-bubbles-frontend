@@ -18,3 +18,8 @@ export interface IGetNotesRequestDto {
 }
 
 export interface INoteFormikValues extends Partial<INoteForm> {}
+
+export interface INoteFormSubmitValues extends Omit<INote, 'id' | 'created'> {
+  id?: string;
+  created?: string;
+}

@@ -58,12 +58,11 @@ export const boardSlice = createSlice({
     },
 
     setEditId: create.reducer<string>((state, action) => {
-      // #moment to check it out it work inside one slices
-      boardSlice.actions.resetCreatingMode();
+      state.isCreatingMode = false;
       state.editId = action.payload;
     }),
     resetEditId: (state) => {
-      state.isCreatingMode = true;
+      state.isCreatingMode = false;
       state.editId = undefined;
     },
 

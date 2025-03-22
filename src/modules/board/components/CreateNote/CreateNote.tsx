@@ -12,27 +12,24 @@ import styles from './CreateNote.module.scss';
 import { IHashTag, INote } from '../../../../interfaces';
 
 export interface CreateNoteProps {
-  selectedToEdit?: INote;
+  isEditMode: boolean;
   usedTags?: IHashTag[];
 
   onTextChange: (value?: string) => void;
   onTitleChange: (value?: string) => void;
   onTagsSearch: (value: string) => void;
-  onSubmit: () => void;
   onReset: () => void;
 }
 
 export const CreateNote = ({
-  selectedToEdit,
+  isEditMode,
   usedTags,
   onTextChange,
   onTagsSearch,
   onTitleChange,
-  onSubmit,
+
   onReset,
 }: CreateNoteProps) => {
-  const isEditMode = !!selectedToEdit;
-
   return (
     <Panel bordered shaded expanded className={styles.panel}>
       <div className={styles.titleWrapper}>
@@ -40,16 +37,6 @@ export const CreateNote = ({
           {isEditMode ? `Редактировать запись` : 'Добавить новую запись'}
         </p>
         <div className={styles.actionPanel}>
-          <div className={styles.actionWrapper}>
-            <IconButton
-              size="sm"
-              appearance="primary"
-              icon={<CheckIcon />}
-              onClick={onSubmit}
-              variant="contained"
-              color="green"
-            />
-          </div>
           <div className={styles.actionWrapper}>
             <IconButton
               size="sm"
@@ -81,7 +68,7 @@ export const CreateNote = ({
         </div>
         <div className={styles.formField}>
           <Field name="description">
-            {({ field, form }: FieldProps) => {
+            {({ field }: FieldProps) => {
               return (
                 <HashTextArea
                   value={field.value}

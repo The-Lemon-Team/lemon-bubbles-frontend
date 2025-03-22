@@ -15,7 +15,6 @@ import PlusIcon from '@rsuite/icons/Plus';
 
 import { useModalManager } from './useModalManager';
 import { NoteList } from '../../../common/components/NoteList';
-import { CreateNoteContainer } from '../../containers';
 import {
   DEFAULT_FLOATING_MAX_WIDTH,
   DEFAULT_FLOATING_MAX_HEIGHT,
@@ -165,7 +164,7 @@ export const FloatingList: React.FC = () => {
                   speaker={
                     <Popover ref={poperRef} className={styles.creatingCloud}>
                       <Panel className={styles.creatingWrapper}>
-                        <CreateNoteContainer onAdd={createNote} />
+                        Floating Panel
                       </Panel>
                     </Popover>
                   }

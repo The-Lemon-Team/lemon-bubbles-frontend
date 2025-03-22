@@ -1,0 +1,80 @@
+import React from 'react';
+import { Button, Modal } from 'rsuite';
+import { FormikProvider, useFormik } from 'formik';
+
+import styles from './EditNoteModal.module.scss';
+
+import { CreateNote } from '../CreateNote';
+
+import { useHashTags } from '../../../common/hooks/useHashTags';
+import { useEditNote } from '../../hooks/useEditNote';
+import { useNoteFormAssets } from '../../hooks/useNoteFormAssets';
+
+import { INoteFormikValues } from '../../../../interfaces';
+
+interface IEditNoteModalProps {}
+
+const inititalFormValues: INoteFormikValues = {
+  title: '',
+  description: '',
+  created: new Date().toString(),
+  hashTags: [],
+};
+
+export const EditNoteModal: React.FC<IEditNoteModalProps> = () => {
+  const { editingNote, resetEditId, editNote, editId } = useEditNote();
+
+  const { transformTags } = useHashTags();
+  const initialValues = !!editingNote?.hashTags?.length
+    ? {
+        ...editingNote,
+        hashTags: editingNote.hashTags.map((hashTag) => hashTag.text),
+      }
+    : inititalFormValues;
+
+  const handleSubmit = (payload: INoteFormikValues) => {
+    const hashTags = transformTags(payload.hashTags || []);
+
+    editNote({
+      ...payload,
+      title: payload.title || '',
+      description: payload.description || '',
+      hashTags,
+    });
+  };
+  const formikBag = useFormik({
+    initialValues,
+    enableReinitialize: true,
+    onSubmit: (values) => handleSubmit(values),
+  });
+  const {
+    suggestionTags,
+    handleTagsSearch,
+    handleTextChange,
+    handleTitleChange,
+  } = useNoteFormAssets(formikBag);
+
+  return (
+    <FormikProvider value={formikBag}>
+      <Modal backdrop="static" size="md" open={!!editId}>
+        <Modal.Body>
+          <CreateNote
+            usedTags={suggestionTags}
+            isEditMode
+            onReset={formikBag.resetForm}
+            onTagsSearch={handleTagsSearch}
+            onTextChange={handleTextChange}
+            onTitleChange={handleTitleChange}
+          />
+        </Modal.Body>
+
+        <Modal.Footer className={styles.footer}>
+          <Button appearance="primary">Ok</Button>
+          <Button onClick={resetEditId} appearance="subtle">
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </FormikProvider>
+  );
+};

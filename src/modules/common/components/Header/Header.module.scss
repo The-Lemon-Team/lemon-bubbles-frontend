@@ -1,31 +1,31 @@
-@import '../../../../styles/_variables';
+@use '../../../../styles/_variables';
 
 .main {
-    background: #000;
-    position: relative;
-    z-index: 2;
+  background: #000;
+  position: relative;
+  z-index: 2;
 }
 
 .navbar {
-    padding: 22px 0 26px;
-    position: relative;
-    background-color: #000 !important;
+  padding: 22px 0 26px;
+  position: relative;
+  background-color: #000 !important;
 }
 
 .logo {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
 .title {
-    width: 100%;
-    color: $white;
-    padding: 0 !important;;
-    height: auto !important;
+  width: 100%;
+  color: variables.$white;
+  padding: 0 !important;
+  height: auto !important;
 }
 
 .nav {
-    top: 27px;
-    position: absolute !important;
-    right: 0;
-    z-index: 1;
+  top: 27px;
+  position: absolute !important;
+  right: 0;
+  z-index: 1;
 }

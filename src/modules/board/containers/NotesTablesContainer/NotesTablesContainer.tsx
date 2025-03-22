@@ -3,17 +3,13 @@ import { NotesTable } from '../../components/NotesTable';
 import { useAppSelector } from '../../../common/stores/hooks';
 import { useBoard } from '../../hooks/useBoard';
 import { useNotes } from '../../hooks/useNotes';
+import { useEditNote } from '../../hooks/useEditNote';
 
 export const NotesTablesContainer = () => {
   const { startDate, endDate, isLoading, notes } = useNotes();
-  const {
-    mode,
-    isCreatingMode,
-    editNote,
-    deleteNote,
-    toggleCreatingMode,
-    changeDate,
-  } = useBoard();
+  const { mode, isCreatingMode, deleteNote, toggleCreatingMode, changeDate } =
+    useBoard();
+  const { setEditId } = useEditNote();
   const isUserLoading = useAppSelector((state) => state.user.loading.isLoading);
 
   return (
@@ -22,13 +18,12 @@ export const NotesTablesContainer = () => {
         start: new Date(startDate),
         end: new Date(endDate),
       }}
-      isFormEnabled={isCreatingMode}
       mode={mode as 'table' | 'cards'}
       notes={notes || []}
       isLoading={isLoading || isUserLoading}
       onDateChange={changeDate}
       toggleCreatingMode={toggleCreatingMode}
-      onEdit={editNote}
+      onEdit={setEditId}
       onDelete={deleteNote}
     />
   );
