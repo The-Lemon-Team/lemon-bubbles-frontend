@@ -1,7 +1,6 @@
 import { Divider, IconButton, Input } from 'rsuite';
 import { Field, FieldProps } from 'formik';
 import { Panel } from 'rsuite';
-import CheckIcon from '@rsuite/icons/Check';
 import ReloadIcon from '@rsuite/icons/Reload';
 
 import { HashtagListContainer } from '../../containers';
@@ -9,7 +8,7 @@ import { HashTextArea } from '../HashTextArea';
 
 import styles from './CreateNote.module.scss';
 
-import { IHashTag, INote } from '../../../../interfaces';
+import { IHashTag } from '../../../../interfaces';
 
 export interface CreateNoteProps {
   isEditMode: boolean;
@@ -27,7 +26,6 @@ export const CreateNote = ({
   onTextChange,
   onTagsSearch,
   onTitleChange,
-
   onReset,
 }: CreateNoteProps) => {
   return (

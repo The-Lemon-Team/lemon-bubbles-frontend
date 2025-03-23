@@ -1,13 +1,17 @@
 import { HttpStatus } from '../enums/HttpStatus';
+
 import {
   IAuthTransport,
   IHttpTransport,
   IHttpTransportOptions,
-  ILoginRequestPayload,
   ITokensResponse,
-  ILoginByEmailRequestDto,
 } from '../interfaces';
-import { ITokens, IUser } from '../../../../interfaces';
+import {
+  ITokens,
+  IUser,
+  ILoginByNicknameRequestDto,
+  ILoginByEmailRequestDto,
+} from '../../../../interfaces';
 
 interface IAuthTransportOptions {
   httpTransport: IHttpTransport;
@@ -89,13 +93,13 @@ export class AuthTransport implements IAuthTransport {
   }
 
   async login({
-    login,
+    username,
     password,
-  }: ILoginRequestPayload): Promise<ITokensResponse> {
+  }: ILoginByNicknameRequestDto): Promise<ITokensResponse> {
     const response = await this.client.post<ITokensResponse>(
       '/api/auth/login',
       {
-        login,
+        username,
         password,
       },
     );

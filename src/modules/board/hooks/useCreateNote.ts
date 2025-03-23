@@ -1,10 +1,10 @@
-import { notesApi, useCreateNoteMutation } from '../api/notesApi';
+import { useCreateNoteMutation } from '../api/notesApi';
 import { useAppDispatch, useAppSelector } from '../../common/stores/hooks';
-
 import {
   setCreatingMode as setCreatingModeAction,
   resetCreatingMode as resetCreatingModeAction,
 } from '../stores/boardSlice';
+
 import { INoteFormSubmitValues } from '../../../interfaces';
 
 export const useCreateNote = () => {

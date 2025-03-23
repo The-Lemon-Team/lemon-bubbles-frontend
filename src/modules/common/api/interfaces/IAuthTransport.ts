@@ -1,13 +1,15 @@
+import {
+  ITokens,
+  IUser,
+  ILoginByNicknameRequestDto,
+} from '../../../../interfaces';
 import { IHttpTransportOptions } from './IHttpTransportOptions';
-import { ILoginRequestPayload } from './ILoginRequestPayload';
 import { ITokensResponse } from './ITokenResponse';
-import { IUser } from '../../../users/interfaces';
-import { ITokens } from '../../../../interfaces';
 
 type TDataRequest = Record<string, any>;
 
 export interface IAuthTransport {
-  login(payload: ILoginRequestPayload): Promise<ITokensResponse>;
+  login(payload: ILoginByNicknameRequestDto): Promise<ITokensResponse>;
   logout(): void;
   updateToken(refreshToken: string): Promise<ITokensResponse>;
   getToken(): ITokens;

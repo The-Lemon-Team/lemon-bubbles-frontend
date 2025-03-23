@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 
-import { useAppSelector } from '../../stores/hooks';
+import { useAppSelector } from '../stores/hooks';
 import {
   showError as showErrorAction,
   showInfo as showInfoAction,
@@ -9,9 +9,9 @@ import {
   showWarning as showWarningAction,
   startWork as startWorkAction,
   remove as removeAction,
-} from '../../stores/notifierSlice';
+} from '../stores/notifierSlice';
 
-import { INotification } from '../../../../interfaces';
+import { INotification } from '../../../interfaces';
 
 export const useNotifier = () => {
   const dispatch = useDispatch();

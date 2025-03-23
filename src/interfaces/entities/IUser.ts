@@ -4,6 +4,11 @@ export interface IUser {
   email: string;
 }
 
+export interface ITokens {
+  accessToken: string;
+  refreshToken: string;
+}
+
 export interface ILoginByEmailRequestDto {
   email: string;
   password: string;

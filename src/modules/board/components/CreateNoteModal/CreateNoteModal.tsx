@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormikProvider, useFormik } from 'formik';
 import { Button, Modal } from 'rsuite';
 

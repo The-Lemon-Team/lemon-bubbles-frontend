@@ -18,7 +18,6 @@ import cn from 'classnames';
 import { DateRange } from 'rsuite/esm/DateRangePicker';
 
 import { LineTag } from '../../../common/components';
-import { useNotifier } from '../../../common/api/hooks/useNotifier';
 
 import styles from './NotesTable.module.scss';
 

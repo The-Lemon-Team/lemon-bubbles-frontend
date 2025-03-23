@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { Message, useToaster } from 'rsuite';
 
-import { INotification } from '../../../../interfaces/INotification';
-import { useNotifier } from '../../api/hooks/useNotifier';
+import { INotification } from '../../../../interfaces/ui/INotification';
+import { useNotifier } from '../../hooks/useNotifier';
 
 const NOTIFICATION_DURATION = 3000;
 

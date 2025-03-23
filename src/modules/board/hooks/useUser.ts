@@ -1,10 +1,11 @@
-import { ICreateUserRequestDto } from '../../../interfaces';
 import { useAppDispatch, useAppSelector } from '../../common/stores/hooks';
 import {
   userByToken,
   clearUser as clearUserAction,
   createUser as createUserAction,
 } from '../stores/userSlice';
+
+import { ICreateUserRequestDto } from '../../../interfaces';
 
 export const useUser = () => {
   const dispatch = useAppDispatch();
