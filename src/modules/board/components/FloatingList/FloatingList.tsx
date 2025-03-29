@@ -55,7 +55,7 @@ export const FloatingList: React.FC = () => {
       title: 'Title #1',
       description: 'Description #1',
       created: subDays(new Date(), 2).toString(),
-      hashTags: [
+      hashtags: [
         {
           id: 'h-1',
           created: new Date().toString(),
@@ -69,7 +69,7 @@ export const FloatingList: React.FC = () => {
       title: 'Title Title Title Title #2',
       description: 'Description #2',
       created: new Date().toString(),
-      hashTags: [
+      hashtags: [
         {
           id: 'h-3233',
           created: new Date().toString(),

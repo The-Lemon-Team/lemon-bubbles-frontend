@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { ICommonStore } from '../../common/api/interfaces/IStore';
 import { ThemeMode } from '../../../enums';
+
+import { ICommonStore } from '../../common/interfaces/IStore';
 
 const initialState: ICommonStore = {
   featureFlags: {
@@ -23,10 +24,12 @@ export const commonSlice = createSlice({
     toggleTheme: (state) => {
       if (state.theme === ThemeMode.DARK) {
         state.theme = ThemeMode.LIGHT;
+        return;
       }
 
       if (state.theme === ThemeMode.LIGHT) {
         state.theme = ThemeMode.DARK;
+        return;
       }
     },
   }),

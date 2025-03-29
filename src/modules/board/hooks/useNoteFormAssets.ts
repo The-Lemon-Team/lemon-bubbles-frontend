@@ -22,7 +22,7 @@ export const useNoteFormAssets = (formikBag: ReturnType<typeof useFormik>) => {
     const hashtags = findHashtags(text || '');
 
     formikBag.setFieldValue('description', text || '');
-    formikBag.setFieldValue('hashTags', hashtags);
+    formikBag.setFieldValue('hashtags', hashtags);
   };
   const handleTitleChange = (text?: string) => {
     formikBag.setFieldValue('title', text || '');

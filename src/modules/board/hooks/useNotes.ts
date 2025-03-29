@@ -8,20 +8,22 @@ export const useNotes = () => {
   const { startDate, endDate } = useAppSelector(
     (state) => state.board.dateRange,
   );
-  const [loadNotes, { data, isLoading }] = useLazyLoadNotesQuery();
+  const [loadNotes, { data, isLoading, isSuccess }] = useLazyLoadNotesQuery();
 
   useEffect(() => {
-    if (startDate && endDate) {
-      loadNotes({ endDate, startDate });
-    }
+    if (!isLoading && !isSuccess) {
+      if (startDate && endDate) {
+        loadNotes({ endDate, startDate });
+      }
 
-    if (!startDate || !endDate) {
-      const dates = getInitialDates();
+      if (!startDate || !endDate) {
+        const dates = getInitialDates();
 
-      loadNotes({
-        endDate: dates.endDate,
-        startDate: dates.startDate,
-      });
+        loadNotes({
+          endDate: dates.endDate,
+          startDate: dates.startDate,
+        });
+      }
     }
   }, []);
 

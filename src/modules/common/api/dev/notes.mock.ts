@@ -4,14 +4,14 @@ import { faker } from '@faker-js/faker';
 import { shuffle, take } from 'lodash';
 
 import { formatToIsoDate } from '../../utils';
-import { hashTagsMock } from './hashTags.mock';
+import { hashtagsMock } from './hashtags.mock';
 
 import { INote } from '../../../../interfaces';
 
 export const generateNote = (fields: Partial<INote> = {}) => {
-  const hashTags = take(shuffle(hashTagsMock), 5);
-  const description = `${faker.hacker.phrase()} ${hashTags
-    .map((hashTag) => `#${hashTag.text}`)
+  const hashtags = take(shuffle(hashtagsMock), 5);
+  const description = `${faker.hacker.phrase()} ${hashtags
+    .map((hashtag) => `#${hashtag.text}`)
     .join(', ')}`;
 
   return {
@@ -20,7 +20,7 @@ export const generateNote = (fields: Partial<INote> = {}) => {
     title: `${faker.word.noun()} ${faker.word.adverb()}`,
     created: formatToIsoDate(subHours(new Date(), 5)),
     description,
-    hashTags,
+    hashtags,
     ...fields,
   };
 };

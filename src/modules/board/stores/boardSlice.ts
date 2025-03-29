@@ -8,7 +8,7 @@ import {
 } from '../../../constants';
 import { getInitialDates } from '../../common/utils';
 
-import { IBoardStore } from '../../common/api/interfaces/IStore';
+import { IBoardStore } from '../../common/interfaces/IStore';
 import { ICoordinates, IDateRange, ISizes } from '../../../interfaces';
 
 const dates = getInitialDates();

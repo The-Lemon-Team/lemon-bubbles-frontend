@@ -1,4 +1,4 @@
-import { ThemeMode } from '../../../../enums';
+import { ThemeMode } from '../../../enums';
 import {
   IUser,
   ILoadingState,
@@ -6,7 +6,7 @@ import {
   ICoordinates,
   ISizes,
   INotification,
-} from '../../../../interfaces';
+} from '../../../interfaces';
 
 export interface ICommonStore {
   featureFlags: { [key: string]: boolean };

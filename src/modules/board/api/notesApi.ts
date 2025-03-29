@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+import { notesService } from '../../common/services/notesService';
+
 import { INote, IDateRange, INoteFormSubmitValues } from '../../../interfaces';
 
 export const notesApi = createApi({
@@ -8,11 +10,14 @@ export const notesApi = createApi({
   tagTypes: ['Notes'],
   endpoints: (build) => ({
     loadNotes: build.query<INote[], IDateRange>({
-      query: ({ endDate, startDate }) => ({
-        url: `/notes`,
-        method: 'POST',
-        body: { startDate, endDate },
-      }),
+      queryFn: async (payload) => {
+        return notesService
+          .findAll(payload)
+          .then((data) => ({ data }))
+          .catch((error) => ({
+            error,
+          }));
+      },
       providesTags: (result) =>
         result
           ? [

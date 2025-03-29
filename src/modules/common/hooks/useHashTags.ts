@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { IHashTag } from '../../../interfaces';
 
-import { generateHashTag } from '../api/dev/hashTags.mock';
+import { generateHashTag } from '../api/dev/hashtags.mock';
 import { useLazyLoadAllTagsQuery } from '../../board/api/hashTagsApi';
 
 const mapTagNamesOnTags = (
@@ -31,7 +31,7 @@ const prepareHashtagsToUpload = (
   hashtagsData: IHashTag[],
   hashTagStrings: string[],
 ) => {
-  const [hashTags, unusedTags] = mapTagNamesOnTags(
+  const [hashtags, unusedTags] = mapTagNamesOnTags(
     hashtagsData,
     hashTagStrings,
   );
@@ -39,7 +39,7 @@ const prepareHashtagsToUpload = (
     generateHashTag({ text, id: undefined }),
   );
 
-  return [...hashTags, ...generatedTags];
+  return [...hashtags, ...generatedTags];
 };
 
 export const useHashTags = () => {

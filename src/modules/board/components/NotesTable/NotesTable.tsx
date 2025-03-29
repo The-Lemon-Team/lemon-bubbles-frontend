@@ -185,16 +185,16 @@ export const NotesTable: React.FC<NotesTableProps> = ({
               {({ created }) => format(new Date(created), 'd MMM Y')}
             </Table.Cell>
           </Table.Column>
-          <Table.Column flexGrow={2} key="hashTags">
+          <Table.Column flexGrow={2} key="hashtags">
             <Table.HeaderCell
               className={styles.headerCell}
               style={{ padding: '4px 20px 4px 0' }}
             >
               <h3 className={styles.header}>HashTags</h3>
             </Table.HeaderCell>
-            <Table.Cell dataKey="hashTags" style={{ padding: 4 }}>
-              {({ hashTags }) => {
-                return hashTags.map((hashTag: IHashTag) => (
+            <Table.Cell dataKey="hashtags" style={{ padding: 4 }}>
+              {({ hashtags }) => {
+                return hashtags.map((hashTag: IHashTag) => (
                   <LineTag
                     key={hashTag.id}
                     color={hashTag.color}

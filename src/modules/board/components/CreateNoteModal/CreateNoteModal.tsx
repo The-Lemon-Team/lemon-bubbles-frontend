@@ -15,7 +15,7 @@ const initialValues: INoteFormikValues = {
   title: '',
   description: '',
   created: new Date().toString(),
-  hashTags: [],
+  hashtags: [],
 };
 
 export const CreateNoteModal = () => {
@@ -23,19 +23,19 @@ export const CreateNoteModal = () => {
   const { transformTags } = useHashTags();
 
   const handleSubmit = (payload: INoteFormikValues) => {
-    const hashTags = transformTags(payload.hashTags || []);
+    const hashtags = transformTags(payload.hashtags || []);
 
     createNote({
       ...payload,
       title: payload.title || '',
       description: payload.description || '',
-      hashTags,
+      hashtags,
     });
   };
   const formikBag = useFormik({
     initialValues,
     enableReinitialize: true,
-    onSubmit: (values) => handleSubmit(values),
+    onSubmit: handleSubmit,
   });
 
   const {
@@ -60,7 +60,9 @@ export const CreateNoteModal = () => {
         </Modal.Body>
 
         <Modal.Footer className={styles.footer}>
-          <Button appearance="primary">Ok</Button>
+          <Button appearance="primary" onClick={formikBag.submitForm}>
+            Ok
+          </Button>
           <Button onClick={resetCreatingMode} appearance="subtle">
             Cancel
           </Button>

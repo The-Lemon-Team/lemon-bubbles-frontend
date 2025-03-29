@@ -79,7 +79,7 @@ export const CreateNote = ({
           </Field>
         </div>
         <div className={styles.hashtagField}>
-          <Field name="hashTags">
+          <Field name="hashtags">
             {({ field }: FieldProps) => {
               return <HashtagListContainer hashtagNames={field.value} />;
             }}

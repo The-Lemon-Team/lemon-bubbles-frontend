@@ -18,28 +18,28 @@ const inititalFormValues: INoteFormikValues = {
   title: '',
   description: '',
   created: new Date().toString(),
-  hashTags: [],
+  hashtags: [],
 };
 
 export const EditNoteModal: React.FC<IEditNoteModalProps> = () => {
   const { editingNote, resetEditId, editNote, editId } = useEditNote();
 
   const { transformTags } = useHashTags();
-  const initialValues = !!editingNote?.hashTags?.length
+  const initialValues = !!editingNote?.hashtags?.length
     ? {
         ...editingNote,
-        hashTags: editingNote.hashTags.map((hashTag) => hashTag.text),
+        hashtags: editingNote.hashtags.map((hashTag) => hashTag.text),
       }
     : inititalFormValues;
 
   const handleSubmit = (payload: INoteFormikValues) => {
-    const hashTags = transformTags(payload.hashTags || []);
+    const hashtags = transformTags(payload.hashtags || []);
 
     editNote({
       ...payload,
       title: payload.title || '',
       description: payload.description || '',
-      hashTags,
+      hashtags,
     });
   };
   const formikBag = useFormik({

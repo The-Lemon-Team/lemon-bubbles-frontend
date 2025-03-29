@@ -15,6 +15,6 @@ const generateHashTags = (amount = 1) => {
   return Array.from(Array(amount)).map(generateHashTag);
 };
 
-export const hashTagsMock: IHashTag[] = generateHashTags(200);
+export const hashtagsMock: IHashTag[] = generateHashTags(200);
 export const findHashTag = (text: string) =>
-  hashTagsMock.filter((tag) => tag.text.includes(text));
+  hashtagsMock.filter((tag) => tag.text.includes(text));

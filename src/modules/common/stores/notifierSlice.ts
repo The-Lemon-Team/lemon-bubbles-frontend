@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
 
 import { INotification } from '../../../interfaces';
-import { INotifierStore } from '../api/interfaces/IStore';
+import { INotifierStore } from '../interfaces/IStore';
 
 const initialState: INotifierStore = {
   notifications: [],

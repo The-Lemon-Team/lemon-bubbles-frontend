@@ -9,7 +9,7 @@ export const hashTagsApi = createApi({
   endpoints: (build) => ({
     getHashTagsByQuery: build.query<IHashTag[], string>({
       query: (query) => ({
-        url: `/hashTags?query=` + query,
+        url: `/hashtags?query=` + query,
         method: 'GET',
       }),
       providesTags: (result) =>
@@ -18,7 +18,7 @@ export const hashTagsApi = createApi({
 
     loadAllTags: build.query<IHashTag[], void>({
       query: () => ({
-        url: '/hashTags',
+        url: '/hashtags',
         method: 'GET',
       }),
       providesTags: (result) =>

@@ -7,7 +7,7 @@ import {
   ICreateUserRequestDto,
   IUser,
 } from '../../../interfaces';
-import { IUserStore } from '../../common/api/interfaces/IStore';
+import { IUserStore } from '../../common/interfaces/IStore';
 
 const initialState: IUserStore = {
   data: null,

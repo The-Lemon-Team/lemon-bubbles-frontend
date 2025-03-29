@@ -7,8 +7,7 @@ import { useEditNote } from '../../hooks/useEditNote';
 
 export const NotesTablesContainer = () => {
   const { startDate, endDate, isLoading, notes } = useNotes();
-  const { mode, isCreatingMode, deleteNote, toggleCreatingMode, changeDate } =
-    useBoard();
+  const { mode, deleteNote, toggleCreatingMode, changeDate } = useBoard();
   const { setEditId } = useEditNote();
   const isUserLoading = useAppSelector((state) => state.user.loading.isLoading);
 

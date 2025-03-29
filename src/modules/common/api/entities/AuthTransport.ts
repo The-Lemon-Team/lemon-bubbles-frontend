@@ -74,8 +74,6 @@ export class AuthTransport implements IAuthTransport {
   }
 
   async userByToken() {
-    await wait();
-
     return this.get<IUser>('/api/auth/userByToken').catch((e) => {
       this.logout();
 
@@ -103,6 +101,7 @@ export class AuthTransport implements IAuthTransport {
         password,
       },
     );
+
     const { accessToken, refreshToken } = response;
     if (accessToken && refreshToken) {
       this.setToken({

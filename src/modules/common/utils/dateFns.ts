@@ -8,8 +8,8 @@ export const formatToIsoDate = (date: Date | string | number | null) =>
   format(getDate(date), "yyyy-MM-dd'T'HH:mm:ss.SSS");
 
 export const getInitialDates = () => {
-  const startDate = getDate(null).toString();
-  const endDate = subWeeks(new Date(), 1).toString();
+  const endDate = getDate(null).toString();
+  const startDate = subWeeks(new Date(), 1).toString();
 
   return {
     startDate,

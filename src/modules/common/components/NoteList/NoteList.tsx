@@ -42,7 +42,7 @@ export const NoteList: React.FC<NoteListProps> = ({ notes = [] }) => {
                       <div className={styles.noteWrapper}>
                         <p className={styles.noteLabel}>{note.title}</p>
                         <div>
-                          {note.hashTags.map((hashTag) => (
+                          {note.hashtags.map((hashTag) => (
                             <LineTag {...hashTag} key={hashTag.id} />
                           ))}
                         </div>

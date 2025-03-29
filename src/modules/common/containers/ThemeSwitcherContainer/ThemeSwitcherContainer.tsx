@@ -7,7 +7,10 @@ import { ThemeMode } from '../../../../enums';
 
 export const ThemeSwitcherContainer = () => {
   const dispatch = useDispatch();
-  const toggleTheme = () => dispatch(toggleThemeAction());
+  const toggleTheme = () => {
+    dispatch(toggleThemeAction());
+  };
+  const theme = useAppSelector((state) => state.common.theme);
   const isDarkMode =
     useAppSelector((state) => state.common.theme) === ThemeMode.DARK;
 
