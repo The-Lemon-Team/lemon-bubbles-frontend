@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { notesService } from '../../common/services/notesService';
 
-import { INote, IDateRange, INoteFormSubmitValues } from '../../../interfaces';
+import { INote, IDateRange, INoteCreateFormSubmit } from '../../../interfaces';
 
 export const notesApi = createApi({
   reducerPath: 'notes',
@@ -26,20 +26,24 @@ export const notesApi = createApi({
             ]
           : [{ type: 'Notes', id: 'LIST' }],
     }),
-    editNote: build.mutation<INote, INoteFormSubmitValues>({
-      query: (payload) => ({
-        url: '/notes' + `/${payload.id}`,
-        method: 'PATCH',
-        body: payload,
-      }),
+    editNote: build.mutation<INote, INote>({
+      queryFn: (note) => {
+        return notesService
+          .editNote(note)
+          .then((data) => ({ data }))
+          .catch((error) => ({ error }));
+      },
       invalidatesTags: ['Notes'],
     }),
-    createNote: build.mutation<INote, INoteFormSubmitValues>({
-      query: (payload) => ({
-        url: '/notes',
-        method: 'POST',
-        body: payload,
-      }),
+    createNote: build.mutation<INote, INoteCreateFormSubmit>({
+      queryFn: (payload) => {
+        return notesService
+          .createNote(payload)
+          .then((data) => ({ data }))
+          .catch((error) => ({
+            error,
+          }));
+      },
       invalidatesTags: [{ type: 'Notes', id: 'LIST' }],
     }),
   }),

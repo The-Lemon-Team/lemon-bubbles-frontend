@@ -14,7 +14,9 @@ function findHashtags(searchText: string) {
   }, [] as string[]);
 }
 
-export const useNoteFormAssets = (formikBag: ReturnType<typeof useFormik>) => {
+export const useNoteFormAssets = (
+  formikBag: ReturnType<typeof useFormik<any>>,
+) => {
   const [suggestionTags, setSuggestionTags] = useState<IHashTag[]>([]);
   const { searchHashTags } = useHashTags();
 

@@ -9,9 +9,9 @@ import { CreateNote } from '../CreateNote';
 
 import styles from './CreateNoteModal.module.scss';
 
-import { INoteFormikValues } from '../../../../interfaces';
+import { INoteCreateForm } from '../../../../interfaces';
 
-const initialValues: INoteFormikValues = {
+const initialValues: INoteCreateForm = {
   title: '',
   description: '',
   created: new Date().toString(),
@@ -22,7 +22,7 @@ export const CreateNoteModal = () => {
   const { createNote, resetCreatingMode, isCreatingMode } = useCreateNote();
   const { transformTags } = useHashTags();
 
-  const handleSubmit = (payload: INoteFormikValues) => {
+  const handleSubmit = (payload: INoteCreateForm) => {
     const hashtags = transformTags(payload.hashtags || []);
 
     createNote({
@@ -30,7 +30,7 @@ export const CreateNoteModal = () => {
       title: payload.title || '',
       description: payload.description || '',
       hashtags,
-    });
+    }).then(resetCreatingMode);
   };
   const formikBag = useFormik({
     initialValues,

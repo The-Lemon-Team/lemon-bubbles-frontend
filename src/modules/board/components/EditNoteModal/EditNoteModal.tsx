@@ -10,11 +10,12 @@ import { useHashTags } from '../../../common/hooks/useHashTags';
 import { useEditNote } from '../../hooks/useEditNote';
 import { useNoteFormAssets } from '../../hooks/useNoteFormAssets';
 
-import { INoteFormikValues } from '../../../../interfaces';
+import { INoteEditForm } from '../../../../interfaces';
 
 interface IEditNoteModalProps {}
 
-const inititalFormValues: INoteFormikValues = {
+const inititalFormValues: INoteEditForm = {
+  id: '',
   title: '',
   description: '',
   created: new Date().toString(),
@@ -22,17 +23,15 @@ const inititalFormValues: INoteFormikValues = {
 };
 
 export const EditNoteModal: React.FC<IEditNoteModalProps> = () => {
-  const { editingNote, resetEditId, editNote, editId } = useEditNote();
+  const { resetEditId, editNote, editId, editingNote } = useEditNote();
 
   const { transformTags } = useHashTags();
-  const initialValues = !!editingNote?.hashtags?.length
-    ? {
-        ...editingNote,
-        hashtags: editingNote.hashtags.map((hashTag) => hashTag.text),
-      }
-    : inititalFormValues;
+  const initialValues = {
+    ...(editingNote || inititalFormValues),
+    hashtags: editingNote?.hashtags.map((hashTag) => hashTag.text) || [],
+  };
 
-  const handleSubmit = (payload: INoteFormikValues) => {
+  const handleSubmit = (payload: INoteEditForm) => {
     const hashtags = transformTags(payload.hashtags || []);
 
     editNote({
@@ -40,7 +39,7 @@ export const EditNoteModal: React.FC<IEditNoteModalProps> = () => {
       title: payload.title || '',
       description: payload.description || '',
       hashtags,
-    });
+    }).then(resetEditId);
   };
   const formikBag = useFormik({
     initialValues,
@@ -69,7 +68,9 @@ export const EditNoteModal: React.FC<IEditNoteModalProps> = () => {
         </Modal.Body>
 
         <Modal.Footer className={styles.footer}>
-          <Button appearance="primary">Ok</Button>
+          <Button appearance="primary" onClick={() => formikBag.handleSubmit()}>
+            Ok
+          </Button>
           <Button onClick={resetEditId} appearance="subtle">
             Cancel
           </Button>

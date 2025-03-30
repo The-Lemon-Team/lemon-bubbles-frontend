@@ -1,12 +1,12 @@
+import { useNotes } from './useNotes';
 import { useAppDispatch, useAppSelector } from '../../common/stores/hooks';
 import { useEditNoteMutation } from '../api/notesApi';
 import {
   setEditId as setEditIdAction,
   resetEditId as resetEditIdAction,
 } from '../stores/boardSlice';
-import { useNotes } from './useNotes';
 
-import { INoteFormSubmitValues } from '../../../interfaces';
+import { INote } from '../../../interfaces';
 
 export const useEditNote = () => {
   const dispatch = useAppDispatch();
@@ -22,9 +22,7 @@ export const useEditNote = () => {
     dispatch(resetEditIdAction());
   };
 
-  const editNote = (payload: INoteFormSubmitValues) => {
-    editNoteThunk(payload);
-  };
+  const editNote = (payload: INote) => editNoteThunk(payload);
 
   return {
     isEditing: isLoading,

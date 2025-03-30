@@ -5,7 +5,7 @@ import {
   resetCreatingMode as resetCreatingModeAction,
 } from '../stores/boardSlice';
 
-import { INoteFormSubmitValues } from '../../../interfaces';
+import { INoteCreateFormSubmit } from '../../../interfaces';
 
 export const useCreateNote = () => {
   const dispatch = useAppDispatch();
@@ -17,9 +17,8 @@ export const useCreateNote = () => {
   const resetCreatingMode = () => {
     dispatch(resetCreatingModeAction());
   };
-  const createNote = (payload: INoteFormSubmitValues) => {
+  const createNote = (payload: INoteCreateFormSubmit) =>
     createNoteThunk(payload);
-  };
 
   return {
     isCreatingMode: isCreatingMode || isLoading,

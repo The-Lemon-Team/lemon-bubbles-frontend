@@ -9,22 +9,20 @@ export interface INote {
   hashtags: IHashTag[];
 }
 
-export interface INoteForm extends Omit<INote, 'hashtags'> {
+export interface INoteEditForm extends Omit<INote, 'hashtags'> {
   hashtags: string[];
 }
+
+export interface INoteCreateForm extends Omit<INoteEditForm, 'id'> {}
+export interface INoteCreateFormSubmit extends Omit<INote, 'id'> {}
 
 export interface IGetNotesRequestDto {
   startDate: string;
   endDate: string;
 }
 
-export interface INoteFormikValues extends Partial<INoteForm> {}
-
-export interface INoteFormSubmitValues extends Omit<INote, 'id' | 'created'> {
-  id?: string;
-  created?: string;
-}
-
 export interface INotesService {
+  createNote: (payload: INoteCreateFormSubmit) => Promise<INote>;
+  editNote: (payload: INote) => Promise<INote>;
   findAll: (payload: IDateRange) => Promise<INote[]>;
 }
