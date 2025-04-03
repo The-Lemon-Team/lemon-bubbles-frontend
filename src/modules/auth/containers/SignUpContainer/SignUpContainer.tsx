@@ -1,19 +1,19 @@
+import { useNavigate } from 'react-router-dom';
+
+import { useCreateUser } from '../../hooks/useCreateUser';
 import { SignUpForm } from '../../components';
-import { useUser } from '../../../board/hooks/useUser';
+
 import { ISignUpForm } from '../../../../interfaces';
 
 export const SignUpContainer = () => {
-  const { createUser, isCreating, isLoading } = useUser();
+  const navigate = useNavigate();
+  const { createUser, isCreating } = useCreateUser();
 
   const handleSignUp = ({ repeatedPassword, ...payload }: ISignUpForm) => {
-    createUser(payload);
+    createUser(payload).then(() => navigate('/board'));
   };
 
   return (
-    <SignUpForm
-      onSignUp={handleSignUp}
-      errors={{}}
-      isLoading={isLoading || isCreating}
-    />
+    <SignUpForm onSignUp={handleSignUp} errors={{}} isLoading={isCreating} />
   );
 };

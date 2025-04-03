@@ -1,17 +1,17 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useNavigate, Route, Routes, useMatch } from 'react-router-dom';
 import { Animation, Panel, IconButton } from 'rsuite';
 import PagePreviousIcon from '@rsuite/icons/PagePrevious';
 
-import { useUser } from '../../../board/hooks/useUser';
 import { LoginForm } from '../../components';
 import { SignUpContainer } from '../../containers';
 import { Layout } from './Layout';
 
 import styles from './AuthScreen.module.scss';
+import { useLogged } from '../../../board/hooks/useLogged';
 
 export const AuthScreen = () => {
-  const { user } = useUser();
+  const { isLogged } = useLogged();
   const navigate = useNavigate();
   const match = useMatch('/auth');
   const goToAuth = useCallback(() => {
@@ -19,10 +19,10 @@ export const AuthScreen = () => {
   }, [navigate]);
 
   useEffect(() => {
-    if (user) {
+    if (isLogged) {
       navigate('/board');
     }
-  }, [navigate, user]);
+  }, [isLogged]);
 
   return (
     <div>

@@ -20,7 +20,11 @@ export interface INotifierStore {
 export interface IUserStore {
   data: IUser | null;
   loading: ILoadingState;
-  create: ILoadingState;
+}
+
+export interface IAuthStore {
+  logging: ILoadingState;
+  creating: ILoadingState;
 }
 
 export interface IFloatingList {
@@ -38,6 +42,7 @@ export interface IBoardStore {
 }
 
 export interface IStore {
+  auth: IAuthStore;
   user: IUserStore;
   board: IBoardStore;
   common: ICommonStore;
