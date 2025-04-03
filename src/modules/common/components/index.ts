@@ -5,5 +5,4 @@ export * from './Logo';
 export * from './PrivateRoute';
 export * from './Notifier';
 export * from './ThemeProvider';
-export * from './AuthScreen';
 export * from './StartupActions';

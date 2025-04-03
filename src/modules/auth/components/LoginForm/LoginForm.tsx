@@ -12,10 +12,10 @@ import { pickBy, identity } from 'lodash';
 import GoogleIcon from '@rsuite/icons/legacy/Google';
 import { useNavigate } from 'react-router-dom';
 
-import { loginFormValidationSchema } from '../../../utils/validation/authSchemas';
-import { useLoginWithEmail } from '../../../../board/hooks/useLogingWithEmail';
+import { loginFormValidationSchema } from '../../../common/utils/validation/authSchemas';
+import { useLoginWithEmail } from '../../../board/hooks/useLogingWithEmail';
 
-import { ILoginByEmailRequestDto } from '../../../../../interfaces';
+import { ILoginByEmailRequestDto } from '../../../../interfaces';
 
 import styles from './LoginForm.module.scss';
 

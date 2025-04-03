@@ -3,9 +3,9 @@ import { Form, ButtonToolbar, Button, Input } from 'rsuite';
 import { pickBy, identity, Dictionary } from 'lodash';
 import { useFormik } from 'formik';
 
-import { signUpFormValidationSchema } from '../../../utils/validation/authSchemas';
+import { signUpFormValidationSchema } from '../../../common/utils/validation/authSchemas';
 
-import { ISignUpForm } from '../../../../../interfaces';
+import { ISignUpForm } from '../../../../interfaces';
 
 interface SignUpFormProps {
   isLoading?: boolean;

@@ -1,6 +1,6 @@
 import { SignUpForm } from '../../components';
-import { useUser } from '../../../../board/hooks/useUser';
-import { ISignUpForm } from '../../../../../interfaces';
+import { useUser } from '../../../board/hooks/useUser';
+import { ISignUpForm } from '../../../../interfaces';
 
 export const SignUpContainer = () => {
   const { createUser, isCreating, isLoading } = useUser();

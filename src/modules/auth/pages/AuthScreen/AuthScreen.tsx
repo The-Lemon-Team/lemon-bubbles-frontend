@@ -4,8 +4,8 @@ import { Animation, Panel, IconButton } from 'rsuite';
 import PagePreviousIcon from '@rsuite/icons/PagePrevious';
 
 import { useUser } from '../../../board/hooks/useUser';
-import { LoginForm } from '../../auth/components';
-import { SignUpContainer } from '../../auth/containers';
+import { LoginForm } from '../../components';
+import { SignUpContainer } from '../../containers';
 import { Layout } from './Layout';
 
 import styles from './AuthScreen.module.scss';
