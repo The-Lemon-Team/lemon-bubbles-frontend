@@ -18,6 +18,7 @@ import cn from 'classnames';
 import { DateRange } from 'rsuite/esm/DateRangePicker';
 
 import { LineTag } from '../../../common/components';
+import { NotFound } from '../NotFound';
 
 import styles from './NotesTable.module.scss';
 
@@ -28,16 +29,17 @@ interface NotesTableProps {
     end: Date;
     start: Date;
   };
-  error?: boolean;
   isLoading: boolean;
-  mode?: 'table' | 'cards';
   notes: INote[];
+  error?: boolean;
+  mode?: 'table' | 'cards';
 
   onDateChange: (start: Date, end: Date) => void;
   onDelete: (id: string) => void;
   onEdit: (id: string) => void;
-  onRefresh?: () => void;
+  onCreate: () => void;
   toggleCreatingMode: () => void;
+  onRefresh?: () => void;
 }
 
 interface IEmptyPlaceholderProps {
@@ -77,6 +79,7 @@ export const NotesTable: React.FC<NotesTableProps> = ({
   isLoading,
   mode = 'table',
 
+  onCreate,
   onEdit,
   onRefresh,
   onDateChange,
@@ -131,7 +134,7 @@ export const NotesTable: React.FC<NotesTableProps> = ({
             return error ? (
               <EmptyPlaceholder onRefresh={onRefresh} />
             ) : (
-              'Not found'
+              <NotFound onCreate={onCreate} />
             );
           }}
           data={notes}

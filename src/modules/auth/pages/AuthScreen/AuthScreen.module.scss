@@ -1,12 +1,17 @@
 .form {
-    position: relative;
+  position: relative;
 }
 
 .floating {
-    position: absolute;
-    left: -3rem;
+  position: absolute;
+  left: -3rem;
 }
 
 .registrationHeader {
-    display: flex;
+  display: flex;
+}
+
+.centerText {
+  width: 100%;
+  justify-content: center;
 }

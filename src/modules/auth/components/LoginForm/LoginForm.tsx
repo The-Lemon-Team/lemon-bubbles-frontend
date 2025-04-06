@@ -12,8 +12,9 @@ import { pickBy, identity } from 'lodash';
 import GoogleIcon from '@rsuite/icons/legacy/Google';
 import { useNavigate } from 'react-router-dom';
 
+import { Logo } from '../../../common/components';
 import { loginFormValidationSchema } from '../../../common/utils/validation/authSchemas';
-import { useLoginWithEmail } from '../../../board/hooks/useLogingWithEmail';
+import { useLoginWithEmail } from '../../hooks/useLogingWithEmail';
 
 import { ILoginByEmailRequestDto } from '../../../../interfaces';
 
@@ -27,7 +28,6 @@ const initialValues: ILoginByEmailRequestDto = {
 };
 
 export const LoginForm: React.FC<ILoginFormProps> = () => {
-  // const onSignIn = () => {};
   const { signInWithEmail, isLoading } = useLoginWithEmail();
   const navigate = useNavigate();
 
@@ -37,7 +37,6 @@ export const LoginForm: React.FC<ILoginFormProps> = () => {
 
   const formik = useFormik({
     initialValues,
-    // initialErrors: errors,
     enableReinitialize: true,
     onSubmit: signInWithEmail,
     validate: (values) => {
@@ -61,20 +60,10 @@ export const LoginForm: React.FC<ILoginFormProps> = () => {
     <Form fluid formValue={formik.values}>
       <Form.Group>
         <div>
-          <div className={styles.formWrapper}>
-            <Button
-              color="red"
-              appearance="primary"
-              size="lg"
-              // onClick={onGoogleAuth}
-              block
-            >
-              <GoogleIcon /> Авторизировать с помощью Google
-            </Button>
+          <div className={styles.logoWrapper}>
+            <Logo />
           </div>
-          <div>
-            <Divider>или</Divider>
-          </div>
+          <Divider />
         </div>
       </Form.Group>
       <Form.Group>

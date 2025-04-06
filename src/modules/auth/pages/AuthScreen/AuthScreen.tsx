@@ -1,14 +1,15 @@
 import { useCallback, useEffect } from 'react';
 import { useNavigate, Route, Routes, useMatch } from 'react-router-dom';
-import { Animation, Panel, IconButton } from 'rsuite';
+import { Animation, Panel, IconButton, Text, Divider } from 'rsuite';
 import PagePreviousIcon from '@rsuite/icons/PagePrevious';
 
 import { LoginForm } from '../../components';
 import { SignUpContainer } from '../../containers';
 import { Layout } from './Layout';
 
-import styles from './AuthScreen.module.scss';
 import { useLogged } from '../../../board/hooks/useLogged';
+
+import styles from './AuthScreen.module.scss';
 
 export const AuthScreen = () => {
   const { isLogged } = useLogged();
@@ -70,7 +71,9 @@ export const AuthScreen = () => {
                             size="lg"
                           />
                         </div>
-                        <h3>Зарегистрироваться</h3>
+                        <Text as="h3" align="center">
+                          Зарегистрироваться
+                        </Text>
                       </div>
                     }
                     ref={ref}
