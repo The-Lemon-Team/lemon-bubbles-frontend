@@ -25,4 +25,5 @@ export interface INotesService {
   createNote: (payload: INoteCreateFormSubmit) => Promise<INote>;
   editNote: (payload: INote) => Promise<INote>;
   findAll: (payload: IDateRange) => Promise<INote[]>;
+  deleteNote: (id: string) => Promise<boolean>;
 }

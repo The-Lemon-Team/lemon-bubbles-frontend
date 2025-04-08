@@ -1,7 +1,8 @@
 import {
   resetEditId,
   setEditId as setEditIdAction,
-  setDelitingId,
+  setDelitingId as setDelitingIdAction,
+  resetDelitingId as resetDelitingIdAction,
   toggleCreatingMode as toggleCreatingModeAction,
   setDate,
 } from '../stores/boardSlice';
@@ -23,12 +24,11 @@ export const useBoard = () => {
   const resetEditMode = () => {
     dispatch(resetEditId());
   };
-  const deleteNote = (id: string) => {
-    dispatch(setDelitingId(id));
-  };
+
   const toggleCreatingMode = () => {
     dispatch(toggleCreatingModeAction());
   };
+
   const changeDate = (start: Date, end: Date) => {
     const dates = {
       endDate: start.toString(),
@@ -47,7 +47,6 @@ export const useBoard = () => {
     isLoading,
 
     setEditId,
-    deleteNote,
     toggleCreatingMode,
     changeDate,
     resetEditMode,

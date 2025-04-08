@@ -11,4 +11,5 @@ export const notesService: INotesService = {
       `/api/notes/?startDate=${startDate}&endDate=${endDate}`,
     );
   },
+  deleteNote: (id) => authTransport.delete('/api/notes/' + id),
 };

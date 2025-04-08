@@ -115,11 +115,6 @@ export const NotesTable: React.FC<NotesTableProps> = ({
         </div>
         <div>
           <IconButton
-            icon={<GridIcon />}
-            appearance="subtle"
-            active={mode === 'cards'}
-          />
-          <IconButton
             icon={<MenuIcon />}
             appearance="subtle"
             active={isTableMode}

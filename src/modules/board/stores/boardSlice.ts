@@ -69,7 +69,7 @@ export const boardSlice = createSlice({
     setDelitingId: (state, action) => {
       state.deleteId = action.payload;
     },
-    resetDelitingId: (state, action) => {
+    resetDelitingId: (state) => {
       state.deleteId = undefined;
     },
 

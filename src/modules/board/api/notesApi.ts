@@ -46,6 +46,15 @@ export const notesApi = createApi({
       },
       invalidatesTags: [{ type: 'Notes', id: 'LIST' }],
     }),
+    deleteNote: build.mutation<boolean, string>({
+      queryFn: (id) => {
+        return notesService
+          .deleteNote(id)
+          .then((data) => ({ data }))
+          .catch((error) => ({ error }));
+      },
+      invalidatesTags: (result, error, id) => [{ type: 'Notes', id }],
+    }),
   }),
 });
 
@@ -53,4 +62,5 @@ export const {
   useLazyLoadNotesQuery,
   useEditNoteMutation,
   useCreateNoteMutation,
+  useDeleteNoteMutation,
 } = notesApi;

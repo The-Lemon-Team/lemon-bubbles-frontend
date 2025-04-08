@@ -5,11 +5,13 @@ import { useBoard } from '../../hooks/useBoard';
 import { useNotes } from '../../hooks/useNotes';
 import { useEditNote } from '../../hooks/useEditNote';
 import { useCreateNote } from '../../hooks/useCreateNote';
+import { useDeleteNote } from '../../hooks/useDeleteNote';
 
 export const NotesTablesContainer = () => {
   const { startDate, endDate, isLoading, notes } = useNotes();
-  const { mode, deleteNote, toggleCreatingMode, changeDate } = useBoard();
+  const { mode, toggleCreatingMode, changeDate } = useBoard();
   const { setEditId } = useEditNote();
+  const { setDelitingId } = useDeleteNote();
   const { setCreatingMode } = useCreateNote();
   const isUserLoading = useAppSelector((state) => state.user.loading.isLoading);
 
@@ -25,7 +27,7 @@ export const NotesTablesContainer = () => {
       onDateChange={changeDate}
       toggleCreatingMode={toggleCreatingMode}
       onEdit={setEditId}
-      onDelete={deleteNote}
+      onDelete={setDelitingId}
       onCreate={setCreatingMode}
     />
   );
