@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+import { hashTagsService } from '../../common/services/hashTagsService';
+
 import { IHashTag } from '../../../interfaces';
 
 export const hashTagsApi = createApi({
@@ -7,25 +9,19 @@ export const hashTagsApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
   tagTypes: ['HashTags'],
   endpoints: (build) => ({
-    getHashTagsByQuery: build.query<IHashTag[], string>({
-      query: (query) => ({
-        url: `/hashtags?query=` + query,
-        method: 'GET',
-      }),
-      providesTags: (result) =>
-        result ? result.map(({ id }) => ({ type: 'HashTags', id })) : [],
-    }),
-
     loadAllTags: build.query<IHashTag[], void>({
-      query: () => ({
-        url: '/hashtags',
-        method: 'GET',
-      }),
+      queryFn: async () => {
+        return hashTagsService
+          .findAll()
+          .then((data) => ({ data }))
+          .catch((error) => ({
+            error,
+          }));
+      },
       providesTags: (result) =>
         result ? result.map(({ id }) => ({ type: 'HashTags', id })) : [],
     }),
   }),
 });
 
-export const { useLazyGetHashTagsByQueryQuery, useLazyLoadAllTagsQuery } =
-  hashTagsApi;
+export const { useLazyLoadAllTagsQuery } = hashTagsApi;

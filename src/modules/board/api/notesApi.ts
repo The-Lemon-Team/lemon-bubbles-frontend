@@ -7,7 +7,7 @@ import { INote, IDateRange, INoteCreateFormSubmit } from '../../../interfaces';
 export const notesApi = createApi({
   reducerPath: 'notes',
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
-  tagTypes: ['Notes'],
+  tagTypes: ['Notes', 'HashTags'],
   endpoints: (build) => ({
     loadNotes: build.query<INote[], IDateRange>({
       queryFn: async (payload) => {
