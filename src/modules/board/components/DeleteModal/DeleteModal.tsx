@@ -5,8 +5,6 @@ import { useDeleteNote } from '../../hooks/useDeleteNote';
 export const DeleteModal = () => {
   const { deletingId, onDelete, resetDelitingId } = useDeleteNote();
 
-  console.log('deletingId', deletingId);
-
   return (
     <Modal
       backdrop="static"

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { authTransport } from '../../common/api';
 import { ITokens } from '../../../interfaces';
-import { useUser } from './useUser';
+import { useUser } from '../../common/hooks/useUser';
 
 export const useLogged = () => {
   const { user } = useUser();

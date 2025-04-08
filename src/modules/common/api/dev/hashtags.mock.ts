@@ -11,7 +11,7 @@ export const generateHashTag = (fields: Partial<IHashTag> = {}) => ({
   ...fields,
 });
 
-const generateHashTags = (amount = 1) => {
+export const generateHashTags = (amount = 1) => {
   return Array.from(Array(amount)).map(generateHashTag);
 };
 

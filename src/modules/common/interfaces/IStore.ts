@@ -20,6 +20,7 @@ export interface INotifierStore {
 export interface IUserStore {
   data: IUser | null;
   loading: ILoadingState;
+  editing: ILoadingState;
 }
 
 export interface IAuthStore {

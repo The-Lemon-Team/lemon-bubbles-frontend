@@ -1,15 +1,16 @@
 @use '../../../../styles/_variables';
 
 .main {
-  background: #000;
+  background: var(--rs-gray-900);
   position: relative;
   z-index: 2;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .navbar {
   padding: 22px 0 26px;
   position: relative;
-  background-color: #000 !important;
+  background-color: var(--rs-gray-900) !important;
 }
 
 .logo {
@@ -24,8 +25,35 @@
 }
 
 .nav {
+  display: flex;
+  gap: 12px;
   top: 27px;
+  align-items: center;
   position: absolute !important;
   right: 0;
   z-index: 1;
+}
+
+.userContainer {
+  position: relative;
+}
+
+.userNav {
+  position: absolute !important;
+  top: 47px;
+  right: 0;
+}
+
+.userNavItem {
+  display: flex;
+  align-items: center;
+  height: 24px !important;
+}
+
+.themeSwitcherItem {
+  background: var(--rs-gray-900) !important;
+}
+
+.lightThemeSwitcherItem {
+  background-color: var(--rs-gray-300) !important;
 }

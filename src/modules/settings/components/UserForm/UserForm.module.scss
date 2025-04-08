@@ -1,0 +1,28 @@
+.heading {
+  margin-bottom: 12px;
+}
+
+.userContainer {
+  margin-bottom: 18px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.fieldContainer {
+  margin-bottom: 14px !important;
+}
+
+.submitContainer {
+  display: flex;
+  justify-content: end;
+}
+
+.fioContainer {
+  display: grid;
+  grid-template-columns: 185px 185px;
+  gap: 14px;
+}

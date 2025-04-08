@@ -10,7 +10,6 @@ export const ThemeSwitcherContainer = () => {
   const toggleTheme = () => {
     dispatch(toggleThemeAction());
   };
-  const theme = useAppSelector((state) => state.common.theme);
   const isDarkMode =
     useAppSelector((state) => state.common.theme) === ThemeMode.DARK;
 

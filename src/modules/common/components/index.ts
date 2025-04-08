@@ -6,3 +6,4 @@ export * from './PrivateRoute';
 export * from './Notifier';
 export * from './ThemeProvider';
 export * from './StartupActions';
+export * from './MainLayout';

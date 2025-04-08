@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { authTransport } from '../../api';
 
-import { useUser } from '../../../board/hooks/useUser';
+import { useUser } from '../../hooks/useUser';
 
 export const StartupActions: React.FC<React.PropsWithChildren> = ({
   children,

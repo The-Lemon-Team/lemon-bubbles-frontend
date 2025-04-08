@@ -14,6 +14,7 @@ import {
   StartupActions,
 } from './modules/common/components';
 import { AuthScreen } from './modules/auth';
+import { SettingsScreen } from './modules/settings';
 import { Board } from './modules/board';
 
 import { store, persistor } from './modules/common/stores';
@@ -33,6 +34,15 @@ export const App = () => {
                     <div>
                       <Header />
                       <Board />
+                    </div>
+                  }
+                />
+                <Route
+                  path="/settings/*"
+                  element={
+                    <div>
+                      <Header />
+                      <SettingsScreen />
                     </div>
                   }
                 />

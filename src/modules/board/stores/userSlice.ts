@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { authTransport } from '../../common/api';
+import { userService } from '../../common/services';
 
 import { IUserStore } from '../../common/interfaces/IStore';
+import { IUserEditForm } from '../../../interfaces';
 
 const initialState: IUserStore = {
   data: null,
@@ -10,10 +12,18 @@ const initialState: IUserStore = {
     isLoading: false,
     error: false,
   },
+  editing: {
+    isLoading: false,
+    error: false,
+  },
 };
 
 const userByToken = createAsyncThunk('user/userByToken', () => {
   return authTransport.userByToken();
+});
+
+const editUser = createAsyncThunk('user/edit', (payload: IUserEditForm) => {
+  return userService.editUser(payload);
 });
 
 export const userSlice = createSlice({
@@ -43,6 +53,22 @@ export const userSlice = createSlice({
 
         state.loading.isLoading = false;
         state.loading.error = false;
+      })
+      .addCase(editUser.pending, (state) => {
+        state.editing.isLoading = true;
+        state.editing.error = false;
+      })
+      .addCase(editUser.rejected, (state) => {
+        state.editing.error = true;
+        state.editing.isLoading = false;
+      })
+      .addCase(editUser.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.data = action.payload;
+        }
+
+        state.editing.isLoading = false;
+        state.editing.error = false;
       });
   },
 });

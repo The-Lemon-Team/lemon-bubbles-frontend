@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.heading {
+  margin-bottom: 14px;
+}
+
+.copyright {
+  margin-bottom: 4px;
+}
+
+.socialsContainer {
+  display: flex;
+  gap: 10px;
+}
