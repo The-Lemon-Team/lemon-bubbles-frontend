@@ -11,12 +11,10 @@ import { IAuthStore } from '../../common/interfaces/IStore';
 
 const initialState: IAuthStore = {
   logging: {
-    isLoading: false,
-    error: false,
+    status: 'idle',
   },
   creating: {
-    isLoading: false,
-    error: false,
+    status: 'idle',
   },
 };
 
@@ -47,27 +45,22 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginByEmail.pending, (state) => {
-        state.logging.isLoading = true;
+        state.logging.status = 'loading';
       })
       .addCase(loginByEmail.fulfilled, (state, action) => {
-        state.logging.isLoading = false;
-        state.logging.error = false;
+        state.logging.status = 'succeed';
       })
       .addCase(loginByEmail.rejected, (state) => {
-        state.logging.error = true;
-        state.logging.isLoading = false;
+        state.logging.status = 'error';
       })
       .addCase(createUser.pending, (state) => {
-        state.creating.isLoading = true;
-        state.creating.error = false;
+        state.creating.status = 'loading';
       })
       .addCase(createUser.fulfilled, (state, action) => {
-        state.creating.isLoading = false;
-        state.creating.error = false;
+        state.creating.status = 'succeed';
       })
       .addCase(createUser.rejected, (state) => {
-        state.creating.isLoading = false;
-        state.creating.error = false;
+        state.creating.status = 'error';
       });
   },
 });

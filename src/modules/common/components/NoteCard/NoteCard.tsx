@@ -1,4 +1,5 @@
 import { Card, Divider, Text } from 'rsuite';
+import { format } from 'date-fns';
 
 import { HashTag } from '../HashTag';
 
@@ -10,36 +11,48 @@ interface INoteCardProps {
   title: string;
   description: string;
   created: string;
-  hashTags: IHashTag[];
+  hashTags?: IHashTag[];
+  className?: string;
+  width?: number;
+  showHashTags?: boolean;
 }
 
 export const NoteCard: React.FC<INoteCardProps> = ({
   title,
   description,
   created,
-  hashTags = [],
+  className = '',
+  hashTags,
+  showHashTags = true,
+  width = 240,
 }) => (
-  <Card width={240}>
+  <Card width={width} bordered className={className}>
     <Card.Header as="h5">{title}</Card.Header>
     <Card.Body>
-      {description}
+      {description.length >= 50
+        ? description.slice(0, 50) + '...'
+        : description}
 
-      <Divider />
-      <div className={styles.hashTagsContainer}>
-        <Text
-          size="md"
-          style={{
-            margin: 4,
-          }}
-        >
-          Хэштеги:
-        </Text>
-        {hashTags.map((hashTag) => (
-          <HashTag key={hashTag.id} color={hashTag.color}>
-            {hashTag.text}
-          </HashTag>
-        ))}
-      </div>
+      {hashTags && (
+        <>
+          <Divider />
+          <div className={styles.hashTagsContainer}>
+            <Text
+              size="md"
+              style={{
+                margin: 4,
+              }}
+            >
+              Хэштеги:
+            </Text>
+            {hashTags.map((hashTag) => (
+              <HashTag key={hashTag.id} color={hashTag.color}>
+                {hashTag.text}
+              </HashTag>
+            ))}
+          </div>
+        </>
+      )}
     </Card.Body>
     <Divider
       style={{
@@ -47,7 +60,7 @@ export const NoteCard: React.FC<INoteCardProps> = ({
       }}
     />
     <Card.Footer>
-      <Text muted>{created}</Text>
+      <Text muted>{format(new Date(created), 'do MMM yyy')}</Text>
     </Card.Footer>
   </Card>
 );

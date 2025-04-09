@@ -26,3 +26,14 @@
   grid-template-columns: 185px 185px;
   gap: 14px;
 }
+
+.skeletonContainer {
+  display: flex;
+  gap: 4px;
+}
+
+.statisticsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}

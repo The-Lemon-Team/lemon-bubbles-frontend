@@ -1,3 +1,6 @@
+import { IHashTag } from './IHashTag';
+import { INote } from './INote';
+
 export interface IUser {
   id: string;
   username: string;
@@ -6,7 +9,29 @@ export interface IUser {
   lastName?: string;
 }
 
-export interface IUserEditForm extends Omit<IUser, 'id'> {
+export interface IProfileStatistics {
+  notesCount?: number;
+  top5HashTags?: {
+    // Статистика хэштегов в формате {[Хэштег]: Колличество упоминаний}
+    [key: string]: {
+      hashtag: IHashTag;
+      count: number;
+    };
+  };
+}
+
+export interface IEntireStatistics {
+  hashTags: {
+    [key: string]: {
+      hashTag: IHashTag;
+      notes: INote[];
+      count: number;
+    };
+  };
+  lastNotes: INote[];
+}
+
+export interface IProfileForm extends Omit<IUser, 'id'> {
   id?: string;
   password?: string;
   newPassword?: string;
@@ -39,5 +64,7 @@ export interface ISignUpForm extends ILoginForm {
 }
 
 export interface IUserService {
-  editUser: (payload: IUserEditForm) => Promise<IUser>;
+  editUser: (payload: IProfileForm) => Promise<IUser>;
+  loadProfileStatistics: () => Promise<IProfileStatistics>;
+  loadEntireStatistics: () => Promise<IEntireStatistics>;
 }

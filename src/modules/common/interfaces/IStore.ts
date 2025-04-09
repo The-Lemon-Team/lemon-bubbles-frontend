@@ -6,15 +6,18 @@ import {
   ICoordinates,
   ISizes,
   INotification,
+  IHashTag,
+  INote,
 } from '../../../interfaces';
+
+export interface IAuthStore {
+  logging: ILoadingState;
+  creating: ILoadingState;
+}
 
 export interface ICommonStore {
   featureFlags: { [key: string]: boolean };
   theme: ThemeMode;
-}
-
-export interface INotifierStore {
-  notifications: INotification[];
 }
 
 export interface IUserStore {
@@ -23,9 +26,31 @@ export interface IUserStore {
   editing: ILoadingState;
 }
 
-export interface IAuthStore {
-  logging: ILoadingState;
-  creating: ILoadingState;
+export interface IStatisticsStore {
+  loading: ILoadingState;
+  data: {
+    notesCount?: number;
+    top5HashTags?: {
+      // Статистика хэштегов в формате {[Хэштег id]: Колличество упоминаний}
+      [key: string]: {
+        hashtag: IHashTag;
+        count: number;
+      };
+    };
+    hashTagsTop?: {
+      [key: string]: {
+        hashTag: IHashTag;
+        notes: INote[];
+        count: number;
+      };
+    };
+    // Добавить 5 или больше, может сделать инфинити - скрол
+    lastNotes?: INote[];
+  };
+}
+
+export interface INotifierStore {
+  notifications: INotification[];
 }
 
 export interface IFloatingList {

@@ -22,8 +22,12 @@ export const Header = () => {
   const toggleTheme = () => {
     dispatch(toggleThemeAction());
   };
-  const navigateToSettings = () => {
-    navigation('/settings');
+  const navigateToProfile = () => {
+    navigation('/user/profile');
+    setUserMenuOpened(() => false);
+  };
+  const navigateToStatistics = () => {
+    navigation('/user/statistics');
     setUserMenuOpened(() => false);
   };
 
@@ -52,11 +56,18 @@ export const Header = () => {
                     className={styles.userNav}
                   >
                     <Nav.Item
-                      eventKey="settings"
+                      eventKey="users"
                       className={styles.userNavItem}
-                      onClick={navigateToSettings}
+                      onClick={navigateToProfile}
                     >
                       Настройки
+                    </Nav.Item>
+                    <Nav.Item
+                      eventKey="statistics"
+                      className={styles.userNavItem}
+                      onClick={navigateToStatistics}
+                    >
+                      Статистика
                     </Nav.Item>
                     <Nav.Item
                       eventKey="theme"

@@ -6,11 +6,11 @@ export interface INote {
   title: string;
   created: string;
   description: string;
-  hashtags: IHashTag[];
+  hashTags: IHashTag[];
 }
 
-export interface INoteEditForm extends Omit<INote, 'hashtags'> {
-  hashtags: string[];
+export interface INoteEditForm extends Omit<INote, 'hashTags'> {
+  hashTags: string[];
 }
 
 export interface INoteCreateForm extends Omit<INoteEditForm, 'id'> {}

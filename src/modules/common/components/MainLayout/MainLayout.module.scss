@@ -1,14 +1,9 @@
 .main {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  padding-top: 90px;
+  margin-top: 24px;
 }
 
-.tableWrapper {
-  padding-top: 35px;
+.contentWrapper {
+  // padding-top: 35px;Fs
 }
 
 .background {
@@ -20,7 +15,17 @@
   z-index: -2;
 }
 
+.grid {
+  overflow: hidden;
+  display: flex;
+}
+
 .container {
   position: relative;
   z-index: 2;
+}
+
+.contentWrapper {
+  height: 100%;
+  width: 100%;
 }

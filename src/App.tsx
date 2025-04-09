@@ -14,7 +14,7 @@ import {
   StartupActions,
 } from './modules/common/components';
 import { AuthScreen } from './modules/auth';
-import { SettingsScreen } from './modules/settings';
+import { UserScreen } from './modules/user';
 import { Board } from './modules/board';
 
 import { store, persistor } from './modules/common/stores';
@@ -38,11 +38,15 @@ export const App = () => {
                   }
                 />
                 <Route
-                  path="/settings/*"
+                  path="/user/*"
                   element={
-                    <div>
+                    <div
+                      style={{
+                        height: '100%',
+                      }}
+                    >
                       <Header />
-                      <SettingsScreen />
+                      <UserScreen />
                     </div>
                   }
                 />

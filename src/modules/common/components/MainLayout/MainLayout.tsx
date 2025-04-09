@@ -17,8 +17,8 @@ export const MainLayout: React.FC<IMainLayoutProps> = ({
   return (
     <div className={styles.main}>
       <Container className={styles.container}>
-        <Grid>
-          <Row className={styles.tableWrapper}>
+        <Grid className={styles.grid}>
+          <Row className={styles.contentWrapper}>
             <Col xl={24}>{content}</Col>
           </Row>
         </Grid>

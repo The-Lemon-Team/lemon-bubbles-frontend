@@ -9,8 +9,8 @@ import { hashtagsMock } from './hashtags.mock';
 import { INote } from '../../../../interfaces';
 
 export const generateNote = (fields: Partial<INote> = {}) => {
-  const hashtags = take(shuffle(hashtagsMock), 5);
-  const description = `${faker.hacker.phrase()} ${hashtags
+  const hashTags = take(shuffle(hashtagsMock), 5);
+  const description = `${faker.hacker.phrase()} ${hashTags
     .map((hashtag) => `#${hashtag.text}`)
     .join(', ')}`;
 
@@ -20,12 +20,12 @@ export const generateNote = (fields: Partial<INote> = {}) => {
     title: `${faker.word.noun()} ${faker.word.adverb()}`,
     created: formatToIsoDate(subHours(new Date(), 5)),
     description,
-    hashtags,
+    hashTags,
     ...fields,
   };
 };
 
-const generateNotes = (amount = 1) => {
+export const generateNotes = (amount = 1) => {
   return Array.from(Array(amount)).map(generateNote);
 };
 

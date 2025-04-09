@@ -3,7 +3,7 @@ import {
   userByToken,
   clearUser as clearUserAction,
 } from '../../board/stores/userSlice';
-import { IUserEditForm } from '../../../interfaces';
+import { IProfileForm } from '../../../interfaces';
 
 export const useUser = () => {
   const dispatch = useAppDispatch();
@@ -12,7 +12,7 @@ export const useUser = () => {
 
   const loadUserByToken = () => dispatch(userByToken());
   const clearUser = () => dispatch(clearUserAction());
-  const editUser = (editUserForm: IUserEditForm) => {
+  const editUser = (editUserForm: IProfileForm) => {
     console.log('editUserForm', editUserForm);
   };
 

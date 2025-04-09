@@ -8,8 +8,12 @@ import { ILoginByEmailRequestDto } from '../../../interfaces';
 export const useLoginWithEmail = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector((state) => state.auth.logging.isLoading);
-  const error = useAppSelector((state) => state.auth.logging.error);
+  const isLoading = useAppSelector(
+    (state) => state.auth.logging.status === 'loading',
+  );
+  const error = useAppSelector(
+    (state) => state.auth.logging.status === 'error',
+  );
 
   const signInWithEmail = (payload: ILoginByEmailRequestDto) => {
     dispatch(loginByEmail(payload)).then(() => navigate('/board'));

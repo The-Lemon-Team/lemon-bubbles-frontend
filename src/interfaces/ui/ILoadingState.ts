@@ -1,4 +1,3 @@
 export interface ILoadingState {
-  isLoading: boolean;
-  error: boolean;
+  status: 'idle' | 'loading' | 'succeed' | 'error';
 }

@@ -1,20 +1,23 @@
 import { useFormik } from 'formik';
-import { Input, Form, Text, Heading, Button } from 'rsuite';
+import { Input, Form, Text, Heading, Button, Placeholder } from 'rsuite';
 import classNames from 'classnames';
 
 import { useUser } from '../../../common/hooks/useUser';
-import styles from './UserForm.module.scss';
+import styles from './Profile.module.scss';
 
-import { IUserEditForm } from '../../../../interfaces';
+import { IProfileForm } from '../../../../interfaces';
+import { HashTag } from '../../../common/components/HashTag';
+import { useProfile } from '../../hooks/useProfile';
 
-export const UserForm = () => {
+export const Profile = () => {
+  const { isLoading, top5HashTags, notesCount } = useProfile();
   const { user, editUser } = useUser();
   const initialValues = user || {
     email: '',
     username: '',
   };
 
-  const formikBag = useFormik<IUserEditForm>({
+  const formikBag = useFormik<IProfileForm>({
     initialValues,
     onSubmit: editUser,
     enableReinitialize: true,
@@ -119,16 +122,55 @@ export const UserForm = () => {
       <div className={styles.heading}>
         <Heading level={4}>Статистика:</Heading>
 
-        <div>
-          <Text size="lg">Всего записей</Text>
-        </div>
+        <div className={styles.statisticsContainer}>
+          <div
+            style={{
+              display: 'flex',
+              gap: '8px',
+              alignItems: 'center',
+            }}
+          >
+            <Text size="lg">Всего записей: {notesCount}</Text>
+            {isLoading && <Placeholder.Graph active width={72} height={26} />}
+          </div>
 
-        <div>
-          <Text size="lg">Самый популярный хэштег</Text>
-        </div>
+          <div>
+            <Text size="lg">Самый популярный хэштег: </Text>
 
-        <div>
-          <Text size="lg">Записей за неделю</Text>
+            <div>
+              {isLoading && (
+                <div className={styles.skeletonContainer}>
+                  {Array.from({ length: 5 }).map((item, i) => (
+                    <Placeholder.Graph key={i} active width={58} height={18} />
+                  ))}
+                </div>
+              )}
+              {!isLoading &&
+                Object.values(top5HashTags || {}).map(({ hashtag, count }) => (
+                  <HashTag color={hashtag.color} key={hashtag.id}>
+                    {hashtag.text} | {count}
+                  </HashTag>
+                ))}
+            </div>
+          </div>
+
+          <div>
+            <Text size="lg">Записей за неделю: </Text>
+            {isLoading && (
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '4px',
+                }}
+              >
+                <Placeholder.Graph active width={62} height={26} />
+                <Placeholder.Graph active width={62} height={26} />
+                <Placeholder.Graph active width={62} height={26} />
+                <Placeholder.Graph active width={62} height={26} />
+                <Placeholder.Graph active width={62} height={26} />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
