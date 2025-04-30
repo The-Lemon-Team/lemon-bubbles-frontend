@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { Toggle } from 'rsuite';
 
-import { toggleTheme as toggleThemeAction } from '../../../board/stores/commonSlice';
+import { toggleTheme as toggleThemeAction } from '../../stores/commonSlice';
 import { useAppSelector } from '../../stores/hooks';
 import { ThemeMode } from '../../../../enums';
 

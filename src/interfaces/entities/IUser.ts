@@ -21,17 +21,11 @@ export interface IProfileStatistics {
 }
 
 export interface IEntireStatistics {
-  hashTags: {
-    [key: string]: {
-      hashTag: IHashTag;
-      notes: INote[];
-      count: number;
-    };
-  };
+  hashTags: IHashTag[];
   lastNotes: INote[];
 }
 
-export interface IProfileForm extends Omit<IUser, 'id'> {
+export interface IUserEditForm extends Omit<IUser, 'id'> {
   id?: string;
   password?: string;
   newPassword?: string;
@@ -64,7 +58,7 @@ export interface ISignUpForm extends ILoginForm {
 }
 
 export interface IUserService {
-  editUser: (payload: IProfileForm) => Promise<IUser>;
+  editUser: (payload: IUserEditForm) => Promise<IUser>;
   loadProfileStatistics: () => Promise<IProfileStatistics>;
   loadEntireStatistics: () => Promise<IEntireStatistics>;
 }

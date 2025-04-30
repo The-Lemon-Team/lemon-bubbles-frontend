@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { Message, useToaster } from 'rsuite';
 
-import { INotification } from '../../../../interfaces/ui/INotification';
 import { useNotifier } from '../../hooks/useNotifier';
+
+import { INotification } from '../../../../interfaces/ui/INotification';
 
 const NOTIFICATION_DURATION = 3000;
 
@@ -25,20 +26,20 @@ export const Notifier = () => {
     removeToaster,
     startWork,
   } = useNotifier();
-
   const timersMap = useRef(new Map());
 
   useEffect(() => {
-    notificationsNotInProgress.forEach((notification) => {
-      const toasterId = toaster.push(
+    notificationsNotInProgress.forEach(async (notification) => {
+      const toasterId = await toaster.push(
         <Notification
           status={notification.status as INotification['status']}
           message={notification.message}
         />,
         {
-          placement: 'topCenter',
+          placement: 'bottomCenter',
         },
       );
+
       toasterId && startWork(notification, toasterId);
     });
 

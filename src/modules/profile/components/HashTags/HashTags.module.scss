@@ -1,0 +1,65 @@
+.hashTagsContainer {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.hashTagEditor {
+  padding: 12px 0;
+}
+
+.hashTagInput {
+  max-width: 185px;
+}
+
+.colorField {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.colorBtn {
+  width: 26px;
+  height: 26px;
+}
+
+.form {
+  display: flex;
+  gap: 14px;
+}
+
+.hashTagLabel {
+}
+
+.hashTagFormContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.notesWrapper {
+  flex-grow: 1;
+}
+
+.accordion {
+  width: 100%;
+
+  .rs-panel-header {
+    padding: 0 !important;
+  }
+
+  button {
+    padding: 4px 6px !important;
+  }
+}
+
+.accordionTitleWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.accordionHeader {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-right: 12px;
+}

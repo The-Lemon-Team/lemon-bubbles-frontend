@@ -3,7 +3,7 @@
 .main {
   background: var(--rs-gray-900);
   position: relative;
-  z-index: 2;
+  z-index: 10 !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -13,15 +13,17 @@
   background-color: var(--rs-gray-900) !important;
 }
 
-.logo {
-  margin: 0 auto;
-}
-
 .title {
   width: 100%;
   color: variables.$white;
   padding: 0 !important;
   height: auto !important;
+  display: flex !important;
+  justify-content: center;
+}
+
+.logo {
+  margin: 0 auto;
 }
 
 .nav {

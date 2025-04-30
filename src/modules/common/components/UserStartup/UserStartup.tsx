@@ -1,0 +1,42 @@
+import React, { useEffect } from 'react';
+
+import { authTransport } from '../../utils/authTransport';
+
+import { useAppDispatch, useAppSelector } from '../../stores/hooks';
+import { clearUser, userByToken } from '../../../user/stores/userModelSlice';
+
+// @todo переделать в UserStartup
+export const UserStartup: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user.model.data);
+  const isUserLoading = useAppSelector(
+    (state) => state.user.model.loading.status === 'loading',
+  );
+
+  useEffect(() => {
+    const tokens = authTransport.getToken();
+    const hasAnyToken = !!(tokens.accessToken || tokens.refreshToken);
+
+    if (!user && !isUserLoading && hasAnyToken) {
+      dispatch(userByToken());
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   const unsubscribe = authTransport.onLogin(() => {
+  //     const tokens = authTransport.getToken();
+  //     const hasAnyToken = !!(tokens.accessToken || tokens.refreshToken);
+
+  //   })
+  // }, [])
+
+  useEffect(() => {
+    const unsubscribe = authTransport.onLogout(() => {
+      dispatch(clearUser());
+    });
+
+    return unsubscribe;
+  }, []);
+
+  return null;
+};

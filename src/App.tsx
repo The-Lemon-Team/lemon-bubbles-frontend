@@ -7,54 +7,34 @@ import {
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import {
-  Header,
-  ThemeProvider,
-  Notifier,
-  StartupActions,
-} from './modules/common/components';
+import { ThemeProvider, Notifier, store, persistor } from './modules/common';
 import { AuthScreen } from './modules/auth';
-import { UserScreen } from './modules/user';
-import { Board } from './modules/board';
+import { AccessibleRoutes } from './pages';
 
-import { store, persistor } from './modules/common/stores';
+import { AUTH_PATH } from './constants';
 
 export const App = () => {
   return (
     <Router>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <StartupActions>
-            <ThemeProvider>
-              <Routes>
-                <Route path="/" element={<Navigate to="/auth" />} />
-                <Route
-                  path="/board"
-                  element={
-                    <div>
-                      <Header />
-                      <Board />
-                    </div>
-                  }
-                />
-                <Route
-                  path="/user/*"
-                  element={
-                    <div
-                      style={{
-                        height: '100%',
-                      }}
-                    >
-                      <Header />
-                      <UserScreen />
-                    </div>
-                  }
-                />
-                <Route path="/auth/*" element={<AuthScreen />} />
-              </Routes>
-              <Notifier />
-            </ThemeProvider>
-          </StartupActions>
+          <ThemeProvider>
+            <Routes>
+              <Route
+                path="/*"
+                element={
+                  <div>
+                    <Routes>
+                      <Route path="/" element={<Navigate to={AUTH_PATH} />} />
+                      <Route path="/*" element={<AccessibleRoutes />} />
+                    </Routes>
+                  </div>
+                }
+              />
+              <Route path={AUTH_PATH + '/*'} element={<AuthScreen />} />
+            </Routes>
+            <Notifier />
+          </ThemeProvider>
         </PersistGate>
       </Provider>
     </Router>

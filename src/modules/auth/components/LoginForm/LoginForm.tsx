@@ -9,7 +9,6 @@ import {
 } from 'rsuite';
 import { useFormik } from 'formik';
 import { pickBy, identity } from 'lodash';
-import GoogleIcon from '@rsuite/icons/legacy/Google';
 import { useNavigate } from 'react-router-dom';
 
 import { Logo } from '../../../common/components';
@@ -42,6 +41,7 @@ export const LoginForm: React.FC<ILoginFormProps> = () => {
     validate: (values) => {
       const { email, password } = loginFormValidationSchema.check(values);
       const errors = {
+        // @todo починить валидацию
         email: email.errorMessage,
         password: password.errorMessage,
       };

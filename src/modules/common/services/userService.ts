@@ -1,4 +1,4 @@
-import { authTransport } from '../api';
+import { authTransport } from '../utils/authTransport';
 
 import { IUserService } from '../../../interfaces';
 

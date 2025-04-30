@@ -1,0 +1,94 @@
+import React from 'react';
+import { FormikProvider, useFormik } from 'formik';
+import { Button, Modal } from 'rsuite';
+
+import { CreateNote } from '../CreateNote';
+
+import { useNoteFormAssets } from '../../hooks/useNoteFormAssets';
+import { useCreateNote } from '../../hooks/useCreateNote';
+import { useHashTags, useNotifier } from '../../../common';
+import styles from './CreateNoteModal.module.scss';
+
+import {
+  IHashTag,
+  INoteCreateForm,
+  INoteCreateRequestDto,
+} from '../../../../interfaces';
+
+const initialValues: INoteCreateForm = {
+  title: '',
+  description: '',
+  created: '',
+  hashTags: [],
+};
+
+interface ICreateNoteModalProps {
+  onCreate: (payload: INoteCreateRequestDto) => void;
+  onClose?: () => void;
+  transformTags: (hashTags: string[]) => IHashTag[];
+}
+
+export const CreateNoteModal: React.FC<ICreateNoteModalProps> = ({}) => {
+  const { isCreatingMode, createNote, resetCreatingMode } = useCreateNote();
+  const { transformTags } = useHashTags();
+  const { showSuccess } = useNotifier();
+
+  const handleSubmit = (payload: INoteCreateForm) => {
+    const hashTags = transformTags(payload.hashTags || []);
+
+    createNote({
+      ...payload,
+      created: new Date().toString(),
+      title: payload.title || '',
+      description: payload.description || '',
+      hashTags,
+    }).then(() => {
+      resetCreatingMode();
+      showSuccess(`Запись "${payload.title}" добавлена`);
+    });
+  };
+  const formikBag = useFormik({
+    initialValues,
+    enableReinitialize: true,
+    onSubmit: handleSubmit,
+  });
+
+  const {
+    suggestionTags,
+    handleTagsSearch,
+    handleTextChange,
+    handleTitleChange,
+  } = useNoteFormAssets(formikBag);
+
+  return (
+    <FormikProvider value={formikBag}>
+      <Modal
+        backdrop="static"
+        size="md"
+        keyboard
+        onClose={resetCreatingMode}
+        open={isCreatingMode}
+      >
+        <Modal.Body>
+          <CreateNote
+            usedTags={suggestionTags}
+            isEditMode={false}
+            onReset={formikBag.resetForm}
+            onTagsSearch={handleTagsSearch}
+            onTextChange={handleTextChange}
+            onTitleChange={handleTitleChange}
+          />
+        </Modal.Body>
+
+        <Modal.Footer className={styles.footer}>
+          <Button appearance="primary" onClick={formikBag.submitForm}>
+            Ok
+          </Button>
+          <Button onClick={resetCreatingMode} appearance="subtle">
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </FormikProvider>
+  );
+};

@@ -2,14 +2,17 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 import { useAppSelector } from '../../stores/hooks';
+import { useLogged } from '../../../auth';
 
 interface IPrivateRouteProps {
   children?: React.ReactNode;
 }
 
 export const PrivateRoute: React.FC<IPrivateRouteProps> = ({ children }) => {
-  const user = useAppSelector((state) => state.user.data);
-  const isLoading = useAppSelector((state) => state.user.loading.isLoading);
+  const isUserLoading = useAppSelector(
+    (state) => state.user.model.loading.status === 'loading',
+  );
+  const isLogged = useLogged();
 
-  return user || isLoading ? <>{children}</> : <Navigate to="/auth" />;
+  return isLogged || isUserLoading ? <>{children}</> : <Navigate to="/auth" />;
 };

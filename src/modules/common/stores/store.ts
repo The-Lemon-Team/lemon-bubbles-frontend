@@ -11,14 +11,15 @@ import {
 import storage from 'redux-persist/lib/storage';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
-import { userSlice } from '../../board/stores/userSlice';
-import { notesApi } from '../../board/api/notesApi';
-import { commonSlice } from '../../board/stores/commonSlice';
-import { boardSlice } from '../../board/stores/boardSlice';
-import { hashTagsApi } from '../../board/api/hashTagsApi';
-import { notifierSlice } from './notifierSlice';
+import { userReducer } from '../../user';
+import { notesApi, notesCreatingSlice } from '../../notes';
+import { boardSlice } from '../../board';
 import { authSlice } from '../../auth';
-import { statisticsSlice } from '../../user';
+import { profileSlice, profileApi } from '../../profile';
+import { commonSlice } from './commonSlice';
+
+import { hashTagsApi } from '../../hashTags/api/hashTagsApi';
+import { notifierSlice } from './notifierSlice';
 
 const persistConfig = {
   key: 'user',
@@ -26,14 +27,19 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  auth: authSlice.reducer,
   common: commonSlice.reducer,
-  user: userSlice.reducer,
-  board: boardSlice.reducer,
-  notes: notesApi.reducer,
-  hashtags: hashTagsApi.reducer,
-  statistics: statisticsSlice.reducer,
+  auth: authSlice.reducer,
   notifier: notifierSlice.reducer,
+
+  user: userReducer,
+  profile: profileSlice.reducer,
+  [profileApi.reducerPath]: profileApi.reducer,
+
+  notesCreating: notesCreatingSlice.reducer,
+  [notesApi.reducerPath]: notesApi.reducer,
+
+  board: boardSlice.reducer,
+  hashTags: hashTagsApi.reducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
@@ -46,11 +52,12 @@ export const store = configureStore({
       },
     })
       .concat(notesApi.middleware)
-      .concat(hashTagsApi.middleware),
+      .concat(hashTagsApi.middleware)
+      .concat(profileApi.middleware),
 });
 export const persistor = persistStore(store);
 
 persistor.pause();
 
-export type RootState = ReturnType<typeof store.getState>;
+export type IStore = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

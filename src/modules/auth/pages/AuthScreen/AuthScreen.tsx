@@ -1,27 +1,29 @@
 import { useCallback, useEffect } from 'react';
 import { useNavigate, Route, Routes, useMatch } from 'react-router-dom';
-import { Animation, Panel, IconButton, Text, Divider } from 'rsuite';
+import { Animation, Panel, IconButton, Text } from 'rsuite';
 import PagePreviousIcon from '@rsuite/icons/PagePrevious';
 
 import { LoginForm } from '../../components';
 import { SignUpContainer } from '../../containers';
 import { Layout } from './Layout';
 
-import { useLogged } from '../../../board/hooks/useLogged';
+import { useLogged } from '../../hooks/useLogged';
+import { AUTH_PATH, BOARD_PATH, SIGNUP_PATH } from '../../../../constants';
 
 import styles from './AuthScreen.module.scss';
 
 export const AuthScreen = () => {
-  const { isLogged } = useLogged();
+  const isLogged = useLogged();
   const navigate = useNavigate();
-  const match = useMatch('/auth');
+  const match = useMatch(AUTH_PATH);
+
   const goToAuth = useCallback(() => {
-    navigate('/auth');
+    navigate(AUTH_PATH);
   }, [navigate]);
 
   useEffect(() => {
     if (isLogged) {
-      navigate('/board');
+      navigate(BOARD_PATH);
     }
   }, [isLogged]);
 
@@ -48,7 +50,7 @@ export const AuthScreen = () => {
             }
           />
           <Route
-            path="/sign-up"
+            path={SIGNUP_PATH}
             element={
               <Animation.Bounce
                 key="sign-up-animation"

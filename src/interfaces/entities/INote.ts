@@ -14,16 +14,19 @@ export interface INoteEditForm extends Omit<INote, 'hashTags'> {
 }
 
 export interface INoteCreateForm extends Omit<INoteEditForm, 'id'> {}
-export interface INoteCreateFormSubmit extends Omit<INote, 'id'> {}
+export interface INoteCreateRequestDto extends Omit<INote, 'id'> {}
 
 export interface IGetNotesRequestDto {
-  startDate: string;
-  endDate: string;
+  dateRange?: IDateRange;
+  take?: number;
+  skip?: number;
 }
 
 export interface INotesService {
-  createNote: (payload: INoteCreateFormSubmit) => Promise<INote>;
+  createNote: (payload: INoteCreateRequestDto) => Promise<INote>;
   editNote: (payload: INote) => Promise<INote>;
-  findAll: (payload: IDateRange) => Promise<INote[]>;
+  findAll: (payload: IGetNotesRequestDto) => Promise<INote[]>;
+  findOne: (noteId: string) => Promise<INote>;
   deleteNote: (id: string) => Promise<boolean>;
+  getNotesTotal: (payload?: IDateRange) => Promise<number>;
 }

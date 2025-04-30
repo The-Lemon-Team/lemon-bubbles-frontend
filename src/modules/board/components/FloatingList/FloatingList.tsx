@@ -15,7 +15,7 @@ import PlusIcon from '@rsuite/icons/Plus';
 
 import { useFloatingList } from './useFloatingList';
 import { useModalManager } from './useModalManager';
-import { NoteList } from '../../../common/components/NoteList';
+import { NoteList } from '../../../notes/components/NoteList';
 import {
   DEFAULT_FLOATING_MAX_WIDTH,
   DEFAULT_FLOATING_MAX_HEIGHT,
@@ -55,7 +55,7 @@ export const FloatingList: React.FC = () => {
       title: 'Title #1',
       description: 'Description #1',
       created: subDays(new Date(), 2).toString(),
-      hashtags: [
+      hashTags: [
         {
           id: 'h-1',
           created: new Date().toString(),
@@ -69,7 +69,7 @@ export const FloatingList: React.FC = () => {
       title: 'Title Title Title Title #2',
       description: 'Description #2',
       created: new Date().toString(),
-      hashtags: [
+      hashTags: [
         {
           id: 'h-3233',
           created: new Date().toString(),
@@ -141,7 +141,7 @@ export const FloatingList: React.FC = () => {
               onSelect={handleTabChange}
             >
               <Nav.Item eventKey="notes">By notes</Nav.Item>
-              <Nav.Item eventKey="hashtags">By hashtag</Nav.Item>
+              <Nav.Item eventKey="hashTags">By hashtag</Nav.Item>
             </Nav>
             <div className={styles.actions}>
               <div className={styles.actionWrapper}>
@@ -186,7 +186,7 @@ export const FloatingList: React.FC = () => {
             <TabPanel active={activeTab === 'notes'} eventKey="notes">
               <NoteList notes={notes} />
             </TabPanel>
-            <TabPanel active={activeTab === 'hashtags'} eventKey="hashtags">
+            <TabPanel active={activeTab === 'hashTags'} eventKey="hashTags">
               By hashtag list
             </TabPanel>
           </div>

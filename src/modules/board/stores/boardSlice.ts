@@ -14,9 +14,6 @@ import { ICoordinates, IDateRange, ISizes } from '../../../interfaces';
 const dates = getInitialDates();
 const initialState: IBoardStore = {
   mode: 'table',
-  isCreatingMode: false,
-  editId: undefined,
-  deleteId: undefined,
   dateRange: {
     startDate: dates.startDate,
     endDate: dates.endDate,
@@ -37,40 +34,11 @@ export const boardSlice = createSlice({
   name: 'board',
   initialState,
   reducers: (create) => ({
-    setCreatingMode: (state) => {
-      state.editId = undefined;
-      state.isCreatingMode = true;
-    },
-    resetCreatingMode: (state) => {
-      state.isCreatingMode = false;
-    },
-    toggleCreatingMode: (state) => {
-      state.deleteId = undefined;
-      state.editId = undefined;
-      state.isCreatingMode = !state.isCreatingMode;
-    },
-
     setTableMode: (state) => {
       state.mode = 'table';
     },
     setCardsMode: (state) => {
       state.mode = 'cards';
-    },
-
-    setEditId: create.reducer<string>((state, action) => {
-      state.isCreatingMode = false;
-      state.editId = action.payload;
-    }),
-    resetEditId: (state) => {
-      state.isCreatingMode = false;
-      state.editId = undefined;
-    },
-
-    setDelitingId: (state, action) => {
-      state.deleteId = action.payload;
-    },
-    resetDelitingId: (state) => {
-      state.deleteId = undefined;
     },
 
     setDate: create.reducer<IDateRange>((state, action) => {
@@ -86,17 +54,5 @@ export const boardSlice = createSlice({
   }),
 });
 
-export const {
-  setCreatingMode,
-  resetCreatingMode,
-  setTableMode,
-  setCardsMode,
-  setEditId,
-  resetEditId,
-  setDate,
-  setCoordinates,
-  setSizes,
-  setDelitingId,
-  resetDelitingId,
-  toggleCreatingMode,
-} = boardSlice.actions;
+export const { setCardsMode, setCoordinates, setDate, setSizes, setTableMode } =
+  boardSlice.actions;

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { loginByEmail } from '../../auth/stores/authSlice';
+import { loginByEmail } from '../stores/authSlice';
 import { useAppSelector, useAppDispatch } from '../../common/stores/hooks';
 
 import { ILoginByEmailRequestDto } from '../../../interfaces';

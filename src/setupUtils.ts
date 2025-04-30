@@ -1,4 +1,4 @@
-import { setupDevServer } from './modules/common/api/dev/devServer';
+import { setupDevServer } from './modules/common/utils/authTransport/dev/devServer';
 
 export const setupUtils = () => {
   const isDevServerEnabled = process.env.DEV_SERVER === 'true';

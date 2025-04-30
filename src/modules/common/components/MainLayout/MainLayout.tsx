@@ -19,7 +19,7 @@ export const MainLayout: React.FC<IMainLayoutProps> = ({
       <Container className={styles.container}>
         <Grid className={styles.grid}>
           <Row className={styles.contentWrapper}>
-            <Col xl={24}>{content}</Col>
+            <Col xs={24}>{content}</Col>
           </Row>
         </Grid>
       </Container>
