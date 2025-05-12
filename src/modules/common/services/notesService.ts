@@ -20,14 +20,17 @@ export const notesService: INotesService = {
     return authTransport.get('/api/notes/count');
   },
   findOne: (noteId) => authTransport.get('/api/notes/' + noteId),
-  findAll: ({ dateRange: { startDate, endDate } = {}, take, skip }) => {
+  findAll: ({
+    dateRange: { startDate, endDate } = {},
+    pagination: { page, limit } = {},
+  }) => {
     const seachParams = new URLSearchParams(
       _.omitBy(
         {
           startDate: startDate || '',
           endDate: endDate || '',
-          take: take ? take + '' : '',
-          skip: skip ? skip + '' : '',
+          limit: limit ? limit + '' : '',
+          page: page ? page + '' : '',
         },
         (str) => +str !== 0 && !str,
       ),

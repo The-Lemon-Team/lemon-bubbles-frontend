@@ -57,6 +57,7 @@ export const CreateNote = ({
                   size="sm"
                   id="outlined-basic"
                   placeholder="Заголовок"
+                  data-testid="titleInput"
                   {...field}
                   onChange={onTitleChange}
                 />
@@ -70,6 +71,7 @@ export const CreateNote = ({
               return (
                 <HashTextArea
                   value={field.value}
+                  data-testid="descriptionInput"
                   hashTags={usedTags}
                   onChange={onTextChange}
                   onSearch={onTagsSearch}

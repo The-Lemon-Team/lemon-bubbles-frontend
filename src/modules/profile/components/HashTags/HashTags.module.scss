@@ -2,6 +2,7 @@
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .hashTagEditor {
@@ -28,7 +29,10 @@
   gap: 14px;
 }
 
-.hashTagLabel {
+.hashTag {
+  display: flex;
+  justify-content: space-between;
+  width: 120px;
 }
 
 .hashTagFormContainer {

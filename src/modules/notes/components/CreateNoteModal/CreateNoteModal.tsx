@@ -64,6 +64,7 @@ export const CreateNoteModal: React.FC<ICreateNoteModalProps> = ({}) => {
     <FormikProvider value={formikBag}>
       <Modal
         backdrop="static"
+        data-testid="createNoteModal"
         size="md"
         keyboard
         onClose={resetCreatingMode}
@@ -81,7 +82,11 @@ export const CreateNoteModal: React.FC<ICreateNoteModalProps> = ({}) => {
         </Modal.Body>
 
         <Modal.Footer className={styles.footer}>
-          <Button appearance="primary" onClick={formikBag.submitForm}>
+          <Button
+            data-testid="submitBtn"
+            appearance="primary"
+            onClick={formikBag.submitForm}
+          >
             Ok
           </Button>
           <Button onClick={resetCreatingMode} appearance="subtle">

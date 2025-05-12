@@ -9,6 +9,8 @@ import {
   Whisper,
   Message,
   Button,
+  Pagination,
+  Panel,
 } from 'rsuite';
 import AddOutlineIcon from '@rsuite/icons/AddOutline';
 import MenuIcon from '@rsuite/icons/Menu';
@@ -28,16 +30,21 @@ interface NotesTableProps {
     end: Date;
     start: Date;
   };
+  pagination: {
+    currentPage: number;
+    totalItems?: number;
+  };
   isLoading: boolean;
   notes: INote[];
   error?: boolean;
   mode?: 'table' | 'cards';
 
+  toggleCreatingMode: () => void;
+  onPageChange: (page: number) => void;
   onDateChange: (start: Date, end: Date) => void;
   onDelete: (id: string) => void;
   onEdit: (id: string) => void;
   onCreate: () => void;
-  toggleCreatingMode: () => void;
   onRefresh?: () => void;
 }
 
@@ -77,7 +84,9 @@ export const NotesTable: React.FC<NotesTableProps> = ({
   notes = [],
   isLoading,
   mode = 'table',
+  pagination: { currentPage = 1, totalItems } = {},
 
+  onPageChange,
   onCreate,
   onEdit,
   onRefresh,
@@ -96,13 +105,14 @@ export const NotesTable: React.FC<NotesTableProps> = ({
   );
 
   return (
-    <div>
+    <Panel bordered className={styles.main}>
       <div className={styles.actions}>
         <div className={styles.filters}>
           <div className={styles.filterItem}>
             <IconButton
               icon={<AddOutlineIcon />}
               onClick={toggleCreatingMode}
+              data-testid="addButton"
               circle
             />
           </div>
@@ -122,9 +132,9 @@ export const NotesTable: React.FC<NotesTableProps> = ({
           />
         </div>
       </div>
-      <div>
+      <div className={styles.tableWrapper}>
         <Table
-          height={450}
+          height={520}
           loading={isLoading}
           renderEmpty={() => {
             return error ? (
@@ -142,7 +152,7 @@ export const NotesTable: React.FC<NotesTableProps> = ({
             );
           }}
           headerHeight={50}
-          className={cn(styles.table)}
+          className={styles.table}
         >
           <Table.Column flexGrow={2} key="title">
             <Table.HeaderCell
@@ -249,7 +259,19 @@ export const NotesTable: React.FC<NotesTableProps> = ({
             </Table.Cell>
           </Table.Column>
         </Table>
+        <div className={styles.paginationWrapper}>
+          <Pagination
+            prev
+            last
+            next
+            first
+            total={totalItems || 0}
+            limit={10}
+            activePage={currentPage}
+            onChangePage={onPageChange}
+          />
+        </div>
       </div>
-    </div>
+    </Panel>
   );
 };

@@ -6,3 +6,12 @@
   display: flex;
   justify-content: center;
 }
+
+.errorMessage {
+  border: 1px solid var(--rs-color-red);
+  width: 100%;
+}
+
+.fieldError {
+  border: 1px solid var(--rs-color-red) !important;
+}

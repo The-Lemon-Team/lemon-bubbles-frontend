@@ -79,6 +79,7 @@
     "@types/twitter-text": "^3.1.2",
     "@types/uuid": "^8.3.4",
     "@vitejs/plugin-react": "^4.3.4",
+    "cypress": "^14.3.2",
     "eslint-plugin-prettier": "5.2.3",
     "husky": "^8.0.1",
     "prettier": "3.5.3",

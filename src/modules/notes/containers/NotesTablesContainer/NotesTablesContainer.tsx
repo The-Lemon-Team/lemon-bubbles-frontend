@@ -1,17 +1,25 @@
 import { NotesTable } from '../../components/NotesTable';
 
-import { useAppSelector } from '../../../common/stores/hooks';
 import { useBoard } from '../../../board/hooks/useBoard';
 import { useBoardNotes } from '../../../board/hooks/useBoardNotes';
 import { useEditNote } from '../../hooks/useEditNote';
 import { useCreateNote } from '../../hooks/useCreateNote';
 import { useDeleteNote } from '../../hooks/useDeleteNote';
+import { useAppSelector } from '../../../common';
 
 export const NotesTablesContainer = () => {
   const { startDate, endDate } = useAppSelector(
     (state) => state.board.dateRange,
   );
-  const { isLoading, notes } = useBoardNotes({ startDate, endDate });
+  const {
+    isLoading,
+    notes,
+    meta: { page, totalItems },
+    setPage,
+  } = useBoardNotes({
+    startDate,
+    endDate,
+  });
   const { mode, changeDate } = useBoard();
   const { setEditId } = useEditNote();
   const { setDelitingId } = useDeleteNote();
@@ -26,6 +34,8 @@ export const NotesTablesContainer = () => {
         start: new Date(startDate),
         end: new Date(endDate),
       }}
+      pagination={{ currentPage: page, totalItems }}
+      onPageChange={setPage}
       mode={mode as 'table' | 'cards'}
       notes={notes || []}
       isLoading={isLoading || isUserLoading}

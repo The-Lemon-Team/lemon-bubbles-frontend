@@ -4,6 +4,7 @@ import { notesService } from '../../common/services/notesService';
 
 import {
   INote,
+  IGetNotesResponseDto,
   IGetNotesRequestDto,
   INoteCreateRequestDto,
 } from '../../../interfaces';
@@ -21,17 +22,17 @@ export const notesApi = createApi({
           .catch((error) => ({ error }));
       },
     }),
-    loadNotes: build.query<INote[], IGetNotesRequestDto>({
+    loadNotes: build.query<IGetNotesResponseDto, IGetNotesRequestDto>({
       queryFn: async (payload) => {
         return notesService
           .findAll(payload)
-          .then((data = []) => ({ data }))
+          .then((payload) => ({ data: payload }))
           .catch((error) => ({ error }));
       },
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Notes', id }) as const),
+              ...result.items.map(({ id }) => ({ type: 'Notes', id }) as const),
               { type: 'Notes', id: 'LIST' },
             ]
           : [{ type: 'Notes', id: 'LIST' }],

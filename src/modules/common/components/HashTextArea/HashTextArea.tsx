@@ -24,6 +24,8 @@ export interface HashTextAreaProps {
 
   onSearch: (query: string) => void;
   onChange: (text?: string) => void;
+
+  [key: string]: string | any;
 }
 
 const mentionPlugin = createMentionPlugin({
@@ -72,6 +74,8 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
 
   onSearch,
   onChange,
+
+  ...props
 }) => {
   const [open, setOpen] = useState(false);
   const editorRef = useRef<Editor>(null);
@@ -121,7 +125,13 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
   }, [editorValue, value]);
 
   return (
-    <div className={classNames('rs-input', styles.inputWrapper, styles.editor)}>
+    <div
+      data-testId={props['data-testid']}
+      className={classNames('rs-input', styles.inputWrapper, styles.editor)}
+      onClick={() => {
+        editorRef.current!.focus();
+      }}
+    >
       <Editor
         ref={editorRef}
         plugins={plugins}

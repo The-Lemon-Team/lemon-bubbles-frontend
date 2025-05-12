@@ -19,7 +19,8 @@
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "noImplicitAny": true,
-    "noImplicitThis": true
+    "noImplicitThis": true,
+    "types": ["cypress", "node"]
   },
-  "include": ["src"]
+  "include": ["src", "**/*.ts"]
 }

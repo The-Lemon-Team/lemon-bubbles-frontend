@@ -11,9 +11,10 @@ export const useLoginWithEmail = () => {
   const isLoading = useAppSelector(
     (state) => state.auth.logging.status === 'loading',
   );
-  const error = useAppSelector(
+  const errorStatus = useAppSelector(
     (state) => state.auth.logging.status === 'error',
   );
+  const errorMessage = useAppSelector((state) => state.auth.logging.error);
 
   const signInWithEmail = (payload: ILoginByEmailRequestDto) => {
     dispatch(loginByEmail(payload)).then(() => navigate('/board'));
@@ -21,7 +22,8 @@ export const useLoginWithEmail = () => {
 
   return {
     isLoading,
-    error,
+    errorStatus,
+    errorMessage,
 
     signInWithEmail,
   };

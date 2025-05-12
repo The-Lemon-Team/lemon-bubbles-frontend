@@ -1,21 +1,26 @@
-import { useEffect } from 'react';
-
 import { useLoadNotesQuery } from '../../notes/api/notesApi';
 import { useInfiniteAssets } from '../../common/hooks';
 
 import { IDateRange } from '../../../interfaces';
 
 export const useBoardNotes = (dateRange?: IDateRange) => {
-  const { take, skip } = useInfiniteAssets();
-  // @todo убрать lazy
-  const { data: notes, isLoading } = useLoadNotesQuery({
+  const { page, limit, setPage } = useInfiniteAssets();
+  const { data, isLoading } = useLoadNotesQuery({
     dateRange,
-    take,
-    skip,
+    pagination: {
+      page,
+      limit,
+    },
   });
 
   return {
-    notes,
     isLoading,
+    notes: data?.items || [],
+    meta: {
+      page,
+      limit,
+      totalItems: data?.meta?.totalItems,
+    },
+    setPage,
   };
 };

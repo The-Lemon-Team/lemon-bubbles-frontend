@@ -8,6 +8,7 @@ import {
   ISizes,
   INotification,
 } from '../../../interfaces';
+import { HttpStatus } from '../utils/authTransport/enums/HttpStatus';
 
 export interface IAuthStore {
   logging: ILoadingState;

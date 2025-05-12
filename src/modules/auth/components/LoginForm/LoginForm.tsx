@@ -1,11 +1,12 @@
 import { useCallback } from 'react';
 import {
-  Button,
   ButtonToolbar,
   Divider,
   FlexboxGrid,
   Form,
   Input,
+  Notification,
+  Button,
 } from 'rsuite';
 import { useFormik } from 'formik';
 import { pickBy, identity } from 'lodash';
@@ -18,6 +19,7 @@ import { useLoginWithEmail } from '../../hooks/useLogingWithEmail';
 import { ILoginByEmailRequestDto } from '../../../../interfaces';
 
 import styles from './LoginForm.module.scss';
+import classNames from 'classnames';
 
 export interface ILoginFormProps {}
 
@@ -27,7 +29,7 @@ const initialValues: ILoginByEmailRequestDto = {
 };
 
 export const LoginForm: React.FC<ILoginFormProps> = () => {
-  const { signInWithEmail, isLoading } = useLoginWithEmail();
+  const { signInWithEmail, errorMessage, isLoading } = useLoginWithEmail();
   const navigate = useNavigate();
 
   const onSignUp = useCallback(() => {
@@ -39,11 +41,10 @@ export const LoginForm: React.FC<ILoginFormProps> = () => {
     enableReinitialize: true,
     onSubmit: signInWithEmail,
     validate: (values) => {
-      const { email, password } = loginFormValidationSchema.check(values);
+      const validation = loginFormValidationSchema.check(values);
       const errors = {
-        // @todo починить валидацию
-        email: email.errorMessage,
-        password: password.errorMessage,
+        email: validation.email?.errorMessage,
+        password: validation.password?.errorMessage,
       };
 
       return pickBy(errors, identity);
@@ -71,6 +72,8 @@ export const LoginForm: React.FC<ILoginFormProps> = () => {
         <Input
           name="email"
           type="email"
+          data-testid="email"
+          className={errorMessage && styles.fieldError}
           onChange={handleFormikChange}
           disabled={isLoading}
         />
@@ -84,18 +87,32 @@ export const LoginForm: React.FC<ILoginFormProps> = () => {
           name="password"
           type="password"
           autoComplete="off"
+          className={errorMessage && styles.fieldError}
+          data-testid="password"
           disabled={isLoading}
           onChange={handleFormikChange}
         />
-        <Form.ErrorMessage show={!!formik.errors.password}>
-          {formik.errors.password}
-        </Form.ErrorMessage>
       </Form.Group>
+
+      {errorMessage?.message && (
+        <Notification
+          data-testid="error-message"
+          className={styles.errorMessage}
+          type="error"
+        >
+          {errorMessage?.message}
+        </Notification>
+      )}
 
       <Form.Group>
         <FlexboxGrid justify="start" align="middle">
           <span>Ещё не зарегистрированы? </span>
-          <Button appearance="link" onClick={onSignUp} disabled={isLoading}>
+          <Button
+            appearance="link"
+            onClick={onSignUp}
+            data-testid="sign-up-btn"
+            disabled={isLoading}
+          >
             Создать аккаунт
           </Button>
         </FlexboxGrid>
@@ -106,6 +123,7 @@ export const LoginForm: React.FC<ILoginFormProps> = () => {
           appearance="primary"
           block
           size="md"
+          data-testid="login"
           onClick={() => formik.handleSubmit()}
         >
           Войти

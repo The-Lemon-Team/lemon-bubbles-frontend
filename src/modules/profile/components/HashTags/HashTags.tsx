@@ -13,8 +13,11 @@ import {
   Form,
   Divider,
   Tag,
+  IconButton,
 } from 'rsuite';
 import InfoRoundIcon from '@rsuite/icons/InfoRound';
+import EditIcon from '@rsuite/icons/Edit';
+
 import { useFormik } from 'formik';
 import ColorPicker from '@rc-component/color-picker';
 import '@rc-component/color-picker/assets/index.css';
@@ -180,6 +183,7 @@ const HashTagModule: React.FC<IHashTagFormProps> = ({ selectedHashTag }) => {
   );
 };
 
+// Переместить в модуль hashtags
 export const HashTags = () => {
   const [selectedId, setSelectedId] = useState('');
   const { data: hashTags } = useLoadTagsWithNotesQuery({});
@@ -209,6 +213,11 @@ export const HashTags = () => {
               >
                 {hashTag.text} | {hashTag.notes.length}
               </HashTag>
+              <IconButton
+                icon={<EditIcon />}
+                size="xs"
+                appearance="subtle"
+              ></IconButton>
             </div>
           ))}
         </div>

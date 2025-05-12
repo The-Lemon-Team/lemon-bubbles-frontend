@@ -1,4 +1,4 @@
-export interface IBackendError {
+export interface IErrorMessage {
   message: string;
   statusCode: number;
 }

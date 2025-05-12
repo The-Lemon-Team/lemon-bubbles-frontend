@@ -1,85 +1,90 @@
-.table {
-    width: 100%;
+.main {
+  background-color: var(--rs-gray-900);
+  box-sizing: border-box;
 }
 
-.tableWrapper {
-    // min-height: 200px;
+.table {
+  width: 100%;
 }
 
 .tableCreatingMode {
-    width: 57% !important;
+  width: 57% !important;
 }
 
 .header {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
 .title {
-    overflow: hidden;
-    font-size: 1rem;
+  overflow: hidden;
+  font-size: 1rem;
 }
 
 .actions {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
 .content {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .formWrapper {
-    width: 40% !important;
+  width: 40% !important;
 }
 
 .headerCell {
-    [class~="rs-table-cell"] {
-        transition: none !important;
-    }
+  [class~='rs-table-cell'] {
+    transition: none !important;
+  }
 }
 
 .filters {
-    display: flex;
+  display: flex;
 }
 
 .filterItem {
-    &:not(:last-child) {
-        margin-right: 0.5rem;
-    }
+  &:not(:last-child) {
+    margin-right: 0.5rem;
+  }
 }
 
 .dateBtn {
-    [class~="rs-picker-toggle"] {
-        border-radius: 1.115rem !important;
-    }
+  [class~='rs-picker-toggle'] {
+    border-radius: 1.115rem !important;
+  }
 }
 
 .refreshBtn {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 .notFoundWrapper {
-    position: relative;
-    &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        background: rgba(0,0,0, 0.2);
-    }
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+  }
 }
 
 .messageWrapper {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center; 
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .message {
-    width: 50%;
+  width: 50%;
+}
+
+.paginationWrapper {
+  padding-top: 18px;
 }

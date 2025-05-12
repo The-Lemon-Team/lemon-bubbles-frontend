@@ -58,6 +58,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
         <Input
           name="email"
           type="email"
+          data-testid="email"
           onChange={handleFormikChange}
           disabled={isLoading}
         />
@@ -69,6 +70,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
         <Form.ControlLabel>Никнейм: </Form.ControlLabel>
         <Input
           name="username"
+          data-testid="username"
           onChange={handleFormikChange}
           disabled={isLoading}
         />
@@ -82,6 +84,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           name="password"
           type="password"
           autoComplete="off"
+          data-testid="password"
           disabled={isLoading}
           onChange={handleFormikChange}
         />
@@ -95,6 +98,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           name="repeatedPassword"
           type="password"
           autoComplete="off"
+          data-testid="repeatedPassword"
           disabled={isLoading}
           onChange={handleFormikChange}
         />
@@ -108,6 +112,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           appearance="primary"
           block
           size="md"
+          data-testid="registrationBtn"
           loading={isLoading}
           onClick={() => formik.handleSubmit()}
         >

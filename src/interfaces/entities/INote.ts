@@ -1,11 +1,15 @@
 import { IDateRange } from '../ui/IDateRange';
+import { IPagination, IPaginationDto } from '../ui/IPagination';
 import { IHashTag } from './IHashTag';
 
-export interface INote {
-  id: string;
+export interface INoteObj {
   title: string;
-  created: string;
   description: string;
+}
+
+export interface INote extends INoteObj {
+  id: string;
+  created: string;
   hashTags: IHashTag[];
 }
 
@@ -18,14 +22,18 @@ export interface INoteCreateRequestDto extends Omit<INote, 'id'> {}
 
 export interface IGetNotesRequestDto {
   dateRange?: IDateRange;
-  take?: number;
-  skip?: number;
+  pagination?: IPagination;
+}
+
+export interface IGetNotesResponseDto {
+  items: INote[];
+  meta: IPaginationDto;
 }
 
 export interface INotesService {
   createNote: (payload: INoteCreateRequestDto) => Promise<INote>;
   editNote: (payload: INote) => Promise<INote>;
-  findAll: (payload: IGetNotesRequestDto) => Promise<INote[]>;
+  findAll: (payload: IGetNotesRequestDto) => Promise<IGetNotesResponseDto>;
   findOne: (noteId: string) => Promise<INote>;
   deleteNote: (id: string) => Promise<boolean>;
   getNotesTotal: (payload?: IDateRange) => Promise<number>;

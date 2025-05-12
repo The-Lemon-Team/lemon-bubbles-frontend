@@ -1,17 +1,17 @@
 import { useState } from 'react';
 
-const INITIAL_SKIP = 0;
-const INITIAL_TAKE = 10;
+const INITIAL_PAGE = 1;
+const INITIAL_SKIP = 10;
 
 export const useInfiniteAssets = () => {
-  const [take, setTake] = useState(INITIAL_TAKE);
-  const [skip, setSkip] = useState(INITIAL_SKIP);
+  const [page, setPage] = useState(INITIAL_PAGE);
+  const [limit, setLimit] = useState(INITIAL_SKIP);
 
   return {
-    take,
-    skip,
+    page,
+    limit,
 
-    setTake,
-    setSkip,
+    setPage,
+    setLimit,
   };
 };
