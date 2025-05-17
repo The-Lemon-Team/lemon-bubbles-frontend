@@ -44,7 +44,7 @@ export const notesApi = createApi({
           .then((data) => ({ data }))
           .catch((error) => ({ error }));
       },
-      invalidatesTags: ['Notes'],
+      invalidatesTags: (result, error, arg) => [{ type: 'Notes', id: arg.id }],
     }),
     createNote: build.mutation<INote, INoteCreateRequestDto>({
       queryFn: (payload) => {
@@ -55,7 +55,7 @@ export const notesApi = createApi({
             error,
           }));
       },
-      invalidatesTags: [{ type: 'Notes', id: 'LIST' }],
+      invalidatesTags: () => ['Notes'],
     }),
     deleteNote: build.mutation<boolean, string>({
       queryFn: (id) => {
@@ -72,7 +72,6 @@ export const notesApi = createApi({
 export const {
   useLazyLoadNotesQuery,
   useLazyLoadNoteQuery,
-  useLoadNoteQuery,
   useEditNoteMutation,
   useCreateNoteMutation,
   useDeleteNoteMutation,

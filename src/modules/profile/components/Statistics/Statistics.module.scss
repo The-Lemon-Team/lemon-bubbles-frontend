@@ -1,5 +1,9 @@
 .contentItem {
   margin-bottom: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 0;
 }
 
 .notes {

@@ -4,30 +4,30 @@ import {
 } from '../stores';
 
 import { useAppDispatch, useAppSelector } from '../../common/stores/hooks';
-import { useEditNoteMutation } from '../api/notesApi';
-import { useNote } from './useNote';
+import { useEditNoteMutation, useLazyLoadNoteQuery } from '../api/notesApi';
 
 import { INote } from '../../../interfaces';
 
 export const useEditNote = () => {
   const dispatch = useAppDispatch();
   const [editNoteThunk, { isLoading: isEditing }] = useEditNoteMutation();
-  const editId = useAppSelector((state) => state.notesCreating.editId);
-  const { data: editingNote } = useNote(editId || '');
+  const editId = useAppSelector((state) => state.notes.editId);
+  const [loadNote, { data, isLoading }] = useLazyLoadNoteQuery();
 
   const setEditId = (id: string) => {
     dispatch(setEditIdAction(id));
+    loadNote(id);
   };
   const resetEditId = () => {
     dispatch(resetEditIdAction());
   };
-
   const editNote = (payload: INote) => editNoteThunk(payload);
 
   return {
+    isLoading,
     isEditing,
     editId,
-    editingNote,
+    editingNote: data,
 
     editNote,
     setEditId,

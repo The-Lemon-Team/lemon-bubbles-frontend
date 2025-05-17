@@ -1,1 +1,1 @@
-export * from './notesCreatingSlice';
+export * from './notesSlice';

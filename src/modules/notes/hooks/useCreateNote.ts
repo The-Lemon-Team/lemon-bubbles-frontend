@@ -4,15 +4,13 @@ import {
   setCreatingMode as setCreatingModeAction,
   resetCreatingMode as resetCreatingModeAction,
   toggleCreatingMode as toggleCreatingModeAction,
-} from '../stores/notesCreatingSlice';
+} from '../stores/notesSlice';
 
 import { INoteCreateRequestDto } from '../../../interfaces';
 
 export const useCreateNote = () => {
   const dispatch = useAppDispatch();
-  const isCreatingMode = useAppSelector(
-    (state) => state.notesCreating.createMode,
-  );
+  const isCreatingMode = useAppSelector((state) => state.notes.createMode);
   const [createNoteThunk, { isLoading }] = useCreateNoteMutation();
   const setCreatingMode = () => {
     dispatch(setCreatingModeAction());

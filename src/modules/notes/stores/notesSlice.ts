@@ -8,8 +8,8 @@ const initialState: INotesStore = {
   createMode: false,
 };
 
-export const notesCreatingSlice = createSlice({
-  name: 'notes/creating',
+export const notesSlice = createSlice({
+  name: 'notes',
   initialState,
   reducers: (create) => ({
     setCreatingMode: (state) => {
@@ -50,4 +50,4 @@ export const {
   resetDelitingId,
   setDelitingId,
   resetEditId,
-} = notesCreatingSlice.actions;
+} = notesSlice.actions;

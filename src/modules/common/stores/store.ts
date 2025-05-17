@@ -12,7 +12,7 @@ import storage from 'redux-persist/lib/storage';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
 import { userReducer } from '../../user';
-import { notesApi, notesCreatingSlice } from '../../notes';
+import { notesApi, notesSlice } from '../../notes';
 import { boardSlice } from '../../board';
 import { authSlice } from '../../auth';
 import { profileSlice, profileApi } from '../../profile';
@@ -35,7 +35,7 @@ const rootReducer = combineReducers({
   profile: profileSlice.reducer,
   [profileApi.reducerPath]: profileApi.reducer,
 
-  notesCreating: notesCreatingSlice.reducer,
+  notes: notesSlice.reducer,
   [notesApi.reducerPath]: notesApi.reducer,
 
   board: boardSlice.reducer,

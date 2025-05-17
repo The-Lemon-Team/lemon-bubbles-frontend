@@ -32,8 +32,21 @@ export const notesService: INotesService = {
           limit: limit ? limit + '' : '',
           page: page ? page + '' : '',
         },
-        (str) => +str !== 0 && !str,
+        (str) => {
+          console.log('str', str);
+          return !!str && +str !== 0;
+        },
       ),
+    );
+    console.log(
+      'seachParams',
+      {
+        startDate: startDate || '',
+        endDate: endDate || '',
+        limit: limit ? limit + '' : '',
+        page: page ? page + '' : '',
+      },
+      seachParams.toString(),
     );
     return authTransport.get(`/api/notes/?` + seachParams);
   },

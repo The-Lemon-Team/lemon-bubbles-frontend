@@ -58,7 +58,11 @@ export const LoginForm: React.FC<ILoginFormProps> = () => {
   );
 
   return (
-    <Form fluid formValue={formik.values}>
+    <Form
+      onSubmit={() => formik.handleSubmit()}
+      fluid
+      formValue={formik.values}
+    >
       <Form.Group>
         <div>
           <div className={styles.logoWrapper}>
@@ -124,6 +128,7 @@ export const LoginForm: React.FC<ILoginFormProps> = () => {
           block
           size="md"
           data-testid="login"
+          type="submit"
           onClick={() => formik.handleSubmit()}
         >
           Войти

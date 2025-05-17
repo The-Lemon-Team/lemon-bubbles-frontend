@@ -3,11 +3,11 @@ import { useDeleteNoteMutation } from '../api/notesApi';
 import {
   setDelitingId as setDelitingIdAction,
   resetDelitingId as resetDelitingIdAction,
-} from '../stores/notesCreatingSlice';
+} from '../stores/notesSlice';
 
 export const useDeleteNote = () => {
   const dispatch = useAppDispatch();
-  const deletingId = useAppSelector((state) => state.board.deleteId || '');
+  const deletingId = useAppSelector((state) => state.notes.deleteId || '');
   const [deleteNote] = useDeleteNoteMutation();
 
   const setDelitingId = (id: string) => {
