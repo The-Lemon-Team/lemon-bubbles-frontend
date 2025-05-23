@@ -1,29 +1,13 @@
 import React, { useCallback } from 'react';
-import { format } from 'date-fns';
-import {
-  DateRangePicker,
-  Dropdown,
-  IconButton,
-  Popover,
-  Table,
-  Whisper,
-  Message,
-  Button,
-  Pagination,
-  Panel,
-} from 'rsuite';
+import { DateRangePicker, IconButton, Panel } from 'rsuite';
 import AddOutlineIcon from '@rsuite/icons/AddOutline';
 import MenuIcon from '@rsuite/icons/Menu';
-import MoreIcon from '@rsuite/icons/More';
-import cn from 'classnames';
 import { DateRange } from 'rsuite/esm/DateRangePicker';
 
-import { LineTag } from '../../../common/components';
-import { NotFound } from '../NotFound';
-
+import { Notes } from '../Notes';
 import styles from './NotesTable.module.scss';
 
-import { IHashTag, INote } from '../../../../interfaces';
+import { INote } from '../../../../interfaces';
 
 interface NotesTableProps {
   dateRange: {
@@ -31,13 +15,14 @@ interface NotesTableProps {
     start: Date;
   };
   pagination: {
-    currentPage: number;
+    page: number;
+    limit: number;
     totalItems?: number;
   };
   isLoading: boolean;
   notes: INote[];
   error?: boolean;
-  mode?: 'table' | 'cards';
+  mode: 'table' | 'cards';
 
   toggleCreatingMode: () => void;
   onPageChange: (page: number) => void;
@@ -48,43 +33,13 @@ interface NotesTableProps {
   onRefresh?: () => void;
 }
 
-interface IEmptyPlaceholderProps {
-  onRefresh?: () => void;
-}
-
-const EmptyPlaceholder = ({ onRefresh }: IEmptyPlaceholderProps) => {
-  return (
-    <div className={cn(styles.notFoundWrapper, styles.messageWrapper)}>
-      <Message
-        showIcon
-        type="error"
-        header="Ошибка загрузки"
-        className={styles.message}
-      >
-        <span>
-          Попробуйте ещё раз <br />
-        </span>
-        <Button
-          appearance="subtle"
-          color="cyan"
-          size="md"
-          className={styles.refreshBtn}
-          onClick={onRefresh}
-        >
-          Обновить
-        </Button>
-      </Message>
-    </div>
-  );
-};
-
 export const NotesTable: React.FC<NotesTableProps> = ({
   dateRange,
   error,
   notes = [],
   isLoading,
   mode = 'table',
-  pagination: { currentPage = 1, totalItems } = {},
+  pagination,
 
   onPageChange,
   onCreate,
@@ -133,133 +88,18 @@ export const NotesTable: React.FC<NotesTableProps> = ({
         </div>
       </div>
       <div className={styles.tableWrapper}>
-        <Table
-          height={520}
-          loading={isLoading}
-          renderEmpty={() => {
-            return error ? (
-              <EmptyPlaceholder onRefresh={onRefresh} />
-            ) : (
-              <NotFound onCreate={onCreate} />
-            );
-          }}
+        <Notes
+          isLoading={isLoading}
+          error={error}
           data={notes}
-          renderRow={(children, item) => {
-            return item?.dayLabel ? (
-              <div>{item.dayLabel}</div>
-            ) : (
-              <>{children}</>
-            );
-          }}
-          headerHeight={50}
-          className={styles.table}
-        >
-          <Table.Column flexGrow={2} key="title">
-            <Table.HeaderCell
-              className={styles.headerCell}
-              style={{ padding: '4px 20px', marginRight: '2px' }}
-            >
-              <h3 className={styles.header}>Title</h3>
-            </Table.HeaderCell>
-            <Table.Cell
-              dataKey="title"
-              wordWrap="break-word"
-              style={{ padding: '4px 20px' }}
-            >
-              {({ title }) => {
-                return <h4 className={styles.title}>{title}</h4>;
-              }}
-            </Table.Cell>
-          </Table.Column>
-          <Table.Column flexGrow={2} key="description">
-            <Table.HeaderCell
-              className={styles.headerCell}
-              style={{ padding: '4px 20px 4px 0' }}
-            >
-              <h3 className={styles.header}>Description</h3>
-            </Table.HeaderCell>
-            <Table.Cell
-              dataKey="description"
-              style={{ padding: '4px 25px 4px 5px' }}
-            />
-          </Table.Column>
-          <Table.Column flexGrow={1} key="created">
-            <Table.HeaderCell
-              className={styles.headerCell}
-              style={{ padding: '4px 20px 4px 0' }}
-            >
-              <h3 className={styles.header}>Date</h3>
-            </Table.HeaderCell>
-            <Table.Cell dataKey="created" style={{ padding: 4 }}>
-              {({ created }) => format(new Date(created), 'd MMM Y')}
-            </Table.Cell>
-          </Table.Column>
-          <Table.Column flexGrow={2} key="hashtags">
-            <Table.HeaderCell
-              className={styles.headerCell}
-              style={{ padding: '4px 20px 4px 0' }}
-            >
-              <h3 className={styles.header}>HashTags</h3>
-            </Table.HeaderCell>
-            <Table.Cell dataKey="hashTags" style={{ padding: 4 }}>
-              {({ hashTags }) => {
-                return hashTags?.map((hashTag: IHashTag) => (
-                  <LineTag
-                    key={hashTag.id}
-                    color={hashTag.color}
-                    text={hashTag.text}
-                  />
-                ));
-              }}
-            </Table.Cell>
-          </Table.Column>
-          <Table.Column width={60}>
-            <Table.HeaderCell
-              className={styles.headerCell}
-              style={{ padding: '4px 20px 4px 0' }}
-            >
-              <></>
-            </Table.HeaderCell>
-            <Table.Cell dataKey="id" style={{ padding: 4 }}>
-              {(item) => {
-                return (
-                  <Whisper
-                    placement="autoVerticalStart"
-                    trigger="click"
-                    speaker={({ className, left, top, onClose }, ref) => {
-                      return (
-                        <Popover
-                          ref={ref}
-                          className={className}
-                          style={{ left, top }}
-                          full
-                        >
-                          <Dropdown.Menu onSelect={() => onClose()}>
-                            <Dropdown.Item
-                              eventKey={1}
-                              onSelect={() => onDelete(item.id)}
-                            >
-                              Удалить
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              onSelect={() => onEdit(item.id)}
-                              eventKey={2}
-                            >
-                              Редактировать
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Popover>
-                      );
-                    }}
-                  >
-                    <IconButton appearance="subtle" icon={<MoreIcon />} />
-                  </Whisper>
-                );
-              }}
-            </Table.Cell>
-          </Table.Column>
-        </Table>
-        <div className={styles.paginationWrapper}>
+          pagination={pagination}
+          onRefresh={onRefresh}
+          onCreate={onCreate}
+          onDelete={onDelete}
+          onEdit={onEdit}
+          onPageChange={onPageChange}
+        />
+        {/* <div className={styles.paginationWrapper}>
           <Pagination
             prev
             last
@@ -270,7 +110,7 @@ export const NotesTable: React.FC<NotesTableProps> = ({
             activePage={currentPage}
             onChangePage={onPageChange}
           />
-        </div>
+        </div> */}
       </div>
     </Panel>
   );

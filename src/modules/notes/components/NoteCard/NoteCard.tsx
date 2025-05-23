@@ -1,7 +1,7 @@
 import { Card, Divider, Text } from 'rsuite';
 import { format } from 'date-fns';
 
-import { HashTag } from '../../../common';
+import { HashTag } from '../../../hashTags';
 
 import { IHashTag } from '../../../../interfaces';
 

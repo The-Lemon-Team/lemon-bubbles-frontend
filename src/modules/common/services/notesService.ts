@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { authTransport } from '../utils/authTransport';
+import { authTransport, cleanUpObject } from '../utils';
 
 import { INotesService } from '../../../interfaces';
 
@@ -25,28 +25,12 @@ export const notesService: INotesService = {
     pagination: { page, limit } = {},
   }) => {
     const seachParams = new URLSearchParams(
-      _.omitBy(
-        {
-          startDate: startDate || '',
-          endDate: endDate || '',
-          limit: limit ? limit + '' : '',
-          page: page ? page + '' : '',
-        },
-        (str) => {
-          console.log('str', str);
-          return !!str && +str !== 0;
-        },
-      ),
-    );
-    console.log(
-      'seachParams',
-      {
+      cleanUpObject({
         startDate: startDate || '',
         endDate: endDate || '',
         limit: limit ? limit + '' : '',
         page: page ? page + '' : '',
-      },
-      seachParams.toString(),
+      }),
     );
     return authTransport.get(`/api/notes/?` + seachParams);
   },

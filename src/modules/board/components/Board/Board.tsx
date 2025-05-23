@@ -1,6 +1,25 @@
+import { lazy, Suspense } from 'react';
 import { MainLayout } from '../../../common';
-import { NotesTablesContainer } from '../../../notes';
+
+import { useBoard } from '../../hooks/useBoard';
 
 export const Board = () => {
-  return <MainLayout content={<NotesTablesContainer />} />;
+  const { mode, changeDate } = useBoard();
+
+  const NotesTablesContainer = lazy(
+    () => import('../../../notes/containers/NotesTableContainer'),
+  );
+
+  return (
+    <MainLayout
+      content={
+        <Suspense fallback={<div>loading...</div>}>
+          <NotesTablesContainer
+            mode={mode as 'table' | 'cards'}
+            onDateChange={changeDate}
+          />
+        </Suspense>
+      }
+    />
+  );
 };

@@ -1,0 +1,23 @@
+.table {
+  width: 100%;
+}
+
+.header {
+  font-size: 1rem;
+}
+
+.headerCell {
+  [class~='rs-table-cell'] {
+    transition: none !important;
+  }
+
+  [class~='rs-table-cell-content'] {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.title {
+  overflow: hidden;
+  font-size: 1rem;
+}

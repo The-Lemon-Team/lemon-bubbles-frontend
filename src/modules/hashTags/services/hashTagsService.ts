@@ -13,7 +13,6 @@ export const hashTagsService: IHashTagsService = {
     }),
 
   findWithNotes: ({ limit, dateRange: { startDate, endDate } = {} }) => {
-    console.log('findWithNotes');
     const searchParams = new URLSearchParams(
       _.omitBy(
         {

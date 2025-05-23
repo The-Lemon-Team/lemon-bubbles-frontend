@@ -5,6 +5,7 @@ import { INotesStore } from '../../common/interfaces';
 const initialState: INotesStore = {
   editId: undefined,
   deleteId: undefined,
+  created: false,
   createMode: false,
 };
 
@@ -16,6 +17,9 @@ export const notesSlice = createSlice({
       state.editId = undefined;
       state.createMode = true;
     },
+    setCreated: create.reducer<boolean>((state, action) => {
+      state.createMode = action.payload;
+    }),
     resetCreatingMode: (state) => {
       state.createMode = false;
     },
@@ -43,6 +47,7 @@ export const notesSlice = createSlice({
 });
 
 export const {
+  setCreated,
   setCreatingMode,
   resetCreatingMode,
   toggleCreatingMode,

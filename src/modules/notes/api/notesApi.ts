@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { notesService } from '../../common/services/notesService';
-
+import { notesService } from '../../common';
 import {
   INote,
   IGetNotesResponseDto,
@@ -14,12 +13,15 @@ export const notesApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
   tagTypes: ['Notes', 'HashTags'],
   endpoints: (build) => ({
-    loadNote: build.query<INote, string>({
+    loadNote: build.query<INote | undefined, string>({
       queryFn: async (noteId) => {
         return notesService
           .findOne(noteId)
           .then((data) => ({ data }))
           .catch((error) => ({ error }));
+      },
+      providesTags: (arg) => {
+        return [{ type: 'Notes', id: arg?.id }];
       },
     }),
     loadNotes: build.query<IGetNotesResponseDto, IGetNotesRequestDto>({
@@ -72,6 +74,7 @@ export const notesApi = createApi({
 export const {
   useLazyLoadNotesQuery,
   useLazyLoadNoteQuery,
+  useLoadNoteQuery,
   useEditNoteMutation,
   useCreateNoteMutation,
   useDeleteNoteMutation,

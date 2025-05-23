@@ -8,7 +8,7 @@ import createMentionPlugin, { defaultTheme } from '@draft-js-plugins/mention';
 import { EntryComponentProps } from '@draft-js-plugins/mention/lib/MentionSuggestions/Entry/Entry';
 import getCurrentContrastText from 'font-color-contrast';
 
-import { LineTag } from '../../../hashTags/components/LineTag';
+import { LineTag } from '../../../hashTags';
 
 import styles from './HashTextArea.module.scss';
 import hashTagStyles from './HashTagStyles.module.scss';
@@ -126,7 +126,7 @@ export const HashTextArea: React.FC<HashTextAreaProps> = ({
 
   return (
     <div
-      data-testId={props['data-testid']}
+      data-testid={props['data-testid']}
       className={classNames('rs-input', styles.inputWrapper, styles.editor)}
       onClick={() => {
         editorRef.current!.focus();

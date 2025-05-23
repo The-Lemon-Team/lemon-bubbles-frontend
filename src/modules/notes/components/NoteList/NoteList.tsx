@@ -2,8 +2,8 @@ import React from 'react';
 import { useMemo } from 'react';
 import { Panel, PanelGroup } from 'rsuite';
 
-import { groupNotesByDays } from '../../../common/utils/groupNotesByDays';
-import { LineTag } from '../../../common';
+import { groupNotesByDays } from '../../../common/utils';
+import { LineTag } from '../../../hashTags';
 
 import styles from './NoteList.module.scss';
 
@@ -19,7 +19,7 @@ export const NoteList: React.FC<NoteListProps> = ({ notes = [] }) => {
 
   return (
     <div>
-      {Object.keys(notesByDay).map((date, index) => {
+      {Object.keys(notesByDay).map((date) => {
         const notes = notesByDay[date];
 
         return (
@@ -42,7 +42,7 @@ export const NoteList: React.FC<NoteListProps> = ({ notes = [] }) => {
                       <div className={styles.noteWrapper}>
                         <p className={styles.noteLabel}>{note.title}</p>
                         <div>
-                          {note.hashtags.map((hashTag) => (
+                          {note.hashTags.map((hashTag) => (
                             <LineTag {...hashTag} key={hashTag.id} />
                           ))}
                         </div>

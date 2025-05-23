@@ -4,9 +4,9 @@ import UserChangeIcon from '@rsuite/icons/UserChange';
 import PieChartIcon from '@rsuite/icons/PieChart';
 import ListIcon from '@rsuite/icons/List';
 
-import { CopyRight, Notes, Profile, Statistics } from '../../components';
-import { MainLayout } from '../../../common/components';
-import { useRouteMatch } from '../../../common/hooks';
+import { MainLayout, useRouteMatch } from '../../../common';
+import { CopyRight, Profile, Statistics } from '../../components';
+import { NotesContainer } from '../../../notes';
 import {
   PROFILE_PATH,
   PROFILE_STATISTICS_PATH,
@@ -75,7 +75,7 @@ export const ProfilePage = () => {
                 <div className={styles.content}>
                   {isProfilePage && <Profile />}
                   {isStatisticsPage && <Statistics />}
-                  {isNotesPage && <Notes />}
+                  {isNotesPage && <NotesContainer />}
                   {isCopyrightPage && <CopyRight />}
                 </div>
               </Col>

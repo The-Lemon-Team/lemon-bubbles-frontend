@@ -1,9 +1,9 @@
-import { useLoadNotesQuery } from '../../notes/api/notesApi';
+import { useLoadNotesQuery } from '../api/notesApi';
 import { useInfiniteAssets } from '../../common/hooks';
 
 import { IDateRange } from '../../../interfaces';
 
-export const useBoardNotes = (dateRange?: IDateRange) => {
+export const useNotes = (dateRange?: IDateRange) => {
   const { page, limit, setPage } = useInfiniteAssets();
   const { data, isLoading } = useLoadNotesQuery({
     dateRange,
@@ -16,7 +16,7 @@ export const useBoardNotes = (dateRange?: IDateRange) => {
   return {
     isLoading,
     notes: data?.items || [],
-    meta: {
+    pagination: {
       page,
       limit,
       totalItems: data?.meta?.totalItems,

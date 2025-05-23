@@ -1,6 +1,7 @@
 import { useCreateNoteMutation } from '../api/notesApi';
 import { useAppDispatch, useAppSelector } from '../../common/stores/hooks';
 import {
+  setCreated as setCreatedMode,
   setCreatingMode as setCreatingModeAction,
   resetCreatingMode as resetCreatingModeAction,
   toggleCreatingMode as toggleCreatingModeAction,
@@ -22,7 +23,9 @@ export const useCreateNote = () => {
     dispatch(resetCreatingModeAction());
   };
   const createNote = (payload: INoteCreateRequestDto) =>
-    createNoteThunk(payload);
+    createNoteThunk(payload).then(() => {
+      dispatch(setCreatedMode(true));
+    });
 
   return {
     isCreatingMode: isCreatingMode || isLoading,

@@ -1,10 +1,7 @@
 import { Heading, Text, IconButton } from 'rsuite';
-import GoogleIcon from '@rsuite/icons/Google';
-import IOsIcon from '@rsuite/icons/IOs';
-import AndroidIcon from '@rsuite/icons/Android';
-import MiniProgramIcon from '@rsuite/icons/MiniProgram';
 
 import styles from './CopyRight.module.scss';
+import { GithubSvg } from './GithubSvg';
 
 export const CopyRight = () => {
   return (
@@ -16,10 +13,13 @@ export const CopyRight = () => {
         <Text size="lg">© Copyright by Lemon Team</Text>
       </div>
       <div className={styles.socialsContainer}>
-        <IconButton icon={<GoogleIcon />} size="xs" />
-        <IconButton icon={<IOsIcon />} size="xs" />
-        <IconButton icon={<AndroidIcon />} size="xs" />
-        <IconButton icon={<MiniProgramIcon />} size="xs" />
+        <IconButton
+          icon={<GithubSvg />}
+          size="xs"
+          onClick={() =>
+            window.location.replace('https://github.com/The-Lemon-Team')
+          }
+        />
       </div>
     </div>
   );

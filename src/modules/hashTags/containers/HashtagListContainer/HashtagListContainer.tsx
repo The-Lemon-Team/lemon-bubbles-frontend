@@ -11,7 +11,10 @@ export const HashtagListContainer: React.FC<HashtagListContainerProps> = ({
   hashtagNames,
 }) => {
   const { mapTagNamesOnTags } = useHashTags();
-  const [usedHashtags, unusedHashtags] = mapTagNamesOnTags(hashtagNames);
+  const [unusedHashtags, usedHashtags] = mapTagNamesOnTags(hashtagNames);
+
+  console.log('usedHashtags', usedHashtags);
+  console.log('unusedHashtags', unusedHashtags);
 
   return (
     <HashtagList usedHashtags={usedHashtags} unusedHashtags={unusedHashtags} />

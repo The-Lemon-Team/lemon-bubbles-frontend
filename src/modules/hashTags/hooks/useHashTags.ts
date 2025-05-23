@@ -1,4 +1,4 @@
-import { generateHashTag } from '../../common/utils/authTransport/dev/hashtags.mock';
+import { generateHashTag } from '../../common/utils/generateHashTag';
 import { useLoadAllTagsQuery } from '../api/hashTagsApi';
 
 import { IHashTag } from '../../../interfaces';
@@ -7,11 +7,13 @@ const mapTagNamesOnTags = (
   hashTagsData: IHashTag[] = [],
   tagNames: string[] = [],
 ) => {
-  const usedHashTags = tagNames.reduce(
+  return tagNames.reduce(
     (acc, cur) => {
       const usedHashtag: IHashTag | undefined = hashTagsData?.find(
         (hashTag) => hashTag.text === cur,
       );
+
+      console.log('------------- dddd', hashTagsData, usedHashtag, tagNames);
 
       if (usedHashtag) {
         return [[...acc[0], usedHashtag], acc[1]] as [IHashTag[], string[]];
@@ -22,7 +24,7 @@ const mapTagNamesOnTags = (
     [[], []] as [IHashTag[], string[]],
   );
 
-  return usedHashTags;
+  // return usedHashTags;
 };
 
 const prepareHashtagsToUpload = (

@@ -1,1 +1,0 @@
-export { NotesTablesContainer } from './NotesTablesContainer';

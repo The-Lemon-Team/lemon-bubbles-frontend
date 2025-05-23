@@ -5,14 +5,19 @@ import { FormikProvider, useFormik } from 'formik';
 import { CreateNote } from '../CreateNote';
 
 import { useHashTags } from '../../../hashTags/hooks/useHashTags';
-import { useEditNote } from '../../hooks/useEditNote';
 import { useNoteFormAssets } from '../../hooks/useNoteFormAssets';
 
 import styles from './EditNoteModal.module.scss';
 
-import { INoteEditForm } from '../../../../interfaces';
+import { INote, INoteEditForm } from '../../../../interfaces';
 
-interface IEditNoteModalProps {}
+interface IEditNoteModalProps {
+  editingNote?: INote;
+  disabled?: boolean;
+
+  resetEditId: () => void;
+  editNote: (payload: INote) => void;
+}
 
 const inititalFormValues: INoteEditForm = {
   id: '',
@@ -22,8 +27,12 @@ const inititalFormValues: INoteEditForm = {
   hashTags: [],
 };
 
-export const EditNoteModal: React.FC<IEditNoteModalProps> = () => {
-  const { resetEditId, editNote, editId, editingNote } = useEditNote();
+export const EditNoteModal: React.FC<IEditNoteModalProps> = ({
+  disabled,
+  editingNote,
+  editNote,
+  resetEditId,
+}) => {
   const { transformTags } = useHashTags();
   const initialValues = {
     ...(editingNote || inititalFormValues),
@@ -38,7 +47,7 @@ export const EditNoteModal: React.FC<IEditNoteModalProps> = () => {
       title: payload.title || '',
       description: payload.description || '',
       hashTags,
-    }).then(resetEditId);
+    });
   };
   const formikBag = useFormik({
     initialValues,
@@ -54,11 +63,12 @@ export const EditNoteModal: React.FC<IEditNoteModalProps> = () => {
 
   return (
     <FormikProvider value={formikBag}>
-      <Modal backdrop="static" size="md" open={!!editId}>
+      <Modal backdrop="static" size="md" open={!!editingNote}>
         <Modal.Body>
           <CreateNote
-            usedTags={suggestionTags}
             isEditMode
+            disabled={disabled}
+            usedTags={suggestionTags}
             onReset={formikBag.resetForm}
             onTagsSearch={handleTagsSearch}
             onTextChange={handleTextChange}
@@ -67,10 +77,14 @@ export const EditNoteModal: React.FC<IEditNoteModalProps> = () => {
         </Modal.Body>
 
         <Modal.Footer className={styles.footer}>
-          <Button appearance="primary" onClick={() => formikBag.handleSubmit()}>
+          <Button
+            appearance="primary"
+            onClick={() => formikBag.handleSubmit()}
+            disabled={disabled}
+          >
             Ok
           </Button>
-          <Button onClick={resetEditId} appearance="subtle">
+          <Button onClick={resetEditId} appearance="subtle" disabled={disabled}>
             Cancel
           </Button>
         </Modal.Footer>

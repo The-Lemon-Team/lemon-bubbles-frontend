@@ -1,2 +1,3 @@
 export * from './CreateNoteModalContainer';
-export * from './NotesTablesContainer';
+export * from './NotesContainer';
+export * from './NotesTableContainer';

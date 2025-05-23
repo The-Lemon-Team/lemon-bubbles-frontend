@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 
-import { authTransport } from '../../utils/authTransport';
+import { authTransport } from '../../../common/utils';
 
-import { useAppDispatch, useAppSelector } from '../../stores/hooks';
+import { useAppDispatch, useAppSelector } from '../../../common';
 import { clearUser, userByToken } from '../../../user/stores/userModelSlice';
 
 // @todo переделать в UserStartup
@@ -21,14 +21,6 @@ export const UserStartup: React.FC = () => {
       dispatch(userByToken());
     }
   }, []);
-
-  // useEffect(() => {
-  //   const unsubscribe = authTransport.onLogin(() => {
-  //     const tokens = authTransport.getToken();
-  //     const hasAnyToken = !!(tokens.accessToken || tokens.refreshToken);
-
-  //   })
-  // }, [])
 
   useEffect(() => {
     const unsubscribe = authTransport.onLogout(() => {

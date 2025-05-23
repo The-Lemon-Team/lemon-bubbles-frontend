@@ -1,26 +1,30 @@
-import { NotesTable } from '../../components/NotesTable';
-
-import { useBoard } from '../../../board/hooks/useBoard';
-import { useBoardNotes } from '../../../board/hooks/useBoardNotes';
-import { useEditNote } from '../../hooks/useEditNote';
-import { useCreateNote } from '../../hooks/useCreateNote';
-import { useDeleteNote } from '../../hooks/useDeleteNote';
 import { useAppSelector } from '../../../common';
+import { NotesTable } from '../../components';
 
-export const NotesTablesContainer = () => {
+import {
+  useNotes,
+  useEditNote,
+  useCreateNote,
+  useDeleteNote,
+} from '../../hooks';
+
+interface INotesTablesContainerProps {
+  mode: 'table' | 'cards';
+
+  onDateChange: (startDate: Date, endDate: Date) => void;
+}
+
+export const NotesTablesContainer: React.FC<INotesTablesContainerProps> = ({
+  mode,
+  onDateChange,
+}) => {
   const { startDate, endDate } = useAppSelector(
     (state) => state.board.dateRange,
   );
-  const {
-    isLoading,
-    notes,
-    meta: { page, totalItems },
-    setPage,
-  } = useBoardNotes({
+  const { isLoading, notes, pagination, setPage } = useNotes({
     startDate,
     endDate,
   });
-  const { mode, changeDate } = useBoard();
   const { setEditId } = useEditNote();
   const { setDelitingId } = useDeleteNote();
   const { setCreatingMode, toggleCreatingMode } = useCreateNote();
@@ -34,12 +38,12 @@ export const NotesTablesContainer = () => {
         start: new Date(startDate),
         end: new Date(endDate),
       }}
-      pagination={{ currentPage: page, totalItems }}
+      pagination={pagination}
       onPageChange={setPage}
-      mode={mode as 'table' | 'cards'}
+      mode={mode}
       notes={notes || []}
       isLoading={isLoading || isUserLoading}
-      onDateChange={changeDate}
+      onDateChange={onDateChange}
       toggleCreatingMode={toggleCreatingMode}
       onEdit={setEditId}
       onDelete={setDelitingId}

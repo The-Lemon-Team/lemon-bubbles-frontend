@@ -49,5 +49,6 @@ export interface IBoardStore {
 export interface INotesStore {
   editId?: string;
   deleteId?: string;
+  created?: boolean;
   createMode?: boolean;
 }

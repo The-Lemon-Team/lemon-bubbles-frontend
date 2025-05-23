@@ -4,7 +4,7 @@ import { Panel } from 'rsuite';
 import ReloadIcon from '@rsuite/icons/Reload';
 
 import { HashtagListContainer } from '../../../hashTags';
-import { HashTextArea } from '../../../common/components/HashTextArea';
+import { HashTextArea } from '../../../common';
 
 import styles from './CreateNote.module.scss';
 
@@ -12,6 +12,7 @@ import { IHashTag } from '../../../../interfaces';
 
 export interface CreateNoteProps {
   isEditMode?: boolean;
+  disabled?: boolean;
   usedTags?: IHashTag[];
 
   onTextChange: (value?: string) => void;
@@ -21,6 +22,7 @@ export interface CreateNoteProps {
 }
 
 export const CreateNote = ({
+  disabled,
   isEditMode,
   usedTags,
   onTextChange,
@@ -43,6 +45,7 @@ export const CreateNote = ({
               onClick={onReset}
               variant="contained"
               color="violet"
+              disabled={disabled}
             />
           </div>
         </div>
@@ -58,6 +61,7 @@ export const CreateNote = ({
                   id="outlined-basic"
                   placeholder="Заголовок"
                   data-testid="titleInput"
+                  disabled={disabled}
                   {...field}
                   onChange={onTitleChange}
                 />

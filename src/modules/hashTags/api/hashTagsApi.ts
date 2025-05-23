@@ -30,7 +30,6 @@ export const hashTagsApi = createApi({
       IHashTagFindWithNotesRequestDto
     >({
       queryFn: async (payload) => {
-        console.log('payload', payload);
         return hashTagsService
           .findWithNotes(payload)
           .then((data) => ({ data }))

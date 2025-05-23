@@ -1,24 +1,46 @@
-import { useAppDispatch, useAppSelector } from '../../common';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useInfiniteAssets,
+} from '../../common';
 import { useLoadTagsWithNotesQuery } from '../../hashTags';
 import { setCreatingMode, useLoadNotesQuery } from '../../notes';
 
+const INITIAL_PAGE = 1;
+const LIMIT = 5;
+
 export const useStatistics = () => {
   const dispatch = useAppDispatch();
-  const { data: lastNotes, isLoading: notesLoading } = useLoadNotesQuery({});
+  const { page, limit, setPage } = useInfiniteAssets(INITIAL_PAGE, LIMIT);
+  const { data: response, isLoading: notesLoading } = useLoadNotesQuery({
+    pagination: {
+      limit: limit,
+      page: page,
+    },
+  });
   const { data: hashTagsWithNotes, isLoading: hashTagsLoading } =
     useLoadTagsWithNotesQuery({ limit: 10 });
-  const openCreatingModal = () => dispatch(setCreatingMode());
   const isCreatingModalOpened = useAppSelector(
     (state) => !!state.notes.createMode,
   );
+  const created = useAppSelector((state) => state.notes.created);
+
+  const openCreatingModal = () => dispatch(setCreatingMode());
 
   return {
-    lastNotes,
+    lastNotes: response?.items || [],
     hashTagsWithNotes,
     hashTagsLoading,
     notesLoading,
     isCreatingModalOpened,
+    created,
+    pagination: {
+      page,
+      limit,
+      totalItems: response?.meta.totalItems,
+    },
 
     openCreatingModal,
+    setPage,
   };
 };

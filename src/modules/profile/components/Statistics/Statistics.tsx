@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Card,
   Heading,
@@ -8,6 +8,7 @@ import {
   Tag,
   List,
   Text,
+  Pagination,
 } from 'rsuite';
 import classNames from 'classnames';
 import PlusIcon from '@rsuite/icons/Plus';
@@ -61,7 +62,20 @@ const DefaultPopover: React.FC<IDefaultPopoverProps> = React.forwardRef(
 );
 
 export const Statistics = () => {
-  const { lastNotes, hashTagsWithNotes, openCreatingModal } = useStatistics();
+  const {
+    lastNotes,
+    hashTagsWithNotes,
+    pagination,
+    created,
+    openCreatingModal,
+    setPage,
+  } = useStatistics();
+
+  useEffect(() => {
+    if (created) {
+      setPage(1);
+    }
+  }, [created]);
 
   return (
     <div>
@@ -98,26 +112,36 @@ export const Statistics = () => {
           ))}
         </div>
       </div>
-      <Heading level={4}>Записи: </Heading>
+      <Heading level={4} className={styles.headerWrapper}>
+        <Text>Записи:</Text>
+        <Pagination
+          prev
+          last
+          next
+          first
+          total={pagination.totalItems || 0}
+          limit={5}
+          activePage={pagination.page}
+          onChangePage={setPage}
+        />
+      </Heading>
 
       <div>
         <div className={classNames(styles.contentItem, styles.notes)}>
-          {lastNotes
-            ?.slice(0, 5)
-            .map((note) => (
-              <NoteCard
-                className={styles.card}
-                key={note.id}
-                title={note.title}
-                created={note.created}
-                description={note.description}
-                width={180}
-              />
-            ))}
-          <Card width={180}>
+          {lastNotes.map((note) => (
+            <NoteCard
+              className={styles.card}
+              key={note.id}
+              title={note.title}
+              created={note.created}
+              description={note.description}
+              width={200}
+            />
+          ))}
+          <Card width={200}>
             <IconButton
               onClick={openCreatingModal}
-              className={styles.addBtn}
+              className={classNames(styles.addBtn, styles.card)}
               icon={<PlusIcon />}
             />
           </Card>

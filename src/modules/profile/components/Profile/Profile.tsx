@@ -2,9 +2,9 @@ import { useFormik } from 'formik';
 import { Input, Form, Text, Heading, Button, Placeholder, Tag } from 'rsuite';
 import classNames from 'classnames';
 
+import { useGetNotesCountQuery, useGetPeriodNotesCountQuery } from '../../api';
 import { useUser, useEditUser } from '../../../user';
 import { useLoadTagsWithNotesQuery } from '../../../hashTags';
-import { useGetNotesCountQuery, useGetPeriodNotesCountQuery } from '../../api';
 import { getLastWeek } from '../../../common';
 
 import styles from './Profile.module.scss';

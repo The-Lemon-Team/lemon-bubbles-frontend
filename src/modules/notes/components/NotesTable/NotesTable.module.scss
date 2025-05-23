@@ -3,21 +3,8 @@
   box-sizing: border-box;
 }
 
-.table {
-  width: 100%;
-}
-
 .tableCreatingMode {
   width: 57% !important;
-}
-
-.header {
-  font-size: 1rem;
-}
-
-.title {
-  overflow: hidden;
-  font-size: 1rem;
 }
 
 .actions {
@@ -33,12 +20,6 @@
 
 .formWrapper {
   width: 40% !important;
-}
-
-.headerCell {
-  [class~='rs-table-cell'] {
-    transition: none !important;
-  }
 }
 
 .filters {

@@ -22,7 +22,8 @@ import { useFormik } from 'formik';
 import ColorPicker from '@rc-component/color-picker';
 import '@rc-component/color-picker/assets/index.css';
 
-import { displayDate, HashTag, useAppSelector } from '../../../common';
+import { displayDate, useAppSelector } from '../../../common';
+import { HashTag } from '../../../hashTags';
 import { useLoadTagsWithNotesQuery } from '../../../hashTags';
 
 import styles from './HashTags.module.scss';
@@ -38,6 +39,8 @@ interface IDefaultPopoverProps {
   title: string;
   color: string;
 }
+
+// @todo
 
 const DefaultPopover: React.FC<IDefaultPopoverProps> = React.forwardRef(
   ({ content, title, color, ...props }, ref: any) => {
@@ -62,8 +65,6 @@ const HashTagModule: React.FC<IHashTagFormProps> = ({ selectedHashTag }) => {
     initialValues: selectedHashTag,
     onSubmit: () => void 0,
   });
-
-  console.log('selectedHashTag', selectedHashTag);
 
   return (
     <Panel bordered>
