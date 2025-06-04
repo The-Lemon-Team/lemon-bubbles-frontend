@@ -1,5 +1,5 @@
+import { useInfiniteAssets } from '../../common';
 import { useLoadNotesQuery } from '../api/notesApi';
-import { useInfiniteAssets } from '../../common/hooks';
 
 import { IDateRange } from '../../../interfaces';
 

@@ -12,14 +12,12 @@ import { useFormik } from 'formik';
 import { pickBy, identity } from 'lodash';
 import { useNavigate } from 'react-router-dom';
 
-import { Logo } from '../../../common/components';
-import { loginFormValidationSchema } from '../../../common/utils/validation/authSchemas';
+import { Logo, loginFormValidationSchema } from '../../../common';
 import { useLoginWithEmail } from '../../hooks/useLogingWithEmail';
 
 import { ILoginByEmailRequestDto } from '../../../../interfaces';
 
 import styles from './LoginForm.module.scss';
-import classNames from 'classnames';
 
 export interface ILoginFormProps {}
 

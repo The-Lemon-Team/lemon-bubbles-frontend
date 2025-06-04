@@ -4,16 +4,14 @@ import { Button, Modal } from 'rsuite';
 
 import { CreateNote } from '../CreateNote';
 
+import { useNotifier } from '../../../common';
+import { useHashTagsContext } from '../../../hashTags';
 import { useNoteFormAssets } from '../../hooks/useNoteFormAssets';
 import { useCreateNote } from '../../hooks/useCreateNote';
-import { useHashTags, useNotifier } from '../../../common';
+
 import styles from './CreateNoteModal.module.scss';
 
-import {
-  IHashTag,
-  INoteCreateForm,
-  INoteCreateRequestDto,
-} from '../../../../interfaces';
+import { INoteCreateForm } from '../../../../interfaces';
 
 const initialValues: INoteCreateForm = {
   title: '',
@@ -22,16 +20,12 @@ const initialValues: INoteCreateForm = {
   hashTags: [],
 };
 
-interface ICreateNoteModalProps {
-  onCreate: (payload: INoteCreateRequestDto) => void;
-  onClose?: () => void;
-  transformTags: (hashTags: string[]) => IHashTag[];
-}
+interface ICreateNoteModalProps {}
 
-export const CreateNoteModal: React.FC<ICreateNoteModalProps> = ({}) => {
+export const CreateNoteModal: React.FC<ICreateNoteModalProps> = () => {
   const { isCreatingMode, createNote, resetCreatingMode } = useCreateNote();
-  const { transformTags } = useHashTags();
   const { showSuccess } = useNotifier();
+  const { transformTags } = useHashTagsContext();
 
   const handleSubmit = (payload: INoteCreateForm) => {
     const hashTags = transformTags(payload.hashTags || []);

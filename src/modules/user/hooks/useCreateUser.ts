@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '../../common/stores/hooks';
+import { useAppDispatch, useAppSelector } from '../../common';
 import { createUser as createUserThunk } from '../stores/userCreatingSlice';
 
 import { ICreateUserRequestDto } from '../../../interfaces';

@@ -1,15 +1,15 @@
 import React, { useCallback } from 'react';
 import { DateRangePicker, IconButton, Panel } from 'rsuite';
+import { DateRange } from 'rsuite/esm/DateRangePicker';
 import AddOutlineIcon from '@rsuite/icons/AddOutline';
 import MenuIcon from '@rsuite/icons/Menu';
-import { DateRange } from 'rsuite/esm/DateRangePicker';
 
 import { Notes } from '../Notes';
-import styles from './NotesTable.module.scss';
+import styles from './NotesBoard.module.scss';
 
 import { INote } from '../../../../interfaces';
 
-interface NotesTableProps {
+interface NotesBoardProps {
   dateRange: {
     end: Date;
     start: Date;
@@ -33,7 +33,7 @@ interface NotesTableProps {
   onRefresh?: () => void;
 }
 
-export const NotesTable: React.FC<NotesTableProps> = ({
+export const NotesBoard: React.FC<NotesBoardProps> = ({
   dateRange,
   error,
   notes = [],
@@ -99,18 +99,6 @@ export const NotesTable: React.FC<NotesTableProps> = ({
           onEdit={onEdit}
           onPageChange={onPageChange}
         />
-        {/* <div className={styles.paginationWrapper}>
-          <Pagination
-            prev
-            last
-            next
-            first
-            total={totalItems || 0}
-            limit={10}
-            activePage={currentPage}
-            onChangePage={onPageChange}
-          />
-        </div> */}
       </div>
     </Panel>
   );

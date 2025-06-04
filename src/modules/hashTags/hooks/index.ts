@@ -1,1 +1,1 @@
-export * from './useHashTags';
+export * from './useHashTagsContext';

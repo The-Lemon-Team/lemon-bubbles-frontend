@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
+import { useAppSelector, useAppDispatch } from '../../common';
 import { loginByEmail } from '../stores/authSlice';
-import { useAppSelector, useAppDispatch } from '../../common/stores/hooks';
 
 import { ILoginByEmailRequestDto } from '../../../interfaces';
 

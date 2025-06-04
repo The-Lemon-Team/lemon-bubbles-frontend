@@ -1,4 +1,5 @@
 export { NotesModals } from './NotesModals';
 export { NoteCard } from './NoteCard';
 export { Notes } from './Notes';
-export { NotesTable } from './NotesTable';
+export { NotesBoard } from './NotesBoard';
+export { NoteList } from './NoteList';

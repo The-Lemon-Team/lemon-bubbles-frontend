@@ -1,4 +1,5 @@
 import { Polly } from '@pollyjs/core';
+import { isWithinInterval } from 'date-fns';
 import { v4 as uuid } from 'uuid';
 import FetchAdapter from '@pollyjs/adapter-fetch';
 import XHRAdapter from '@pollyjs/adapter-xhr';
@@ -8,7 +9,6 @@ import { hashtagsMock } from './hashtags.mock';
 import { generateNote, notesMock } from './notes.mock';
 
 import { IDateRangeDto, INote } from '../../../../../interfaces';
-import { isWithinInterval } from 'date-fns';
 
 export const setupDevServer = () => {
   Polly.register(FetchAdapter);

@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { authTransport, userService } from '../../common';
+import { authTransport, userService, IUserCreatingStore } from '../../common';
 
-import { IUserCreatingStore } from '../../common/interfaces';
 import {
   ICreateUserRequestDto,
   IUser,

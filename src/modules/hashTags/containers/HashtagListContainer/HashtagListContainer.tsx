@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { HashtagList } from '../../components/HashtagList';
-import { useHashTags } from '../../hooks/useHashTags';
+import { useHashTagsContext } from '../../hooks/useHashTagsContext';
 
 interface HashtagListContainerProps {
   hashtagNames: string[];
@@ -10,11 +10,8 @@ interface HashtagListContainerProps {
 export const HashtagListContainer: React.FC<HashtagListContainerProps> = ({
   hashtagNames,
 }) => {
-  const { mapTagNamesOnTags } = useHashTags();
-  const [unusedHashtags, usedHashtags] = mapTagNamesOnTags(hashtagNames);
-
-  console.log('usedHashtags', usedHashtags);
-  console.log('unusedHashtags', unusedHashtags);
+  const { mapTagNamesOnTags } = useHashTagsContext();
+  const [usedHashtags, unusedHashtags] = mapTagNamesOnTags(hashtagNames);
 
   return (
     <HashtagList usedHashtags={usedHashtags} unusedHashtags={unusedHashtags} />

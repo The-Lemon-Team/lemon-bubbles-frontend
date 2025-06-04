@@ -3,7 +3,6 @@ import { Container, Grid, Row, Navbar, Nav, IconButton, Button } from 'rsuite';
 import SearchPeopleIcon from '@rsuite/icons/SearchPeople';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
 import { useOnClickOutside } from 'usehooks-ts';
 
 import { BoardGlobalLoader } from '../../../board';

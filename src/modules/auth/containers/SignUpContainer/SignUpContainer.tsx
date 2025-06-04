@@ -1,7 +1,9 @@
 import { useDispatch } from 'react-redux';
+
 import { useCreateUser, setUser } from '../../../user';
-import { useLoginWithEmail } from '../../hooks';
-import { SignUpForm } from '../../components';
+
+import { useLoginWithEmail } from '../../hooks/useLogingWithEmail';
+import { SignUpForm } from '../../components/SignUpForm';
 
 import { ISignUpForm, IUser } from '../../../../interfaces';
 

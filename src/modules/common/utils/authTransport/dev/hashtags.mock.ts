@@ -1,6 +1,3 @@
-import { v4 as uuid } from 'uuid';
-import { faker } from '@faker-js/faker';
-
 import { generateHashTag } from '../../generateHashTag';
 
 import { IHashTag } from '../../../../../interfaces';

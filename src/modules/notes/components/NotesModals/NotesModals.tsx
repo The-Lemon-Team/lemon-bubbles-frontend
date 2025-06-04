@@ -1,11 +1,11 @@
 import { EditNoteModalContainer } from '../../containers/EditNoteModalContainer';
-import { CreateNoteModalContainer } from '../../containers/CreateNoteModalContainer';
+import { CreateNoteModal } from '../CreateNoteModal';
 import { DeleteModal } from '../DeleteModal';
 
 export const NotesModals: React.FC = () => {
   return (
     <>
-      <CreateNoteModalContainer />
+      <CreateNoteModal />
       <EditNoteModalContainer />
       <DeleteModal />
     </>

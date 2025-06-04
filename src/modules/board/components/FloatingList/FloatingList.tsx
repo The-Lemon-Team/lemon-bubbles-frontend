@@ -13,13 +13,15 @@ import {
 } from 'rsuite';
 import PlusIcon from '@rsuite/icons/Plus';
 
+import { NoteList } from '../../../notes';
+
 import { useFloatingList } from './useFloatingList';
 import { useModalManager } from './useModalManager';
-import { NoteList } from '../../../notes/components/NoteList';
 import {
   DEFAULT_FLOATING_MAX_WIDTH,
   DEFAULT_FLOATING_MAX_HEIGHT,
 } from '../../../../constants';
+
 import styles from './FloatingList.module.scss';
 
 import { INote } from '../../../../interfaces';

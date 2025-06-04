@@ -13,8 +13,8 @@ import {
 import classNames from 'classnames';
 import PlusIcon from '@rsuite/icons/Plus';
 
-import { NoteCard } from '../../../notes';
 import { displayDate } from '../../../common';
+import { NoteCard } from '../../../notes';
 import { useStatistics } from '../../hooks/useStatistics';
 
 import styles from './Statistics.module.scss';

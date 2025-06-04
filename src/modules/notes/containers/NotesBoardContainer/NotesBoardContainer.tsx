@@ -1,12 +1,10 @@
-import { useAppSelector } from '../../../common';
-import { NotesTable } from '../../components';
+import { NotesBoard } from '../../components';
 
-import {
-  useNotes,
-  useEditNote,
-  useCreateNote,
-  useDeleteNote,
-} from '../../hooks';
+import { useAppSelector } from '../../../common';
+import { useNotes } from '../../hooks/useNotes';
+import { useEditNote } from '../../hooks/useEditNote';
+import { useCreateNote } from '../../hooks/useCreateNote';
+import { useDeleteNote } from '../../hooks/useDeleteNote';
 
 interface INotesTablesContainerProps {
   mode: 'table' | 'cards';
@@ -14,7 +12,7 @@ interface INotesTablesContainerProps {
   onDateChange: (startDate: Date, endDate: Date) => void;
 }
 
-export const NotesTablesContainer: React.FC<INotesTablesContainerProps> = ({
+export const NotesBoardContainer: React.FC<INotesTablesContainerProps> = ({
   mode,
   onDateChange,
 }) => {
@@ -33,7 +31,7 @@ export const NotesTablesContainer: React.FC<INotesTablesContainerProps> = ({
   );
 
   return (
-    <NotesTable
+    <NotesBoard
       dateRange={{
         start: new Date(startDate),
         end: new Date(endDate),

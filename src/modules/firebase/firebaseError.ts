@@ -1,3 +1,9 @@
+export const validationErrors = {
+  required: 'Обязательное поле',
+  email: 'Введите email',
+  repeatedPassword: 'Пароли не совпадают',
+};
+
 export const FirebaseCreatingErrors = {
   EMAIL_IS_USED: 'auth/email-already-in-use',
   EMAIL_NOT_FOUND: 'auth/user-not-found',

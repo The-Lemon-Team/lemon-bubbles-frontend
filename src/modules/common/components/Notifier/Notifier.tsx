@@ -3,7 +3,7 @@ import { Message, useToaster } from 'rsuite';
 
 import { useNotifier } from '../../hooks/useNotifier';
 
-import { INotification } from '../../../../interfaces/ui/INotification';
+import { INotification } from '../../../../interfaces';
 
 const NOTIFICATION_DURATION = 3000;
 

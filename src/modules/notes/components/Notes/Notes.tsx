@@ -14,8 +14,8 @@ import cn from 'classnames';
 import { format } from 'date-fns';
 import MoreIcon from '@rsuite/icons/More';
 
-import { NotFound } from '../NotFound';
 import { LineTag } from '../../../hashTags';
+import { NotFound } from '../NotFound';
 
 import { IHashTag, INote } from '../../../../interfaces';
 
@@ -93,9 +93,6 @@ export const Notes: React.FC<INotesProps> = ({
           );
         }}
         data={data}
-        renderRow={(children, item) => {
-          return item?.dayLabel ? <div>{item.dayLabel}</div> : <>{children}</>;
-        }}
         headerHeight={50}
         className={styles.table}
       >
@@ -104,7 +101,7 @@ export const Notes: React.FC<INotesProps> = ({
             className={styles.headerCell}
             style={{ padding: '4px 20px', marginRight: '2px' }}
           >
-            <Text size="md">Title</Text>
+            <Text size="md">Заголовок</Text>
           </Table.HeaderCell>
           <Table.Cell
             dataKey="title"
@@ -121,7 +118,7 @@ export const Notes: React.FC<INotesProps> = ({
             className={styles.headerCell}
             style={{ padding: '4px 20px 4px 0' }}
           >
-            <Text size="md">Description</Text>
+            <Text size="md">Описание</Text>
           </Table.HeaderCell>
           <Table.Cell
             dataKey="description"
@@ -133,7 +130,7 @@ export const Notes: React.FC<INotesProps> = ({
             className={styles.headerCell}
             style={{ padding: '4px 20px 4px 0' }}
           >
-            <Text size="md">Date</Text>
+            <Text size="md">Дата</Text>
           </Table.HeaderCell>
           <Table.Cell dataKey="created" style={{ padding: 4 }}>
             {({ created }) => format(new Date(created), 'd MMM Y')}
@@ -144,7 +141,7 @@ export const Notes: React.FC<INotesProps> = ({
             className={styles.headerCell}
             style={{ padding: '4px 20px 4px 0' }}
           >
-            <Text size="md">HashTags</Text>
+            <Text size="md">Хэштеги</Text>
           </Table.HeaderCell>
           <Table.Cell dataKey="hashTags" style={{ padding: 4 }}>
             {({ hashTags }) => {

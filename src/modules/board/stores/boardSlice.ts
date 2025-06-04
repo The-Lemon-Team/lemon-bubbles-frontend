@@ -6,9 +6,9 @@ import {
   DEFAULT_FLOATING_X,
   DEFAULT_FLOATING_Y,
 } from '../../../constants';
-import { getInitialDates } from '../../common/utils';
+import { IBoardStore } from '../../common';
+import { getInitialDates } from '../../common/utils/dateFns';
 
-import { IBoardStore } from '../../common/interfaces/IStore';
 import { ICoordinates, IDateRange, ISizes } from '../../../interfaces';
 
 const dates = getInitialDates();

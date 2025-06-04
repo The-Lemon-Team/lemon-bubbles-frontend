@@ -22,9 +22,8 @@ import { useFormik } from 'formik';
 import ColorPicker from '@rc-component/color-picker';
 import '@rc-component/color-picker/assets/index.css';
 
-import { displayDate, useAppSelector } from '../../../common';
-import { HashTag } from '../../../hashTags';
-import { useLoadTagsWithNotesQuery } from '../../../hashTags';
+import { displayDate } from '../../../common';
+import { HashTag, useLoadTagsWithNotesQuery } from '../../../hashTags';
 
 import styles from './HashTags.module.scss';
 

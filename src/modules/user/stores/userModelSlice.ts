@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { authTransport } from '../../common/utils/authTransport';
+import { authTransport, IUserStore } from '../../common';
 
 import { IUser } from '../../../interfaces';
-import { IUserStore } from '../../common/interfaces';
 
 const initialState: IUserStore = {
   data: null,

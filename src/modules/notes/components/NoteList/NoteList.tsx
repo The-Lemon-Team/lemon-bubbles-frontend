@@ -2,7 +2,7 @@ import React from 'react';
 import { useMemo } from 'react';
 import { Panel, PanelGroup } from 'rsuite';
 
-import { groupNotesByDays } from '../../../common/utils';
+import { groupNotesByDays } from '../../../common';
 import { LineTag } from '../../../hashTags';
 
 import styles from './NoteList.module.scss';

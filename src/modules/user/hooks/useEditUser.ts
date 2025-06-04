@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../common/stores/hooks';
+import { useAppSelector } from '../../common';
 
 import { IUserEditForm } from '../../../interfaces';
 

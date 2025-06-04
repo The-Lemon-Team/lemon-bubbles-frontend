@@ -10,7 +10,7 @@ import { INote } from '../../../interfaces';
 
 export const useEditNote = () => {
   const dispatch = useAppDispatch();
-  const [editNoteThunk, { isLoading: isEditing, data }] = useEditNoteMutation();
+  const [editNoteThunk, { isLoading: isEditing }] = useEditNoteMutation();
 
   const setEditId = (id: string) => {
     dispatch(setEditIdAction(id));
@@ -19,8 +19,6 @@ export const useEditNote = () => {
     dispatch(resetEditIdAction());
   };
   const editNote = (payload: INote) => editNoteThunk(payload);
-
-  console.log('data ----------', data);
 
   return {
     isEditing,

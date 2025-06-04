@@ -23,12 +23,10 @@ export const App = () => {
               <Route
                 path="/*"
                 element={
-                  <div>
-                    <Routes>
-                      <Route path="/" element={<Navigate to={AUTH_PATH} />} />
-                      <Route path="/*" element={<AccessibleRoutes />} />
-                    </Routes>
-                  </div>
+                  <Routes>
+                    <Route path="/" element={<Navigate to={AUTH_PATH} />} />
+                    <Route path="/*" element={<AccessibleRoutes />} />
+                  </Routes>
                 }
               />
               <Route path={AUTH_PATH + '/*'} element={<AuthScreen />} />

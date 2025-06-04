@@ -1,11 +1,8 @@
 import { AxiosError } from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { authTransport } from '../../common/utils/authTransport';
-
-import { ILoginByEmailRequestDto } from '../../../interfaces';
-import { IAuthStore } from '../../common/interfaces/IStore';
-import { IErrorMessage } from '../../../interfaces/ui/IError';
+import { authTransport, IAuthStore } from '../../common';
+import { ILoginByEmailRequestDto, IErrorMessage } from '../../../interfaces';
 
 const initialState: IAuthStore = {
   logging: {

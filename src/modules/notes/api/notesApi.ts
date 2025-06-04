@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { notesService } from '../../common';
+
 import {
   INote,
   IGetNotesResponseDto,
@@ -57,7 +58,7 @@ export const notesApi = createApi({
             error,
           }));
       },
-      invalidatesTags: () => ['Notes'],
+      invalidatesTags: () => ['Notes', 'HashTags'],
     }),
     deleteNote: build.mutation<boolean, string>({
       queryFn: (id) => {

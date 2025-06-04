@@ -1,4 +1,4 @@
-import { generateHashTag } from '../../common/utils/generateHashTag';
+import { generateHashTag } from '../../common';
 import { useLoadAllTagsQuery } from '../api/hashTagsApi';
 
 import { IHashTag } from '../../../interfaces';
@@ -13,8 +13,6 @@ const mapTagNamesOnTags = (
         (hashTag) => hashTag.text === cur,
       );
 
-      console.log('------------- dddd', hashTagsData, usedHashtag, tagNames);
-
       if (usedHashtag) {
         return [[...acc[0], usedHashtag], acc[1]] as [IHashTag[], string[]];
       }
@@ -23,8 +21,6 @@ const mapTagNamesOnTags = (
     },
     [[], []] as [IHashTag[], string[]],
   );
-
-  // return usedHashTags;
 };
 
 const prepareHashtagsToUpload = (
@@ -50,6 +46,8 @@ export const useHashTags = () => {
     data?.filter((hashTag) => hashTag.text.startsWith(value));
   const transformTags = (hashTagStrings: string[]) =>
     prepareHashtagsToUpload(data, hashTagStrings);
+  // @todo возможно пригодиться для оптимизации
+  // const getHashTags = () => data;
 
   return {
     tags: data,

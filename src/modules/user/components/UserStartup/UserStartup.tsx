@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 
-import { authTransport } from '../../../common/utils';
-
-import { useAppDispatch, useAppSelector } from '../../../common';
-import { clearUser, userByToken } from '../../../user/stores/userModelSlice';
+import { authTransport, useAppDispatch, useAppSelector } from '../../../common';
+import { clearUser, userByToken } from '../../../user';
 
 // @todo переделать в UserStartup
 export const UserStartup: React.FC = () => {

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { authTransport } from '../../common/utils/authTransport';
+import { authTransport } from '../../common';
 
 import { IHashTagsService } from '../../../interfaces';
 

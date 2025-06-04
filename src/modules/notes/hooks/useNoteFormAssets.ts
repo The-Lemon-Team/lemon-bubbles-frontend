@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useFormik } from 'formik';
 import twitterUtils from 'twitter-text';
 
-import { useHashTags } from '../../hashTags/hooks/useHashTags';
+import { useHashTagsContext } from '../../hashTags';
 
 import { IHashTag } from '../../../interfaces';
 
@@ -18,7 +18,7 @@ export const useNoteFormAssets = (
   formikBag: ReturnType<typeof useFormik<any>>,
 ) => {
   const [suggestionTags, setSuggestionTags] = useState<IHashTag[]>([]);
-  const { searchHashTags } = useHashTags();
+  const { searchHashTags } = useHashTagsContext();
 
   const handleTextChange = (text?: string) => {
     const hashTags = findHashtags(text || '');

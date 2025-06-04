@@ -3,8 +3,8 @@ import { Field, FieldProps } from 'formik';
 import { Panel } from 'rsuite';
 import ReloadIcon from '@rsuite/icons/Reload';
 
-import { HashtagListContainer } from '../../../hashTags';
 import { HashTextArea } from '../../../common';
+import { HashtagListContainer } from '../../../hashTags';
 
 import styles from './CreateNote.module.scss';
 

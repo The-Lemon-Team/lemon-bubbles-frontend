@@ -3,7 +3,7 @@ import { Form, ButtonToolbar, Button, Input } from 'rsuite';
 import { pickBy, identity, Dictionary } from 'lodash';
 import { useFormik } from 'formik';
 
-import { signUpFormValidationSchema } from '../../../common/utils/validation/authSchemas';
+import { signUpFormValidationSchema } from '../../../common';
 
 import { ISignUpForm } from '../../../../interfaces';
 
@@ -35,10 +35,10 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
       const { username, email, password, repeatedPassword } =
         signUpFormValidationSchema.check(values);
       const errors = {
-        email: email.errorMessage,
-        password: password.errorMessage,
-        repeatedPassword: repeatedPassword.errorMessage,
-        username: username.errorMessage,
+        email: email?.errorMessage,
+        password: password?.errorMessage,
+        repeatedPassword: repeatedPassword?.errorMessage,
+        username: username?.errorMessage,
       };
 
       return pickBy(errors, identity);
@@ -52,7 +52,11 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
   );
 
   return (
-    <Form fluid formValue={formik.values}>
+    <Form
+      fluid
+      formValue={formik.values}
+      onSubmit={() => formik.handleSubmit()}
+    >
       <Form.Group>
         <Form.ControlLabel>Email: </Form.ControlLabel>
         <Input
@@ -112,6 +116,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           appearance="primary"
           block
           size="md"
+          type="submit"
           data-testid="registrationBtn"
           loading={isLoading}
           onClick={() => formik.handleSubmit()}

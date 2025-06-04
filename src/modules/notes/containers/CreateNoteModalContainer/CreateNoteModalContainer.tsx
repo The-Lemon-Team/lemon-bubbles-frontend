@@ -1,11 +1,11 @@
 import { CreateNoteModal } from '../../components/CreateNoteModal';
 
-import { useHashTags } from '../../../common';
+import { useHashTagsContext } from '../../../hashTags';
 import { useCreateNote } from '../../hooks/useCreateNote';
 
 export const CreateNoteModalContainer = () => {
   const { isCreatingMode, createNote, resetCreatingMode } = useCreateNote();
-  const { transformTags } = useHashTags();
+  const { transformTags } = useHashTagsContext();
 
   return isCreatingMode ? (
     <CreateNoteModal

@@ -5,8 +5,10 @@ import PieChartIcon from '@rsuite/icons/PieChart';
 import ListIcon from '@rsuite/icons/List';
 
 import { MainLayout, useRouteMatch } from '../../../common';
-import { CopyRight, Profile, Statistics } from '../../components';
 import { NotesContainer } from '../../../notes';
+
+import { CopyRight, Profile, Statistics } from '../../components';
+
 import {
   PROFILE_PATH,
   PROFILE_STATISTICS_PATH,
