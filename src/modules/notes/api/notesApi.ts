@@ -47,7 +47,10 @@ export const notesApi = createApi({
           .then((data) => ({ data }))
           .catch((error) => ({ error }));
       },
-      invalidatesTags: (result, error, arg) => [{ type: 'Notes', id: arg.id }],
+      invalidatesTags: (result, error, arg) => [
+        { type: 'Notes', id: arg.id },
+        'HashTags',
+      ],
     }),
     createNote: build.mutation<INote, INoteCreateRequestDto>({
       queryFn: (payload) => {

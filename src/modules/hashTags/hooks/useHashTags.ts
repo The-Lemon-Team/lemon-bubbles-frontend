@@ -39,7 +39,7 @@ const prepareHashtagsToUpload = (
 };
 
 export const useHashTags = () => {
-  const { data } = useLoadAllTagsQuery();
+  const { data, refetch } = useLoadAllTagsQuery();
 
   const mapHashTags = (tagNames: string[]) => mapTagNamesOnTags(data, tagNames);
   const searchHashTags = (value: string) =>
@@ -51,6 +51,7 @@ export const useHashTags = () => {
 
   return {
     tags: data,
+    refreshTags: refetch,
     searchHashTags,
     transformTags,
     mapTagNamesOnTags: mapHashTags,

@@ -3,7 +3,7 @@ import {
   setEditId as setEditIdAction,
 } from '../stores';
 
-import { useAppDispatch } from '../../common/stores/hooks';
+import { useAppDispatch } from '../../common';
 import { useEditNoteMutation } from '../api/notesApi';
 
 import { INote } from '../../../interfaces';
