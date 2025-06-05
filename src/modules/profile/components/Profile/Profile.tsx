@@ -1,8 +1,10 @@
+import { useMemo } from 'react';
 import { useFormik } from 'formik';
 import { Input, Form, Text, Heading, Button, Placeholder, Tag } from 'rsuite';
 import classNames from 'classnames';
+import { identity, pickBy } from 'lodash';
 
-import { getLastWeek } from '../../../common';
+import { editUserSchema, getLastWeek } from '../../../common';
 import { useUser, useEditUser } from '../../../user';
 import { useLoadTagsWithNotesQuery } from '../../../hashTags';
 import { useGetNotesCountQuery, useGetPeriodNotesCountQuery } from '../../api';
@@ -12,12 +14,13 @@ import styles from './Profile.module.scss';
 import { IUserEditForm } from '../../../../interfaces';
 
 export const Profile = () => {
+  const lastWeek = useMemo(() => getLastWeek(), []);
   const { user } = useUser();
   const { editUser } = useEditUser();
   const { data: notesCount, isLoading: notesCountLoading } =
     useGetNotesCountQuery();
   const { data: lastNotesCount, isLoading: lastNotesCountLoading } =
-    useGetPeriodNotesCountQuery(getLastWeek());
+    useGetPeriodNotesCountQuery(lastWeek);
   const isLoading = lastNotesCountLoading || notesCountLoading;
   const { data: hashTagsWithNotes, isLoading: hashTagsLoading } =
     useLoadTagsWithNotesQuery({ limit: 5 });
@@ -30,6 +33,20 @@ export const Profile = () => {
   const formikBag = useFormik<IUserEditForm>({
     initialValues,
     onSubmit: editUser,
+    validate: (values) => {
+      const { username, email, password, firstName, lastName, newPassword } =
+        editUserSchema.check(values as any);
+      const errors = {
+        firstName: firstName?.errorMessage,
+        lastName: lastName?.errorMessage,
+        email: email?.errorMessage,
+        password: password?.errorMessage,
+        newPassword: newPassword?.errorMessage,
+        username: username?.errorMessage,
+      };
+
+      return pickBy(errors, identity);
+    },
     enableReinitialize: true,
   });
 
@@ -40,7 +57,7 @@ export const Profile = () => {
           <Heading level={4}>Пользователь:</Heading>
         </div>
 
-        <form onSubmit={formikBag.handleSubmit} className={styles.form}>
+        <Form onSubmit={() => formikBag.handleSubmit()} className={styles.form}>
           <div
             className={classNames(styles.fieldContainer, styles.fioContainer)}
           >
@@ -55,6 +72,9 @@ export const Profile = () => {
                   formikBag.setFieldValue('firstName', value)
                 }
               />
+              <Form.ErrorMessage show={!!formikBag.errors.firstName}>
+                {formikBag.errors.firstName}
+              </Form.ErrorMessage>
             </Form.ControlLabel>
             <Form.ControlLabel htmlFor="lastName">
               <Text size="lg">Фамилия: </Text>
@@ -65,6 +85,9 @@ export const Profile = () => {
                 value={formikBag.values.lastName}
                 onChange={(value) => formikBag.setFieldValue('lastName', value)}
               />
+              <Form.ErrorMessage show={!!formikBag.errors.lastName}>
+                {formikBag.errors.lastName}
+              </Form.ErrorMessage>
             </Form.ControlLabel>
           </div>
           <div className={styles.fieldContainer}>
@@ -77,6 +100,9 @@ export const Profile = () => {
                 value={formikBag.values.email}
                 onChange={(value) => formikBag.setFieldValue('email', value)}
               />
+              <Form.ErrorMessage show={!!formikBag.errors.email}>
+                {formikBag.errors.email}
+              </Form.ErrorMessage>
             </Form.ControlLabel>
           </div>
 
@@ -90,6 +116,9 @@ export const Profile = () => {
                 value={formikBag.values.username}
                 onChange={(value) => formikBag.setFieldValue('username', value)}
               />
+              <Form.ErrorMessage show={!!formikBag.errors.username}>
+                {formikBag.errors.username}
+              </Form.ErrorMessage>
             </Form.ControlLabel>
           </div>
           <div className={styles.fieldContainer}>
@@ -98,9 +127,13 @@ export const Profile = () => {
               <Input
                 id="password"
                 name="password"
+                type="password"
                 value={formikBag.values.password}
                 onChange={(value) => formikBag.setFieldValue('password', value)}
               />
+              <Form.ErrorMessage show={!!formikBag.errors.password}>
+                {formikBag.errors.password}
+              </Form.ErrorMessage>
             </Form.ControlLabel>
           </div>
           <div className={styles.fieldContainer}>
@@ -109,11 +142,15 @@ export const Profile = () => {
               <Input
                 id="newPassword"
                 name="newPassword"
+                type="password"
                 value={formikBag.values.newPassword}
                 onChange={(value) =>
                   formikBag.setFieldValue('newPassword', value)
                 }
               />
+              <Form.ErrorMessage show={!!formikBag.errors.newPassword}>
+                {formikBag.errors.newPassword}
+              </Form.ErrorMessage>
             </Form.ControlLabel>
           </div>
           <div
@@ -126,7 +163,7 @@ export const Profile = () => {
               Сохранить
             </Button>
           </div>
-        </form>
+        </Form>
       </div>
 
       <div className={styles.heading}>
