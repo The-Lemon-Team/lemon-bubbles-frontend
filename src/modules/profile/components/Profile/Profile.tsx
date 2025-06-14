@@ -4,10 +4,10 @@ import { Input, Form, Text, Heading, Button, Placeholder, Tag } from 'rsuite';
 import classNames from 'classnames';
 import { identity, pickBy } from 'lodash';
 
+import { useGetNotesCountQuery, useGetPeriodNotesCountQuery } from '../../api';
 import { editUserSchema, getLastWeek } from '../../../common';
 import { useUser, useEditUser } from '../../../user';
 import { useLoadTagsWithNotesQuery } from '../../../hashTags';
-import { useGetNotesCountQuery, useGetPeriodNotesCountQuery } from '../../api';
 
 import styles from './Profile.module.scss';
 

@@ -1,5 +1,4 @@
-import { useAppSelector } from '../../common/stores/hooks';
-import { authTransport } from '../../common/utils/authTransport';
+import { useAppSelector, authTransport } from '../../common';
 
 export const useUser = () => {
   const user = useAppSelector((state) => state.user.model.data);

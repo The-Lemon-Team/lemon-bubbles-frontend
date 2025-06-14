@@ -1,7 +1,8 @@
 import { Heading, Text, IconButton } from 'rsuite';
 
-import styles from './CopyRight.module.scss';
 import { GithubSvg } from './GithubSvg';
+
+import styles from './CopyRight.module.scss';
 
 export const CopyRight = () => {
   return (
